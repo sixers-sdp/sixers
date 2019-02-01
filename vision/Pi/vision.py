@@ -16,12 +16,12 @@ def connect_to_server_and_loop():
         while True:
             server.accept()
             server.send(SENDING_VALUE)
-            time.sleep(0.01)
+            time.sleep(.1)
     except(KeyboardInterrupt):
         server.close()
 
 def connect_to_vision():
-    NUM_GRIDS = 3
+    NUM_GRIDS = 5
     HUE_THRESHOLD = 10
     SATURATION_THRESHOLD = 20
     h=480
@@ -44,7 +44,7 @@ def connect_to_vision():
     angle_error = 15
 
     to_turn = 0
-
+    c = 100
 
     cv2.namedWindow("preview")
     vc = cv2.VideoCapture(0)
@@ -119,19 +119,19 @@ def connect_to_vision():
                 left_angle = np.degrees(np.arctan(float(grid.shape[1])/(a)))
                 left_angle = np.sign(left_angle)*(90-np.abs(left_angle))
 
-                right_angle = np.degrees(np.arctan(float(grid.shape[1])/(b)))
+                            right_angle = np.degrees(np.arctan(float(grid.shape[1])/(b)))
                 right_angle = np.sign(right_angle)*(90-np.abs(right_angle))
 
-                #print("L:",left_angle)
                 #print("R:",right_angle)
-
+                print(bottom_left)
+                print(bottom_right)
                 if (none_found):
                     SENDING_VALUE['type'] = 'stop'
                     print('stop')
-                elif ((np.abs(left_angle+right_angle)<good_angle)):
-                    SENDING_VALUE['type'] = 'forward'
+                elif (bottom_left>=w/2-c and bottom_right<=w/2+c): #and top_left<=w/2-c and top_right>=w/2+c): #((np.abs(left_angle+right_angle)<good_angle)):
+                    SENDING_VALUE['type'] = 'stop'
                     SENDING_VALUE['time'] = 'none'
-                    print("forward")
+                    print("forward(stop)")
                 else:
                     to_turn = int((left_angle+right_angle)/2)
                     SENDING_VALUE['type'] = 'turn'
@@ -139,13 +139,14 @@ def connect_to_vision():
                         SENDING_VALUE['direction'] = "right"
                     else:
                         SENDING_VALUE['direction'] = "left"
-                    SENDING_VALUE['time'] = np.abs(to_turn)*12.5
+                    SENDING_VALUE['time'] = np.abs(to_turn)*15
                     print("turn",to_turn)
 
 
     cv2.destroyWindow("preview")
     vc.release()
 
+
 if __name__ == '__main__':
-    Thread(taget = connect_to_server_and_loop).start()
+    Thread(target = connect_to_server_and_loop).start()
     Thread(target = connect_to_vision).start()

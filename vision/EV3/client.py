@@ -52,6 +52,8 @@ class Client(object):
     def recv_and_close(self):
         data = self.recv()
         self.close()
+        data = self.recv()
+        self.close()
         return data
 
     def close(self):
@@ -66,10 +68,10 @@ def turn(m1,m2,m3,m4,value,time):
     m4.run_timed(speed_sp=-value,time_sp=time)
 
 def go_forward(m1,m2,m3,m4,value=700):
-    m1.run_timed(speed_sp=value,time_sp=400)
-    m2.run_timed(speed_sp=value,time_sp=400)
-    m3.run_timed(speed_sp=value,time_sp=400)
-    m4.run_timed(speed_sp=value,time_sp=400)
+    m1.run_timed(speed_sp=value,time_sp=200)
+    m2.run_timed(speed_sp=value,time_sp=200)
+    m3.run_timed(speed_sp=value,time_sp=200)
+    m4.run_timed(speed_sp=value,time_sp=200)
 
 class Type(Enum):
     FORWARD = "forward"
@@ -80,7 +82,6 @@ if __name__ == "__main__":
     #host = 'LOCALHOST'
     host = '192.168.105.135'
     port = 5005
-
     m1=ev3.LargeMotor('outA')
     m2=ev3.LargeMotor('outB')
     m3=ev3.LargeMotor('outC')
@@ -102,11 +103,9 @@ if __name__ == "__main__":
             if (response['type']==Type.FORWARD.value):
                 #go forward
                 go_forward(m1,m2,m3,m4)
-                t=0.4
                 print(response,"FORWARD")
             elif (response['type']==Type.STOP.value):
                 print(response,"STOP")
-                t=0.4
             elif (response['type']==Type.TURN.value):
                 t = int(response['time'])
                 if (response['direction']=='right'):
@@ -114,8 +113,7 @@ if __name__ == "__main__":
                 else:
                     v=-700
                 turn(m1,m2,m3,m4,v,t)
-                t=t/1000
-                #print(response,"TURN")
+                print(response,"TURN")
                 #turn
-            time.sleep(t)
+            time.sleep(1)
             client.close()
