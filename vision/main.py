@@ -52,6 +52,7 @@ class AlbertMotion:
         if(turn_in_place):
             self.motor_2.backward(speed)
         global_time.sleep(time)
+        self.stop()
 
     def stop(self):
         stop_all_motors()
@@ -71,7 +72,7 @@ def start_camera(cam):
 
 def connect_to_vision(albert):
     global camera
-    NUM_GRIDS = 25
+    NUM_GRIDS = 10
     HUE_THRESHOLD = 10
     SATURATION_THRESHOLD = 20
     h=480
@@ -193,20 +194,20 @@ def connect_to_vision(albert):
                 elif ((np.abs(left_angle+right_angle)<good_angle)):
                     if (bottom_left<((w/2)-c)):
                         print("Forwards (slight right)")
-                        albert.motion.turn_left(time =0.1,turn_in_place=True)
+                        albert.motion.turn_left(time =0.25,turn_in_place=True)
                     elif (bottom_right>((w/2)+c)):
                         print("Forwards (slight left)")
-                        albert.motion.turn_right(time=0.1,turn_in_place=True)
+                        albert.motion.turn_right(time=0.25,turn_in_place=True)
                     else:
                         print("Forwards")
-                        albert.motion.forward(time=0.1)
+                        albert.motion.forward()
                 else:
                     print("Turn")
                     to_turn = int((left_angle+right_angle)/2)
                     if (np.sign(to_turn)>0):
-                        albert.motion.turn_right(time=0.1,turn_in_place=False)
+                        albert.motion.turn_right(time=0.4,turn_in_place=False)
                     else:
-                        albert.motion.turn_left(time=0.1,turn_in_place=False)
+                        albert.motion.turn_left(time=0.4,turn_in_place=False)
         #print("Entire loop: "+str(global_time.time()-prev))
 
     cv2.destroyWindow("preview")
