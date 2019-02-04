@@ -15,6 +15,14 @@ The API will
 - [ ] will have minimalistic admin interface.
 
 
+# Models
+
+- http://flask-sqlalchemy.pocoo.org/2.3/quickstart/
+- http://flask-sqlalchemy.pocoo.org/2.3/models/
+- Maybe https://docs.sqlalchemy.org/en/latest/orm/tutorial.html
+
+
+
 # API
 
 The API will accept and return JSON. There will be authentication using token stored on the robot. 
