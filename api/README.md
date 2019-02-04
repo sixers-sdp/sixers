@@ -5,6 +5,16 @@ through this web server the cook will be able to see and modify current standing
 
 Furthermore it should contain current map of the place in some reprentation easy to parse.
 
+
+# Infrastructure:
+
+The API will 
+
+- [ ] use Flask, 
+- [ ] sqlite database 
+- [ ] will have minimalistic admin interface.
+
+
 # API
 
 The API will accept and return JSON. There will be authentication using token stored on the robot. 
