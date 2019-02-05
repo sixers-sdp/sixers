@@ -3,14 +3,14 @@
 The robot will store the orders / map on the external web server, 
 through this web server the cook will be able to see and modify current standing orders. 
 
-Furthermore it should contain current map of the place in some reprentation easy to parse.
+Furthermore it should contain current map of the place in some representation easy to parse.
 
 
 # Infrastructure:
 
 The API will 
 
-- [ ] use Flask, 
+- [ ] use Django, 
 - [ ] sqlite database 
 - [ ] will have minimalistic admin interface.
 
