@@ -34,6 +34,7 @@ class Order(models.Model):
 
     products = models.ManyToManyField(Product)
     state = models.CharField(
+        default=ORDER_STATE_NEW,
         choices=ORDER_STATE_CHOICES,
         max_length=24
     )
