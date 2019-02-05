@@ -22,7 +22,7 @@ class Product(models.Model):
     class Meta:
         ordering = ('name', )
 
-    def __repr__(self):
+    def __str__(self):
         return self.name
 
 
