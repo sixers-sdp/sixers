@@ -16,6 +16,7 @@ class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     products = db.relationship('Product', backref='orders', lazy=False)
+    completed = db.Column(db.Boolean, nullable=False)
 
     def __repr__(self):
         return self.created
