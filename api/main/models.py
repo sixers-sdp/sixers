@@ -12,8 +12,6 @@ ORDER_STATE_CHOICES = [
 ]
 
 
-
-
 class Product(models.Model):
     name = models.CharField(max_length=128)
     price = models.IntegerField()
@@ -39,4 +37,3 @@ class Order(models.Model):
         choices=ORDER_STATE_CHOICES,
         max_length=24
     )
-
