@@ -38,3 +38,7 @@ class Order(models.Model):
         choices=ORDER_STATE_CHOICES,
         max_length=24
     )
+
+    def __str__(self):
+        return f"{self.state}: {self.updated_at}"
+
