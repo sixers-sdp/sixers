@@ -41,4 +41,3 @@ class Order(models.Model):
 
     def __str__(self):
         return f"{self.state}: {self.updated_at}"
-
