@@ -8,19 +8,8 @@ Furthermore it should contain current map of the place in some representation ea
 
 # Infrastructure:
 
-The API will 
-
-- [ ] use Django, 
-- [ ] sqlite database 
-- [ ] will have minimalistic admin interface.
-
-
-# Models
-
-- http://flask-sqlalchemy.pocoo.org/2.3/quickstart/
-- http://flask-sqlalchemy.pocoo.org/2.3/models/
-- Maybe https://docs.sqlalchemy.org/en/latest/orm/tutorial.html
-
+Mostly based on [Digital ocean tutorial](https://www.digitalocean.com/community/tutorials/how-to-set-up-django-with-postgres-nginx-and-gunicorn-on-ubuntu-16-04).
+Check [Django docs](https://docs.djangoproject.com/en/2.1/intro/) if you have never seen Django before and want to contribute.
 
 
 # API
