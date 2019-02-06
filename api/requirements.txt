@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 django
 djangorestframework
 gunicorn
 psycopg2
+=======
+django
+>>>>>>> fecceb8fe62b240b98ee8af357796104faf0b6c8
