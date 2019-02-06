@@ -1,5 +1,9 @@
 # Sixers - SDP Group 6
 
+[![Codeship Status for sixers-sdp/sixers](https://app.codeship.com/projects/a7c03b00-0c77-0137-b224-020cd0895321/status?branch=master)](https://app.codeship.com/projects/326543)
+
+# Modules
+
 ![Modules](Modules.png "Modules diagram")
 
 
