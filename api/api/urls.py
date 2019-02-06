@@ -24,6 +24,8 @@ admin.site.site_title = 'Albert'
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path('api/', include('albert_api.urls'))
+    path('api/', include('albert_api.urls')),
+
+    path('', include('main.urls'))
 
 ]
