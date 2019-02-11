@@ -70,11 +70,14 @@ var data = {
 
 var options = {
 	directed: false,
-	zoom: false
+	zoom: false,
+	scale: {
+		min: 1,
+		max: 1
+	}
 };
 
 var graph = new ge.GraphEditor('#graph', data, options);
-graph.zoomEvents = null;
 var shift = false;
 
 graph
