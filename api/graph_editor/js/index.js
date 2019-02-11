@@ -2,42 +2,57 @@ var data = {
     "nodes": [
         {
             "id": 0,
-            "x": 80,
-            "y": 98,
-            "width": 20,
-            "height": 20,
-            "shape": {
-                "aspect": 2,
-                "class": "Rect"
-            },
-            "title": "1",
-            "data": {}
+            "x": 118.50836181640625,
+            "y": 269.0916748046875,
+            "width": 38,
+            "height": 38,
+            "shape": null,
+            "title": "chef"
         },
         {
             "id": 1,
-            "x": 398,
-            "y": 89,
-            "width": 28,
-            "height": 19.350000381469727,
-            "shape": {
-                "aspect": 2,
-                "class": "Rect"
-            },
-            "title": " table 2",
-            "data": {}
+            "x": 339.50836181640625,
+            "y": 263.0916748046875,
+            "width": 30,
+            "height": 30,
+            "shape": null,
+            "title": "C3"
         },
         {
             "id": 2,
-            "x": 285,
-            "y": 399,
-            "width": 20,
-            "height": 20,
-            "shape": {
-                "aspect": 2,
-                "class": "Rect"
-            },
-            "title": "3",
-            "data": {}
+            "x": 127,
+            "y": 151,
+            "width": 28,
+            "height": 28,
+            "shape": null,
+            "title": "c1"
+        },
+        {
+            "id": 3,
+            "x": 336,
+            "y": 147,
+            "width": 28,
+            "height": 28,
+            "shape": null,
+            "title": "c2"
+        },
+        {
+            "id": 4,
+            "x": 80,
+            "y": 80,
+            "width": 26,
+            "height": 26,
+            "shape": null,
+            "title": "t1"
+        },
+        {
+            "id": 5,
+            "x": 400,
+            "y": 85,
+            "width": 26,
+            "height": 26,
+            "shape": null,
+            "title": "t2"
         }
     ],
     "links": [
@@ -46,23 +61,41 @@ var data = {
             "source": 0,
             "target": 1,
             "title": "red",
-            "data": {},
-            "shape": null
-        },
-        {
-            "id": "1-2",
-            "source": 1,
-            "target": 2,
-            "title": "blue",
-            "data": {},
             "shape": null
         },
         {
             "id": "0-2",
+            "source": 0,
+            "target": 2,
+            "title": "green",
+            "shape": null
+        },
+        {
+            "id": "2-4",
             "source": 2,
-            "target": 0,
+            "target": 4,
             "title": "red",
-            "data": {},
+            "shape": null
+        },
+        {
+            "id": "2-3",
+            "source": 2,
+            "target": 3,
+            "title": "blue",
+            "shape": null
+        },
+        {
+            "id": "1-3",
+            "source": 1,
+            "target": 3,
+            "title": "red",
+            "shape": null
+        },
+        {
+            "id": "3-5",
+            "source": 3,
+            "target": 5,
+            "title": "green",
             "shape": null
         }
     ]
