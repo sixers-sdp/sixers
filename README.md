@@ -18,4 +18,4 @@
 
 
 # Links:
-- [Google folder](https://drive.google.com/drive/folders/1-3mFlIckR9XfrBqigKiz7-sDPVg_fLFM) - In order to access you need to loging using your pre-approved Google account first.
+- [Google folder](https://drive.google.com/drive/folders/1-3mFlIckR9XfrBqigKiz7-sDPVg_fLFM) - In order to access you need to login using your pre-approved Google account first.
