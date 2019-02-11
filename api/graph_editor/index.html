@@ -6,9 +6,9 @@
   <title>Graph editor</title>
   
   
-  <link rel='stylesheet' href='https://unpkg.com/graph-editor@0.1.0/dist/css/graph-editor-dark.css'>
+  <link rel='stylesheet' href='https://unpkg.com/graph-editor@0.1.0/dist/css/graph-editor.css'>
 
-      <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css">
 
   
 </head>
@@ -30,7 +30,6 @@
 			shift+click - add a node<br>
 			shift+drag - add a link<br>
 			del - delete selected node/link<br>
-			s - toggle simulation<br>
 		</div>
 	</div>
 	<div class="row">
@@ -45,22 +44,22 @@
 				<input id="node-title" type="text">
 			</div>
 			<div>
-				<label for="node-shape">
-					Shape
+				<label for="node-type">
+					Type
 				</label>
-				<select id="node-shape">
-					<option value="Circle">●</option>
-					<option value="Rect">■</option>
+				<select id="node-type">
+					<option value="table">Table</option>
+					<option value="kitchen">Kitchen</option>
 				</select>
 			</div>
 		</div>
 	</div>
 	<div id="selected-link" class="row hide">
 		<div class="form">
-			<h5>Link</h5>
+			<h5>Color</h5>
 			<div>
-				<label for="link-title">Title</label>
-				<input id="link-title" type="text">
+				<label for="link-color">Color</label>
+				<input id="link-color" type="text">
 			</div>
 		</div>
 	</div>

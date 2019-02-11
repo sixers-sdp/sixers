@@ -1,23 +1,80 @@
 var data = {
-	nodes: [
-		{ id: 0, x: 0, y: 0, title: '1', data: {} },
-		{ id: 1, x: 200, y: 0, title: '2',
-			shape: {'class': 'Rect', aspect: 2}, data: {} },
-		{ id: 2, x: 100, y: 200, title: '3', data: {} }
-	],
-	links: [
-		{ source: 0, target: 1, size: 2, title: '0-1', data: {} },
-		{ source: 1, target: 2, size: 4, title: '1-2', data: {} },
-		{ source: 0, target: 0, size: 2, title: '0-0', data: {} },
-		{ source: 2, target: 0, size: 2, title: '2-0', data: {} }
-	]
+    "nodes": [
+        {
+            "id": 0,
+            "x": 80,
+            "y": 98,
+            "width": 20,
+            "height": 20,
+            "shape": {
+                "aspect": 2,
+                "class": "Rect"
+            },
+            "title": "1",
+            "data": {}
+        },
+        {
+            "id": 1,
+            "x": 398,
+            "y": 89,
+            "width": 28,
+            "height": 19.350000381469727,
+            "shape": {
+                "aspect": 2,
+                "class": "Rect"
+            },
+            "title": " table 2",
+            "data": {}
+        },
+        {
+            "id": 2,
+            "x": 285,
+            "y": 399,
+            "width": 20,
+            "height": 20,
+            "shape": {
+                "aspect": 2,
+                "class": "Rect"
+            },
+            "title": "3",
+            "data": {}
+        }
+    ],
+    "links": [
+        {
+            "id": "0-1",
+            "source": 0,
+            "target": 1,
+            "title": "red",
+            "data": {},
+            "shape": null
+        },
+        {
+            "id": "1-2",
+            "source": 1,
+            "target": 2,
+            "title": "blue",
+            "data": {},
+            "shape": null
+        },
+        {
+            "id": "0-2",
+            "source": 2,
+            "target": 0,
+            "title": "red",
+            "data": {},
+            "shape": null
+        }
+    ]
 };
 
 var options = {
-	directed: true
+	directed: false,
+	zoom: false
 };
 
 var graph = new ge.GraphEditor('#graph', data, options);
+graph.zoomEvents = null;
 var shift = false;
 
 graph
@@ -47,6 +104,7 @@ document.body.addEventListener('keydown', function(ev) {
 		case 'Shift':
 			shift = true;
 			graph.dragToLink(true);
+
 			break;
 		case 'Delete':
 			var selection = graph.select();
@@ -57,10 +115,6 @@ document.body.addEventListener('keydown', function(ev) {
 				graph.remove(selection.link);
 			}
 			updateSelection();
-			break;
-		case 's':
-		case 'S':
-			graph.simulation('toggle');
 			break;
 	}
 });
@@ -75,7 +129,7 @@ document.body.addEventListener('keyup', function(ev) {
 d3.select('#node-title').on('keydown', function(ev) {
 	d3.event.stopPropagation();
 });
-d3.select('#link-title').on('keydown', function(ev) {
+d3.select('#link-color').on('keydown', function(ev) {
 	d3.event.stopPropagation();
 });
 d3.select('#data').on('keydown', function(ev) {
@@ -91,13 +145,13 @@ function updateSelection() {
 			'value',
 			selection.node.title
 		);
-		d3.select('#node-shape').property(
+		d3.select('#node-type').property(
 			'value',
-			selection.node.shape.constructor.name
+			selection.node.data.type
 		);
 	}
 	if(selection.link) {
-		d3.select('#link-title').property('value', selection.link.title);
+		d3.select('#link-color').property('value', selection.link.title);
 	}
 }
 
@@ -195,14 +249,17 @@ d3.select('#node-title').on('input', function() {
 	node.title = this.value;
 	graph.updateNode(node);
 });
-d3.select('#node-shape').on('change', function() {
-	var shape = new ge.shape[this.value]({aspect: 2});
+d3.select('#node-type').on('change', function() {
 	var node = graph.selectNode();
+	node.title = this.value;
+	graph.updateNode(node);
+
+
 	node.shape = shape;
 	node.prevTitle = null;
 	graph.updateNode(node);
 });
-d3.select('#link-title').on('input', function() {
+d3.select('#link-color').on('input', function() {
 	var link = graph.selectLink();
 	link.title = this.value;
 	graph.updateLink(link);
