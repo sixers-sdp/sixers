@@ -2,19 +2,18 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>{% block title %}Albert{% endblock %}</title>
+    <title>{% block title %} Welcome {% endblock %} | Albert</title>
     <meta name="description" content="Webpage for xxxx">
 
 	{% block extra_head %}{% endblock %}
   </head>
   <body>
     <h1>Hello, I am albert.</h1>
-    Things you might be interested in:
     <ul>
 	    <li><a href="/api">API</a></li>
 	    <li><a href="/admin">Admin</a></li>
+	    <li><a href="/map">Map</a></li>
     </ul>
-
 
     {% block body%}
 
