@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+  <title>Graph editor</title>
+  
+  
+  <link rel='stylesheet' href='https://unpkg.com/graph-editor@0.1.0/dist/css/graph-editor-dark.css'>
+
+      <link rel="stylesheet" href="css/style.css">
+
+  
+</head>
+
+<body>
+
+  <div id="graph-container">
+	<svg id="graph"></svg>
+</div>
+
+<div id="sidebar">
+	<h4>Graph editor</h4>
+	<div class="row">
+		<div>
+			double click - zoom in<br/>
+			mouse wheel - zoom in/out<br/>
+			drag - scroll<br/>
+			click - select node/link<br>
+			shift+click - add a node<br>
+			shift+drag - add a link<br>
+			del - delete selected node/link<br>
+			s - toggle simulation<br>
+		</div>
+	</div>
+	<div class="row">
+		<a id="import" class="btn fill" href="#">Import</a>
+		<a id="export" class="btn fill" href="#">Export</a>
+	</div>
+	<div id="selected-node" class="row hide">
+		<div class="form">
+			<h5>Node</h5>
+			<div>
+				<label for="node-title">Title</label>
+				<input id="node-title" type="text">
+			</div>
+			<div>
+				<label for="node-shape">
+					Shape
+				</label>
+				<select id="node-shape">
+					<option value="Circle">●</option>
+					<option value="Rect">■</option>
+				</select>
+			</div>
+		</div>
+	</div>
+	<div id="selected-link" class="row hide">
+		<div class="form">
+			<h5>Link</h5>
+			<div>
+				<label for="link-title">Title</label>
+				<input id="link-title" type="text">
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="modal" class="modal-bg hide">
+	<div class="modal-container">
+		<div class="modal form">
+			<h5 class="modal-title">Export</h5>
+			<div class="row">
+				<label for="data">Graph data:</label>
+			</div>
+			<div class="row">
+				<textarea id="data">
+				</textarea>
+			</div>
+			<div class="row">
+				<div class="error">
+				</div>
+			</div>
+			<div class="row">
+				<a id="copy" class="btn fill" href="#">Copy</a>
+			</div>
+			<div class="row">
+				<a class="btn fill modal-cancel" href="#">Cancel</a>
+				<a class="btn fill modal-ok" href="#">OK</a>
+			</div>
+		</div>
+	</div>
+</div>
+  <script src='https://unpkg.com/d3@5.7.0/dist/d3.js'></script>
+<script src='https://unpkg.com/graph-editor@0.1.0/dist/js/graph-editor.js'></script>
+
+  
+
+    <script type="module" src="js/index.js"></script>
+
+
+
+
+</body>
+
+</html>

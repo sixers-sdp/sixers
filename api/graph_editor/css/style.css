@@ -1,0 +1,180 @@
+body {
+	margin: 0;
+	padding: 0;
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	flex-direction: row;
+	color: #dddddd;
+	background-color: #1d1f20;
+}
+
+h4, h5 {
+	text-align: center;
+	margin: 0;
+	width: 100%;
+}
+
+h5 {
+	margin-top: 10px;
+}
+
+input, select, textarea {
+	background: #000000;
+	border: 1px solid #666666;
+	color: #dddddd;
+	padding: 4px;
+}
+
+textarea {
+	width: 400px;
+	height: 200px;
+}
+
+#graph-container {
+	margin: 1em;
+	padding: 0;
+	border: 1px solid #666666;
+	display: flex;
+	flex-grow: 1;
+}
+
+#sidebar {
+	margin: 1em;
+	padding: 1em;
+	border: 1px solid #666666;
+	display: flex;
+	flex-direction: column;
+	width: 300px;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+#graph {
+	width: 100%;
+	height: 100%;
+}
+
+@media(max-width: 600px) {
+	body {
+		flex-direction: column;
+	}
+	#graph-container {
+		order: 2;
+		height: 100%;
+	}
+	#sidebar {
+		order: 1;
+		width: auto;
+		height: auto;
+	}
+}
+
+.hide {
+	display: none !important;
+}
+
+.form {
+	display: flex;
+	flex-direction: column;
+	min-height: 100px;
+	max-width: 100%;
+}
+
+.form > div {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.form > div > * {
+	display: flex;
+	margin: 4px;
+}
+
+.form > div > label {
+	min-width: 50px;
+}
+
+.form > div > input, .form > div > select {
+	flex-grow: 1;
+	flex-shrink: 1;
+	min-width: 100px;
+}
+
+.row {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	padding: 4px;
+}
+
+.row > * {
+	margin: 4px;
+}
+
+.fill {
+	display: flex;
+	flex-grow: 1;
+}
+
+.btn, .btn:visited {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-decoration: none;
+	background: #000000;
+	border: 1px solid #666666;
+	color: #dddddd;
+	padding: 4px;
+	transition: background-color 0.3s, color 0.3s;
+}
+
+.btn:hover {
+	background: #444444;
+	color: #ffffff;
+}
+
+.btn:active {
+	background: #666666;
+	color: #ffffff;
+}
+
+.modal-bg {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	background-color: #1d1f2080;
+	z-index: 255;
+	opacity: 0;
+	transition: opacity 0.3s;
+}
+
+.modal-bg.active {
+	opacity: 1;
+}
+
+.modal-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 100%;
+}
+
+.modal {
+	background-color: #1d1f20;
+	border: 1px solid #666666;
+	border-radius: 4px;
+}
+
+.error {
+	color: #ff6666;
+	font-weight: bold;
+	max-width: 400px;
+	white-space: pre-wrap;
+}
