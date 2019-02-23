@@ -1,6 +1,6 @@
 from django.views.generic import ListView, TemplateView
 
-from map.utils import map_text
+# from map.utils import map_text
 from . import models
 
 
@@ -15,5 +15,5 @@ class MapView(TemplateView):
 
     def get_context_data(self, **kwargs):
         c = super().get_context_data(**kwargs)
-        c['map_text'] = map_text
+        # c['map_text'] = map_text
         return c
