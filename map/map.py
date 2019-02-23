@@ -4,14 +4,16 @@ from networkx.drawing.nx_pydot import write_dot
 
 g = nx.Graph()
 
+tables = ['t1', 't2', 't3', 't4']
+chef = 'chef'
+
 # add tables:
-g.add_nodes_from(['t1', 't2', 't3', 't4'])
+g.add_nodes_from(tables)
 
 # add chef:
-g.add_nodes_from(['chef'])
+g.add_nodes_from([chef])
 
 # add connecting nodes:
-
 g.add_nodes_from(['cross1', 'cross2', 'cross3'])
 
 g.add_edge('chef', 'cross1', color='red')

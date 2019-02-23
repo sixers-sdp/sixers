@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Plan{% endblock %}
+
+{% block body %}
+<h1>Plan:</h1>
+	<a href="{% url 'main:new_plan' %}">Create new plan</a>
+
+
+	Current execution plan:
+	<pre>
+	{{ current_plan }}
+	</pre>
+
+
+{% endblock %}
