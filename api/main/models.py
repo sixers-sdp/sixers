@@ -52,7 +52,7 @@ class ExecutionPlan(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    plan = models.TextField()
+    plan = models.TextField(null=True)
 
     def __str__(self):
         return f'{self.created_at}'
@@ -80,8 +80,12 @@ class ExecutionPlan(models.Model):
         assert os.path.exists(domain_file)
 
         # 3. run FF with the file arguments
-        ff_out = subprocess.run([settings.FF_EXECUTABLE, '-o', domain_file, '-f', problem_file])
-        plan.plan = ff_out.stdout
+        ff_out = subprocess.run(
+            [settings.FF_EXECUTABLE, '-o', domain_file, '-f', problem_file],
+            stdout=subprocess.PIPE
+        )
+
+        plan.plan = ff_out.stdout.decode("utf-8")
         plan.save()
 
         return plan

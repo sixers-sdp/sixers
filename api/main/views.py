@@ -36,4 +36,5 @@ class NewPlanView(RedirectView):
 
     def get(self, request, *args, **kwargs):
         models.ExecutionPlan.create_new()
+
         return super().get(request, *args, **kwargs)

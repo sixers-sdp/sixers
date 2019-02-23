@@ -125,7 +125,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-FF_EXECUTABLE = '~/ff'
+FF_EXECUTABLE = '/home/visgean/ff'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
