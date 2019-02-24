@@ -86,20 +86,18 @@ class ExecutionPlan(models.Model):
             [settings.FF_EXECUTABLE, '-o', domain_file, '-f', problem_file],
             stdout=subprocess.PIPE
         )
-
+        # save unparsed plan for debugging purposes
         plan.plan_out = ff_out.stdout.decode("utf-8")
 
+        # 4. parse the actual lines of the plan
         plan_parsed = [
             line.strip().lstrip('step').strip()
             for line in plan.plan_out.splitlines()
             if re.match('(step)? \s+ \d+: .*', line)
         ]
 
-
+        # 5. save the cleaned version of the plan to the database.
         plan.plan_parsed = '\n'.join(plan_parsed)
         plan.save()
 
         return plan
-
-
-
