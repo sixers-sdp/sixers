@@ -1,4 +1,5 @@
 import os
+import re
 import subprocess
 
 from django.db import models
@@ -52,7 +53,8 @@ class ExecutionPlan(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    plan = models.TextField(null=True)
+    plan_out = models.TextField(null=True)
+    plan_parsed = models.TextField(null=True)
 
     def __str__(self):
         return f'{self.created_at}'
@@ -85,7 +87,16 @@ class ExecutionPlan(models.Model):
             stdout=subprocess.PIPE
         )
 
-        plan.plan = ff_out.stdout.decode("utf-8")
+        plan.plan_out = ff_out.stdout.decode("utf-8")
+
+        plan_parsed = [
+            line.strip().lstrip('step').strip()
+            for line in plan.plan_out.splitlines()
+            if re.match('(step)? \s+ \d+: .*', line)
+        ]
+
+
+        plan.plan_parsed = '\n'.join(plan_parsed)
         plan.save()
 
         return plan
