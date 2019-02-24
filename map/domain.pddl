@@ -4,27 +4,21 @@
     (:types
         bartender
         location
-        glass
+        order
         customer
-        broom
     )
 
     (:constants
-        ;; You should not need to add any additional constants
-        Agent - bartender
+        Albert - bartender
         BAR - location
     )
 
     (:predicates
-        ;; Example:
-        ;; (Contains ?x - object ?c - container)
-
-        (empty ?x - glass)
+        (empty ?x - order)
         (holding ?x - object ?y - object)
         (served ?x - customer)
         (at ?x - location ?y - object)
         (adj ?x - location ?y - location)
-        (broken-glass ?x - location)
     )
 
     (:action PICKUP
@@ -39,20 +33,8 @@
             (not (at ?loc ?targ)))
     )
 
-    (:action DROP
-        :parameters (?targ - object ?loc - location ?agent - bartender)
-        :precondition (and
-            (at ?loc ?agent)
-            (holding ?agent ?targ)
-        )
-        :effect (and
-            (not (holding ?agent ?targ))
-            (at ?loc ?targ))
-    )
-
-
     (:action HANDOVER
-        :parameters (?c - customer ?l - location ?g - glass ?a - bartender)
+        :parameters (?c - customer ?l - location ?g - order ?a - bartender)
         :precondition (and
             (at ?l ?c)
             (at ?l ?a)
@@ -64,20 +46,10 @@
             (not (holding ?a ?g))
         )
     )
-    (:action POUR
-        :parameters (?g - glass ?a - bartender)
-        :precondition (and
-            (at BAR ?a)
-            (holding ?a ?g)
-            (empty ?g))
-        :effect (and
-            (not (empty ?g))
-        )
-    )
+
     (:action MOVE
         :parameters (?dest - location ?from - location ?agent - bartender)
         :precondition (and
-            (not (broken-glass ?from))
             (at ?from ?agent)
             (or
                 (adj ?dest ?from )
@@ -86,22 +58,6 @@
         :effect (and
             (at ?dest ?agent)
             (not (at ?from ?agent))
-        )
-    )
-
-    (:action SWEEP
-        :parameters (?target - location ?from - location ?agent - bartender ?brm - broom)
-        :precondition (and
-            (broken-glass ?target)
-            (at ?from ?agent)
-            (or
-                (adj ?target ?from )
-                (adj ?from ?target))
-
-            (holding ?agent ?brm)
-        )
-        :effect (and
-            (not (broken-glass ?target))
         )
     )
 )
