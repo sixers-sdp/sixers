@@ -19,11 +19,19 @@ import com.amazon.ask.model.Intent;
 import com.amazon.ask.model.IntentRequest;
 import com.amazon.ask.model.Response;
 import com.amazon.ask.model.Slot;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.message.BasicNameValuePair;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static com.amazon.ask.request.Predicates.intentName;
-
 public class OrderDrinkHandler implements IntentRequestHandler {
 
     @Override
@@ -40,9 +48,21 @@ public class OrderDrinkHandler implements IntentRequestHandler {
         Slot drink = intent.getSlots().get("Drink");
 
         String drinkName = drink.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
-        String foodNumber = number.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
+        String drinkNumber = number.getValue();
+        String speechText = "You order " + drinkNumber +" " + drinkName;
 
-        String speechText = "You order " + foodNumber +" " + drinkName;
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        HttpPost httpPost = new HttpPost("http://albert.visgean.me/api/orders/");
+        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+        nameValuePairs.add(new BasicNameValuePair("Number", drinkNumber));
+        nameValuePairs.add(new BasicNameValuePair("Name", drinkName));
+        try {
+            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+            CloseableHttpResponse response = httpClient.execute(httpPost);
+            httpClient.close();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
 
         return handlerInput.getResponseBuilder()
                 .withSpeech(speechText)
