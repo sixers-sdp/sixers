@@ -21,3 +21,5 @@ DATABASES = {
 }
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+FF_EXECUTABLE = '/home/albert/ff'
