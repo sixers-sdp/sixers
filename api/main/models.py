@@ -43,7 +43,9 @@ class Order(models.Model):
         choices=[(t,t) for t in  cafe_map.tables]
     )
 
-    products = models.ManyToManyField(Product)
+    products = models.ManyToManyField(Product, null=True)
+    products_text = models.TextField(null=True)
+
     state = models.CharField(
         default=ORDER_STATE_NEW,
         choices=ORDER_STATE_CHOICES,
