@@ -2,3 +2,6 @@ django
 djangorestframework
 gunicorn
 psycopg2
+networkx
+pygraphviz
+matplotlib
