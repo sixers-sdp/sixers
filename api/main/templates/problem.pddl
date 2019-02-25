@@ -1,40 +1,30 @@
 (define (problem bar-32)
     (:domain bartending)
     (:objects
-        BAR - location
-        UF - location
-        UB - location
-        MB - location
-        LB  - location
-        LF - location
-        MF - location
+		{% for node in locations %}
+			{{ node.name }} - location
+		{% endfor %}
 
-        Customer1 - customer
-        Glass1 - glass
-        Broom1 - broom
+		{% for order in orders %}
+			{{ order }}	- order
+		{% endfor %}
     )
 
     (:init
-        (adj BAR UF)
-        (adj UF UB)
-        (adj UB MB)
-        (adj MB LB)
-        (adj LB LF)
-        (adj LF MF)
-        (adj MF UF)
+		{% for a,b in edges.keys %}
+			(adj {{ a }} {{ b }})
+		{% endfor %}
 
-        (at BAR Agent)
-        (at BAR Glass1)
-        (at BAR Broom1)
-        (empty Glass1)
-        (broken-glass MF)
-        (broken-glass MB)
-        (at LB Customer1)
+		(at {{ current_location }} Albert)
+
+		{% for order in orders %}
+            (at BAR {{ order }})
+			(awaiting {{ order.location }} {{ order }})
+		{% endfor %}
     )
 
     (:goal (and
-        (forall (?c - customer) (served ?c))
-        (forall (?l - location) (not (broken-glass ?l)))
+        (forall (?c - order) (delivered ?c))
         (at BAR Agent)
     ))
 )
