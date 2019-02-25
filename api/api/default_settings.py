@@ -128,4 +128,5 @@ STATIC_URL = '/static/'
 FF_EXECUTABLE = '/home/visgean/ff'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
+LOGIN_URL = '/admin/'
+LOGIN_REDIRECT_URL = '/'
