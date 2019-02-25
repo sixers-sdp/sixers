@@ -25,6 +25,5 @@
 
     (:goal (and
         (forall (?c - delivery) (delivered ?c))
-
     ))
 )
