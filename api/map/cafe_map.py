@@ -5,13 +5,13 @@ from networkx.drawing.nx_pydot import write_dot
 g = nx.Graph()
 
 tables = ['t1', 't2', 't3', 't4']
-chef = 'chef'
+CHEF = 'chef'
 
 # add tables:
 g.add_nodes_from(tables)
 
 # add chef:
-g.add_nodes_from([chef])
+g.add_nodes_from([CHEF])
 
 # add connecting nodes:
 g.add_nodes_from(['cross1', 'cross2', 'cross3'])

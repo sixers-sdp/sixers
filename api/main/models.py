@@ -6,6 +6,8 @@ from django.db import models
 
 from django.conf import settings
 from django.template.loader import render_to_string
+from map import cafe_map
+
 
 ORDER_STATE_NEW = 'new'
 ORDER_STATE_DELIVERY = 'delivery'
@@ -70,7 +72,14 @@ class ExecutionPlan(models.Model):
         plan.save()
 
         # 1. generate problem file
-        context = {}
+        context = {
+            'current_location': cafe_map.CHEF,
+            'chef_location': cafe_map.CHEF,
+            'orders': Order.objects.filter(state=ORDER_STATE_DELIVERY),
+            'locations': cafe_map.g.nodes,
+            'edges': cafe_map.g.edges,
+        }
+
         problem_content = render_to_string('problem.pddl', context)
         problem_file = os.path.join(settings.MEDIA_ROOT, f'problem_{plan.id}.pddl')
 
@@ -78,7 +87,7 @@ class ExecutionPlan(models.Model):
             static_file.write(problem_content)
 
         # 2. locate domain file:
-        domain_file = os.path.join(settings.BASE_DIR, '..', 'map', 'domain.pddl')
+        domain_file = os.path.join(settings.BASE_DIR, 'map', 'domain.pddl')
         assert os.path.exists(domain_file)
 
         # 3. run FF with the file arguments
@@ -86,6 +95,8 @@ class ExecutionPlan(models.Model):
             [settings.FF_EXECUTABLE, '-o', domain_file, '-f', problem_file],
             stdout=subprocess.PIPE
         )
+        # ff_out.check_returncode()
+
         # save unparsed plan for debugging purposes
         plan.plan_out = ff_out.stdout.decode("utf-8")
 

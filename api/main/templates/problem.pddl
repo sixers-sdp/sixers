@@ -1,8 +1,8 @@
-(define (problem bar-32)
+(define (problem bar)
     (:domain bartending)
     (:objects
 		{% for node in locations %}
-			{{ node.name }} - location
+			{{ node }} - location
 		{% endfor %}
 
 		{% for order in orders %}
@@ -18,13 +18,13 @@
 		(at {{ current_location }} Albert)
 
 		{% for order in orders %}
-            (at BAR {{ order }})
+            (at {{ chef_location }} {{ order }})
 			(awaiting {{ order.location }} {{ order }})
 		{% endfor %}
     )
 
     (:goal (and
         (forall (?c - order) (delivered ?c))
-        (at BAR Agent)
+
     ))
 )

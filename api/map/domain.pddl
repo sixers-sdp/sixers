@@ -4,18 +4,17 @@
     (:types
         bartender
         location
-        order
+        delivery
     )
 
     (:constants
         Albert - bartender
-        BAR - location
     )
 
     (:predicates
         (holding ?x - object ?y - object)
-        (delivered ?x - order)
-		(awaiting ?x - location ?y - order)
+        (delivered ?x - object)
+		(awaiting ?x - location ?y - object)
         (at ?x - location ?y - object)
         (adj ?x - location ?y - location)
     )
@@ -33,16 +32,16 @@
     )
 
     (:action HANDOVER
-        :parameters (?loc - location ?order - order ?agent - bartender)
+        :parameters (?loc - location ?ordr - delivery ?agent - bartender)
         :precondition (and
             (at ?loc ?agent)
-            (holding ?agent ?order)
-			(awaiting ?loc ?order)
-            (not (delivered ?order)))
+            (holding ?agent ?ordr)
+			(awaiting ?loc ?ordr)
+            (not (delivered ?ordr)))
         :effect (and
-            (delivered ?order)
-            (not (awaiting ?loc ?order))
-            (not (holding ?agent ?order))
+            (delivered ?ordr)
+            (not (awaiting ?loc ?ordr))
+            (not (holding ?agent ?ordr))
         )
     )
 
