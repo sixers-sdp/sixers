@@ -31,11 +31,13 @@ public class LaunchRequestHandler implements RequestHandler {
 
     @Override
     public Optional<Response> handle(HandlerInput input) {
-        String speechText = "Welcome to the Alexa Skills Kit, you can say hello";
+        String speechText = "Hello, I am albert. Nice to meet you!";
+
         return input.getResponseBuilder()
                 .withSpeech(speechText)
                 .withSimpleCard("HelloWorld", speechText)
                 .withReprompt(speechText)
+                .withShouldEndSession(false)
                 .build();
     }
 
