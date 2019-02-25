@@ -5,7 +5,6 @@
         bartender
         location
         order
-        customer
     )
 
     (:constants
@@ -14,9 +13,9 @@
     )
 
     (:predicates
-        (empty ?x - order)
         (holding ?x - object ?y - object)
-        (served ?x - customer)
+        (delivered ?x - order)
+		(awaiting ?x - location ?y - order)
         (at ?x - location ?y - object)
         (adj ?x - location ?y - location)
     )
@@ -34,16 +33,16 @@
     )
 
     (:action HANDOVER
-        :parameters (?c - customer ?l - location ?g - order ?a - bartender)
+        :parameters (?loc - location ?order - order ?agent - bartender)
         :precondition (and
-            (at ?l ?c)
-            (at ?l ?a)
-            (holding ?a ?g)
-            (not (empty ?g))
-            (not (served ?c)))
+            (at ?loc ?agent)
+            (holding ?agent ?order)
+			(awaiting ?loc ?order)
+            (not (delivered ?order)))
         :effect (and
-            (served ?c)
-            (not (holding ?a ?g))
+            (delivered ?order)
+            (not (awaiting ?loc ?order))
+            (not (holding ?agent ?order))
         )
     )
 
