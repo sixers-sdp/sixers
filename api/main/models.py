@@ -38,7 +38,10 @@ class Order(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    table_number = models.IntegerField()
+    table_number = models.CharField(
+        max_length=30,
+        choices=[(t,t) for t in  cafe_map.tables]
+    )
 
     products = models.ManyToManyField(Product)
     state = models.CharField(
@@ -48,7 +51,7 @@ class Order(models.Model):
     )
 
     def __str__(self):
-        return f"{self.state}: {self.updated_at}"
+        return f"order{self.pk}"
 
 
 class ExecutionPlan(models.Model):
@@ -76,8 +79,8 @@ class ExecutionPlan(models.Model):
             'current_location': cafe_map.CHEF,
             'chef_location': cafe_map.CHEF,
             'orders': Order.objects.filter(state=ORDER_STATE_DELIVERY),
-            'locations': cafe_map.g.nodes,
-            'edges': cafe_map.g.edges,
+            'locations': cafe_map.current_map.nodes,
+            'edges': cafe_map.current_map.edges,
         }
 
         problem_content = render_to_string('problem.pddl', context)

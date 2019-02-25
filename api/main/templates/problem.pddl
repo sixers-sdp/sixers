@@ -6,7 +6,7 @@
 		{% endfor %}
 
 		{% for order in orders %}
-			{{ order }}	- order
+			{{ order }}	- delivery
 		{% endfor %}
     )
 
@@ -19,12 +19,12 @@
 
 		{% for order in orders %}
             (at {{ chef_location }} {{ order }})
-			(awaiting {{ order.location }} {{ order }})
+			(awaiting {{ order.table_number }} {{ order }})
 		{% endfor %}
     )
 
     (:goal (and
-        (forall (?c - order) (delivered ?c))
+        (forall (?c - delivery) (delivered ?c))
 
     ))
 )

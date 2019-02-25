@@ -20,7 +20,7 @@
     )
 
     (:action PICKUP
-        :parameters (?targ - object ?loc - location ?agent - bartender)
+        :parameters (?targ - delivery ?loc - location ?agent - bartender)
         :precondition (and
             (at ?loc ?targ)
             (at ?loc ?agent)
