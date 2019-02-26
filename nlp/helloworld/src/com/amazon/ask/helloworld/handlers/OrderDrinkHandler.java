@@ -44,18 +44,21 @@ public class OrderDrinkHandler implements IntentRequestHandler {
     public Optional<Response> handle(HandlerInput handlerInput, IntentRequest intentRequest)  {
 //
         Intent intent = intentRequest.getIntent();
-        Slot number = intent.getSlots().get("Number");
+        //Slot number = intent.getSlots().get("Number");
         Slot drink = intent.getSlots().get("Drink");
 
-        String drinkName = drink.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
-        String drinkNumber = number.getValue();
-        String speechText = "You order " + drinkNumber +" " + drinkName;
+        //String drinkName = drink.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
+        String drinkName = drink.getValue();
+
+        //String drinkNumber = number.getValue();
+        String speechText = "You order " + drinkName;
 
         CloseableHttpClient httpClient = HttpClients.createDefault();
         HttpPost httpPost = new HttpPost("http://albert.visgean.me/api/orders/");
         List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-        nameValuePairs.add(new BasicNameValuePair("Number", drinkNumber));
-        nameValuePairs.add(new BasicNameValuePair("Name", drinkName));
+        nameValuePairs.add(new BasicNameValuePair("table_number", "t1"));
+        nameValuePairs.add(new BasicNameValuePair("state", "new"));
+        nameValuePairs.add(new BasicNameValuePair("products_text", drinkName));
         try {
             httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
             CloseableHttpResponse response = httpClient.execute(httpPost);

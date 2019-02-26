@@ -32,12 +32,11 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.amazon.ask.request.Predicates.intentName;
-
-public class OrderFoodHandler implements IntentRequestHandler {
+public class OrderByNumberHandler implements IntentRequestHandler {
 
     @Override
     public boolean canHandle(HandlerInput handlerInput, IntentRequest intentRequest) {
-        return (handlerInput.matches(intentName("OrderFood")));
+        return (handlerInput.matches(intentName("OrderByNumber")));
 
     }
 
@@ -45,38 +44,16 @@ public class OrderFoodHandler implements IntentRequestHandler {
     public Optional<Response> handle(HandlerInput handlerInput, IntentRequest intentRequest)  {
 //
         Intent intent = intentRequest.getIntent();
-        Slot food = intent.getSlots().get("Food");
-        //Slot number = intent.getSlots().get("Number");
-//
-        String foodName = food.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
-//        String foodNumber = number.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
+        Slot item = intent.getSlots().get("Number");
 
-//        String speechText = "You order " + foodNumber +" " + foodName;
 
-//        CloseableHttpClient httpClient = HttpClients.createDefault();
-//        HttpPost httpPost = new HttpPost("http://albert.visgean.me/api/orders/");
-//        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-//        nameValuePairs.add(new BasicNameValuePair("Number", foodNumber));
-//        nameValuePairs.add(new BasicNameValuePair("Name", foodName));
-//        try {
-//            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
-//            CloseableHttpResponse response = httpClient.execute(httpPost);
-//            httpClient.close();
-//        } catch (Exception e){
-//            e.printStackTrace();
-//        }
-
-        //String foodName = food.getValue();
-        //String foodNumber = number.getValue();
-        String speechText = "You order " + foodName;
+        String itemNumber = item.getValue();
+        String speechText = "You order item " + itemNumber;
 
         CloseableHttpClient httpClient = HttpClients.createDefault();
         HttpPost httpPost = new HttpPost("http://albert.visgean.me/api/orders/");
         List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-        //nameValuePairs.add(new BasicNameValuePair("Number", foodNumber));
-        nameValuePairs.add(new BasicNameValuePair("table_number", "t1"));
-        nameValuePairs.add(new BasicNameValuePair("state", "new"));
-        nameValuePairs.add(new BasicNameValuePair("products_text", foodName));
+        nameValuePairs.add(new BasicNameValuePair("ItemNumber", itemNumber));
         try {
             httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
             CloseableHttpResponse response = httpClient.execute(httpPost);

@@ -30,7 +30,8 @@ public class HelloWorldStreamHandler extends SkillStreamHandler {
                         new SessionEndedRequestHandler(),
                         new FallbackIntentHandler(),
                         new OrderFoodHandler(),
-                        new OrderDrinkHandler())
+                        new OrderDrinkHandler(),
+                        new OrderByNumberHandler())
                 // Add your skill id below
                 //.withSkillId("")
                 .build();
@@ -41,3 +42,4 @@ public class HelloWorldStreamHandler extends SkillStreamHandler {
     }
 
 }
+
