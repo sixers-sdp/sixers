@@ -20,7 +20,7 @@
     )
 
     (:action PICKUP
-        :parameters (?targ - delivery ?loc - location ?agent - bartender)
+        :parameters (?agent - bartender ?targ - delivery ?loc - location)
         :precondition (and
             (at ?loc ?targ)
             (at ?loc ?agent)
@@ -32,7 +32,7 @@
     )
 
     (:action HANDOVER
-        :parameters (?loc - location ?ordr - delivery ?agent - bartender)
+        :parameters (?agent - bartender ?loc - location ?ordr - delivery)
         :precondition (and
             (at ?loc ?agent)
             (holding ?agent ?ordr)
@@ -46,7 +46,7 @@
     )
 
     (:action MOVE
-        :parameters (?dest - location ?from - location ?agent - bartender)
+        :parameters (?agent - bartender ?dest - location ?from - location)
         :precondition (and
             (at ?from ?agent)
             (or
