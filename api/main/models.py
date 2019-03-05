@@ -63,6 +63,10 @@ class ExecutionPlan(models.Model):
     plan_out = models.TextField(null=True)
     plan_parsed = models.TextField(null=True)
 
+    class Meta:
+        get_latest_by = 'created_at'
+
+
     def __str__(self):
         return f'{self.created_at}'
 
