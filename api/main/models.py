@@ -43,7 +43,7 @@ class Order(models.Model):
         choices=[(t,t) for t in  cafe_map.tables]
     )
 
-    products = models.ManyToManyField(Product, null=True, blank=True)
+    products = models.ManyToManyField(Product, blank=True)
     products_text = models.TextField(null=True)
 
     state = models.CharField(
@@ -62,6 +62,10 @@ class ExecutionPlan(models.Model):
 
     plan_out = models.TextField(null=True)
     plan_parsed = models.TextField(null=True)
+
+    class Meta:
+        get_latest_by = 'created_at'
+
 
     def __str__(self):
         return f'{self.created_at}'
@@ -106,14 +110,38 @@ class ExecutionPlan(models.Model):
         plan.plan_out = ff_out.stdout.decode("utf-8")
 
         # 4. parse the actual lines of the plan
+        plan_pattern = re.compile("(step)? \s+ \d+: (?P<content>.*)")
         plan_parsed = [
-            line.strip().lstrip('step').strip()
+            re.search(plan_pattern, line).group("content").strip()
             for line in plan.plan_out.splitlines()
-            if re.match('(step)? \s+ \d+: .*', line)
+            if re.match(plan_pattern, line)
         ]
 
         # 5. save the cleaned version of the plan to the database.
         plan.plan_parsed = '\n'.join(plan_parsed)
         plan.save()
 
+        return plan
+
+    def plan_as_json(self):
+        """
+        Parses the text file with plan and returns it as JSON representation
+        """
+        plan = []
+
+        args_mapping = {
+            'PICKUP': ['agent', 'order', 'location'],
+            'HANDOVER': ['agent', 'location', 'delivery'],
+            'MOVE': ['agent', 'destination', 'origin', 'direction']
+        }
+
+        for counter, step in enumerate(self.plan_parsed.splitlines()):
+            action, *args = step.split()
+
+            mapping = args_mapping[action]
+            plan.append({
+                'sub_id': counter,
+                'action': action,
+                'args': dict(zip(mapping, args))
+            })
         return plan
