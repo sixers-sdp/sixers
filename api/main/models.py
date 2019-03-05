@@ -118,3 +118,26 @@ class ExecutionPlan(models.Model):
         plan.save()
 
         return plan
+
+    def plan_as_json(self):
+        """
+        Parses the text file with plan and returns it as JSON representation
+        """
+        plan = []
+
+        args_mapping = {
+            'PICKUP': ['agent', 'order', 'location'],
+            'HANDOVER': ['agent', 'location', 'delivery'],
+            'MOVE': ['agent', 'destination', 'origin', 'direction']
+        }
+
+        for counter, step in enumerate(self.plan_parsed.splitlines()):
+            action, *args = step.split()
+
+            mapping = args_mapping[action]
+            plan.append({
+                'sub_id': counter,
+                'action': action,
+                'args': dict(zip(mapping, args))
+            })
+        return plan
