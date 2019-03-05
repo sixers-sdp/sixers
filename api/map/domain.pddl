@@ -5,10 +5,15 @@
         bartender
         location
         delivery
+		direction
     )
 
     (:constants
         Albert - bartender
+		north - direction
+		east - direction
+		west - direction
+		south - direction
     )
 
     (:predicates
@@ -16,7 +21,7 @@
         (delivered ?x - object)
 		(awaiting ?x - location ?y - object)
         (at ?x - location ?y - object)
-        (adj ?x - location ?y - location)
+        (edge ?x - location ?y - location)
     )
 
     (:action PICKUP
@@ -46,13 +51,10 @@
     )
 
     (:action MOVE
-        :parameters (?agent - bartender ?dest - location ?from - location)
+        :parameters (?agent - bartender ?dest - location ?from - location ?dir - direction)
         :precondition (and
             (at ?from ?agent)
-            (or
-                (adj ?dest ?from )
-                (adj ?from ?dest))
-            )
+            (edge ?dest ?from ?dir)
         :effect (and
             (at ?dest ?agent)
             (not (at ?from ?agent))

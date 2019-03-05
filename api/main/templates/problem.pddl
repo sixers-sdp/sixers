@@ -12,7 +12,8 @@
 
     (:init
 		{% for a,b in edges.keys %}
-			(adj {{ a }} {{ b }})
+			(edge {{ a }} {{ b }} west)
+			(edge {{ b }} {{ a }} west)
 		{% endfor %}
 
 		(at {{ current_location }} Albert)
