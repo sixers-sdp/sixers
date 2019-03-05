@@ -21,7 +21,7 @@
         (delivered ?x - object)
 		(awaiting ?x - location ?y - object)
         (at ?x - location ?y - object)
-        (edge ?x - location ?y - location)
+        (edge ?x - location ?y - location ?d - direction)
     )
 
     (:action PICKUP
@@ -55,6 +55,7 @@
         :precondition (and
             (at ?from ?agent)
             (edge ?dest ?from ?dir)
+		)
         :effect (and
             (at ?dest ?agent)
             (not (at ?from ?agent))
