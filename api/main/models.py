@@ -106,10 +106,11 @@ class ExecutionPlan(models.Model):
         plan.plan_out = ff_out.stdout.decode("utf-8")
 
         # 4. parse the actual lines of the plan
+        plan_pattern = re.compile("(step)? \s+ \d+: (?P<content>.*)")
         plan_parsed = [
-            line.strip().lstrip('step').strip()
+            re.search(plan_pattern, line).group("content").strip()
             for line in plan.plan_out.splitlines()
-            if re.match('(step)? \s+ \d+: .*', line)
+            if re.match(plan_pattern, line)
         ]
 
         # 5. save the cleaned version of the plan to the database.
