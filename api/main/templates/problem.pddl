@@ -26,5 +26,6 @@
 
     (:goal (and
         (forall (?c - delivery) (delivered ?c))
+        (at {{ chef_location }} Albert)
     ))
 )
