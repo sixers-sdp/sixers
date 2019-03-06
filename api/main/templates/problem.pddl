@@ -11,9 +11,8 @@
     )
 
     (:init
-		{% for a,b in edges.keys %}
-			(edge {{ a }} {{ b }} west)
-			(edge {{ b }} {{ a }} west)
+		{% for from, to, direction in edges %}
+			(edge {{ from }} {{ to }} {{ direction }})
 		{% endfor %}
 
 		(at {{ current_location }} Albert)

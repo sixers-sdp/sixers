@@ -86,7 +86,7 @@ class ExecutionPlan(models.Model):
             'chef_location': cafe_map.CHEF,
             'orders': Order.objects.filter(state=ORDER_STATE_DELIVERY),
             'locations': cafe_map.current_map.nodes,
-            'edges': cafe_map.current_map.edges,
+            'edges': cafe_map.adjacency,
         }
 
         problem_content = render_to_string('problem.pddl', context)
