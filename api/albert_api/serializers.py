@@ -23,4 +23,4 @@ class PlanSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ExecutionPlan
-        exclude = ['plan_out', 'plan_parsed']
+        exclude = ['plan_parsed']
