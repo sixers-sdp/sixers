@@ -56,6 +56,10 @@ class Order(models.Model):
         return f"order{self.pk}"
 
 
+class PDDLError(Exception):
+    pass
+
+
 class ExecutionPlan(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -101,13 +105,14 @@ class ExecutionPlan(models.Model):
         # 3. run FF with the file arguments
         ff_out = subprocess.run(
             [settings.FF_EXECUTABLE, '-o', domain_file, '-f', problem_file],
-            stderr=subprocess.PIPE
+            stdout=subprocess.PIPE
         )
 
         # Solution is generated to the problem_xx.pddl.ff file
         solution_file = os.path.join(settings.MEDIA_ROOT, f'problem_{plan.id}.pddl.ff')
         if not os.path.exists(solution_file):
-            ff_out.check_returncode()  # this will raise an exception with the problem
+            raise PDDLError(ff_out.stdout.decode("utf-8"))
+
 
         with open(solution_file) as f:
             plan_plaintext = f.read()
