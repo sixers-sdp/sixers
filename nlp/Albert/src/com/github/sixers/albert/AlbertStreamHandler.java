@@ -11,14 +11,14 @@
      the specific language governing permissions and limitations under the License.
 */
 
-package com.amazon.ask.helloworld;
+package com.github.sixers.albert;
 
 import com.amazon.ask.Skill;
-import com.amazon.ask.Skills;
 import com.amazon.ask.SkillStreamHandler;
-import com.amazon.ask.helloworld.handlers.*;
+import com.amazon.ask.Skills;
+import com.github.sixers.albert.handlers.*;
 
-public class HelloWorldStreamHandler extends SkillStreamHandler {
+public class AlbertStreamHandler extends SkillStreamHandler {
 
     private static Skill getSkill() {
         return Skills.standard()
@@ -37,7 +37,7 @@ public class HelloWorldStreamHandler extends SkillStreamHandler {
                 .build();
     }
 
-    public HelloWorldStreamHandler() {
+    public AlbertStreamHandler() {
         super(getSkill());
     }
 

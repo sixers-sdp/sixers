@@ -11,7 +11,7 @@
      the specific language governing permissions and limitations under the License.
 */
 
-package com.amazon.ask.helloworld.handlers;
+package com.github.sixers.albert.handlers;
 
 import com.amazon.ask.dispatcher.request.handler.HandlerInput;
 import com.amazon.ask.dispatcher.request.handler.impl.IntentRequestHandler;
@@ -32,11 +32,11 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.amazon.ask.request.Predicates.intentName;
-public class OrderDrinkHandler implements IntentRequestHandler {
+public class OrderByNumberHandler implements IntentRequestHandler {
 
     @Override
     public boolean canHandle(HandlerInput handlerInput, IntentRequest intentRequest) {
-        return (handlerInput.matches(intentName("OrderDrink")));
+        return (handlerInput.matches(intentName("OrderByNumber")));
 
     }
 
@@ -44,21 +44,16 @@ public class OrderDrinkHandler implements IntentRequestHandler {
     public Optional<Response> handle(HandlerInput handlerInput, IntentRequest intentRequest)  {
 //
         Intent intent = intentRequest.getIntent();
-        //Slot number = intent.getSlots().get("Number");
-        Slot drink = intent.getSlots().get("Drink");
+        Slot item = intent.getSlots().get("Number");
 
-        //String drinkName = drink.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
-        String drinkName = drink.getValue();
 
-        //String drinkNumber = number.getValue();
-        String speechText = "You order " + drinkName;
+        String itemNumber = item.getValue();
+        String speechText = "You order item " + itemNumber;
 
         CloseableHttpClient httpClient = HttpClients.createDefault();
         HttpPost httpPost = new HttpPost("http://albert.visgean.me/api/orders/");
         List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-        nameValuePairs.add(new BasicNameValuePair("table_number", "t1"));
-        nameValuePairs.add(new BasicNameValuePair("state", "new"));
-        nameValuePairs.add(new BasicNameValuePair("products_text", drinkName));
+        nameValuePairs.add(new BasicNameValuePair("ItemNumber", itemNumber));
         try {
             httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
             CloseableHttpResponse response = httpClient.execute(httpPost);

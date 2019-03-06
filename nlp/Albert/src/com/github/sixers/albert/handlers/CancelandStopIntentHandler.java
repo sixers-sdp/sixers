@@ -11,7 +11,7 @@
      the specific language governing permissions and limitations under the License.
 */
 
-package com.amazon.ask.helloworld.handlers;
+package com.github.sixers.albert.handlers;
 
 import com.amazon.ask.dispatcher.request.handler.HandlerInput;
 import com.amazon.ask.dispatcher.request.handler.RequestHandler;
@@ -21,20 +21,18 @@ import java.util.Optional;
 
 import static com.amazon.ask.request.Predicates.intentName;
 
-public class HelloWorldIntentHandler implements RequestHandler {
-
+public class CancelandStopIntentHandler implements RequestHandler {
     @Override
     public boolean canHandle(HandlerInput input) {
-        return input.matches(intentName("HelloWorldIntent"));
+        return input.matches(intentName("AMAZON.StopIntent").or(intentName("AMAZON.CancelIntent")));
     }
 
     @Override
     public Optional<Response> handle(HandlerInput input) {
-        String speechText = "Hello world I am Albert";
-       return input.getResponseBuilder()
+        String speechText = "Goodbye";
+        return input.getResponseBuilder()
                 .withSpeech(speechText)
                 .withSimpleCard("HelloWorld", speechText)
                 .build();
     }
-
 }

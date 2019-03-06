@@ -11,7 +11,7 @@
      the specific language governing permissions and limitations under the License.
 */
 
-package com.amazon.ask.helloworld.handlers;
+package com.github.sixers.albert.handlers;
 
 import com.amazon.ask.dispatcher.request.handler.HandlerInput;
 import com.amazon.ask.dispatcher.request.handler.impl.IntentRequestHandler;
