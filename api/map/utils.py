@@ -1,5 +1,4 @@
 from networkx import Graph
-from typing import Sequence
 
 
 direction_mapping = {
@@ -8,6 +7,7 @@ direction_mapping = {
     'w': 'west',
     's': 'south',
 }
+
 
 def get_adjacency_with_direction(graph: Graph):
     """
