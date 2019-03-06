@@ -18,7 +18,7 @@ def get_adjacency_with_direction(graph: Graph):
     for source_node, targets in graph.adjacency():
         for target, edges in targets.items():
             for edge in edges.values():
-                unpacked.add((source_node, target, direction_mapping[edge['tailport']]))
-                unpacked.add((target, source_node, direction_mapping[edge['headport']]))
+                unpacked.add((source_node, target, direction_mapping[edge['headport']]))
+                unpacked.add((target, source_node, direction_mapping[edge['tailport']]))
 
     return unpacked
