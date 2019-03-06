@@ -8,12 +8,12 @@
 		{% for order in orders %}
 			{{ order }}	- delivery
 		{% endfor %}
+
     )
 
     (:init
-		{% for a,b in edges.keys %}
-			(edge {{ a }} {{ b }} west)
-			(edge {{ b }} {{ a }} west)
+		{% for from, to, direction in edges %}
+			(edge {{ from }} {{ to }} {{ direction }})
 		{% endfor %}
 
 		(at {{ current_location }} Albert)

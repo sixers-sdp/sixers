@@ -56,11 +56,14 @@ class Order(models.Model):
         return f"order{self.pk}"
 
 
+class PDDLError(Exception):
+    pass
+
+
 class ExecutionPlan(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    plan_out = models.TextField(null=True)
     plan_parsed = models.TextField(null=True)
 
     class Meta:
@@ -86,7 +89,7 @@ class ExecutionPlan(models.Model):
             'chef_location': cafe_map.CHEF,
             'orders': Order.objects.filter(state=ORDER_STATE_DELIVERY),
             'locations': cafe_map.current_map.nodes,
-            'edges': cafe_map.current_map.edges,
+            'edges': cafe_map.adjacency,
         }
 
         problem_content = render_to_string('problem.pddl', context)
@@ -104,16 +107,21 @@ class ExecutionPlan(models.Model):
             [settings.FF_EXECUTABLE, '-o', domain_file, '-f', problem_file],
             stdout=subprocess.PIPE
         )
-        # ff_out.check_returncode()
 
-        # save unparsed plan for debugging purposes
-        plan.plan_out = ff_out.stdout.decode("utf-8")
+        # Solution is generated to the problem_xx.pddl.ff file
+        solution_file = os.path.join(settings.MEDIA_ROOT, f'problem_{plan.id}.pddl.ff')
+        if not os.path.exists(solution_file):
+            raise PDDLError(ff_out.stdout.decode("utf-8"))
+
+
+        with open(solution_file) as f:
+            plan_plaintext = f.read()
 
         # 4. parse the actual lines of the plan
-        plan_pattern = re.compile("(step)? \s+ \d+: (?P<content>.*)")
+        plan_pattern = re.compile("\((?P<content>.*)\)")
         plan_parsed = [
             re.search(plan_pattern, line).group("content").strip()
-            for line in plan.plan_out.splitlines()
+            for line in plan_plaintext.splitlines()[1:]
             if re.match(plan_pattern, line)
         ]
 
