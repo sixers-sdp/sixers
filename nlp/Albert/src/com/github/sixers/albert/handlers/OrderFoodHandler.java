@@ -45,49 +45,90 @@ public class OrderFoodHandler implements IntentRequestHandler {
     public Optional<Response> handle(HandlerInput handlerInput, IntentRequest intentRequest)  {
 //
         Intent intent = intentRequest.getIntent();
-        Slot food = intent.getSlots().get("Food");
-        //Slot number = intent.getSlots().get("Number");
-//
-        String foodName = food.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
-//        String foodNumber = number.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
+        //Food names
+        Slot foodone = intent.getSlots().get("Foodone");
+        Slot foodtwo = intent.getSlots().get("Foodtwo");
+        Slot foodthree = intent.getSlots().get("Foodthree");
+        
+        //Number
+        Slot numone = intent.getSlots().get("Numberone");
+        Slot numtwo = intent.getSlots().get("Numbertwo");
+        Slot numthree = intent.getSlots().get("Numberthree");
 
-//        String speechText = "You order " + foodNumber +" " + foodName;
+        //defining default value for strings
+        String foodtwoName = "";
+        String foodthreeName = "";
 
-//        CloseableHttpClient httpClient = HttpClients.createDefault();
-//        HttpPost httpPost = new HttpPost("http://albert.visgean.me/api/orders/");
-//        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-//        nameValuePairs.add(new BasicNameValuePair("Number", foodNumber));
-//        nameValuePairs.add(new BasicNameValuePair("Name", foodName));
-//        try {
-//            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
-//            CloseableHttpResponse response = httpClient.execute(httpPost);
-//            httpClient.close();
-//        } catch (Exception e){
-//            e.printStackTrace();
-//        }
+        String numoneValue = "";
+        String numtwoValue = "";
+        String numthreeValue = "";
 
-        //String foodName = food.getValue();
-        //String foodNumber = number.getValue();
-        String speechText = "You order " + foodName;
+        //Checking slot values and assign the corresponding string value
 
-        CloseableHttpClient httpClient = HttpClients.createDefault();
-        HttpPost httpPost = new HttpPost("http://albert.visgean.me/api/orders/");
-        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-        //nameValuePairs.add(new BasicNameValuePair("Number", foodNumber));
-        nameValuePairs.add(new BasicNameValuePair("table_number", "t1"));
-        nameValuePairs.add(new BasicNameValuePair("state", "new"));
-        nameValuePairs.add(new BasicNameValuePair("products_text", foodName));
-        try {
-            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
-            CloseableHttpResponse response = httpClient.execute(httpPost);
-            httpClient.close();
-        } catch (Exception e){
-            e.printStackTrace();
+        //ordered food name
+        String foodoneName = foodone.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
+        if (foodtwo.getValue() != null){
+            foodtwoName = foodtwo.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
+        }
+        if (foodthree.getValue() != null){
+            foodthreeName = foodthree.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
         }
 
-        return handlerInput.getResponseBuilder()
-                .withSpeech(speechText)
-                .build();
+        //ordered number value of food
+        if (numone.getValue() != null){
+            numoneValue = numone.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
+        }
+        if (numtwo.getValue() != null){
+            numtwoValue = numtwo.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
+        }
+        if (numthree.getValue() != null){
+            numthreeValue = numthree.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
+        }
+
+
+        //Construct respond text
+        String speechText = "You have ordered ";
+        if (!numoneValue.equals("")){
+            speechText = speechText+ numoneValue +" ";
+        }
+        speechText = speechText +foodoneName + " ";
+        if (foodtwoName.equals("")){
+            return handlerInput.getResponseBuilder()
+                    .withSpeech(speechText)
+                    .build();
+        }
+        else {
+            if (foodthreeName.equals("")) {
+                if (!numtwoValue.equals("")) {
+                    speechText = speechText + "and " + numtwoValue + " " + foodtwoName;
+                }
+                else {
+                    speechText = speechText + "and " + foodtwoName;
+                }
+                return handlerInput.getResponseBuilder()
+                        .withSpeech(speechText)
+                        .build();
+            }
+            else {
+                if (!numtwoValue.equals("")) {
+                    speechText = speechText + numtwoValue + " " + foodtwoName;
+                }
+                else {
+                    speechText = speechText + foodtwoName;
+                }
+                if (!numthreeValue.equals("")) {
+                    speechText = speechText + " and " + numthreeValue + " " + foodthreeName;
+                }
+                speechText = speechText + " and " + foodthreeName;
+                return handlerInput.getResponseBuilder()
+                        .withSpeech(speechText)
+                        .build();
+            }
+        }
+
+
+
+
     }
 
 }
