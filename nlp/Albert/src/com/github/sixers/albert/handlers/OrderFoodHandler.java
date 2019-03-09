@@ -112,11 +112,19 @@ public class OrderFoodHandler implements IntentRequestHandler {
         	e.printStackTrace();
         }
 
-        return handlerInput.getResponseBuilder()
-        		.withSpeech(speechText)
-                .withReprompt("Would you like anything else?")
-                .withShouldEndSession(false)
-                .build();
+        if (intent.getConfirmationStatus().getValue().toString() == "CONFIRMED") {
+        	return handlerInput.getResponseBuilder()
+            		.withSpeech(speechText)
+            		.withReprompt("Would you like anything else?")
+                    .withShouldEndSession(false)
+                    .build();
+        } else {
+        	return handlerInput.getResponseBuilder()
+            		.withSpeech("Okay, I've cancelled that request. Would you like something else?")
+            		.withReprompt("Would you like anything else?")
+                    .withShouldEndSession(false)
+                    .build();
+        }
 
     }
 
