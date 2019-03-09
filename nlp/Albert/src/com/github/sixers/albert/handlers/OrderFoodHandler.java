@@ -100,7 +100,8 @@ public class OrderFoodHandler implements IntentRequestHandler {
         }
 
         return handlerInput.getResponseBuilder()
-                .withSpeech(speechText)
+        		.withSpeech(speechText)
+                .withReprompt(speechText)
                 .withShouldEndSession(false)
                 .build();
 

@@ -96,9 +96,12 @@ public class OrderDrinkHandler implements IntentRequestHandler {
                 speechText = speechText + " and " + numthreeValue + " " + drinkthreeName;
             }
         }
+        
+//        String repromptText = "Anything else?";
 
         return handlerInput.getResponseBuilder()
-                .withSpeech(speechText)
+        		.withSpeech(speechText)
+        		.withReprompt(speechText)
                 .withShouldEndSession(false)
                 .build();
     }
