@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block body %}
+	<h3>Current orders</h3>
+	<ul>
+		{% for order in orders %}
+			<li>{{ order}}</li>
+			<ul>
+				{% for product in order.products.all %}
+					<li>{{ product }}</li>
+				{% endfor %}
+			</ul>
+		{% endfor %}
+	</ul>
+{% endblock %}

@@ -1,0 +1,7 @@
+django
+djangorestframework
+gunicorn
+psycopg2
+networkx
+sentry-sdk==0.7.3
+pydot

@@ -1,0 +1,15 @@
+[Unit]
+Description=gunicorn daemon
+After=network.target
+
+[Service]
+User=sammy
+Group=www-data
+WorkingDirectory=/home/albert/sixers/api/
+ExecStart=/home/albert/venv/bin/gunicorn --access-logfile - --workers 3 --bind unix:/home/albert/albert.sock api.wsgi:application
+
+Environment=DJANGO_SETTINGS_MODULE=api.production_settings
+
+
+[Install]
+WantedBy=multi-user.target

@@ -3,7 +3,14 @@
 The robot will store the orders / map on the external web server, 
 through this web server the cook will be able to see and modify current standing orders. 
 
-Furthermore it should contain current map of the place in some reprentation easy to parse.
+Furthermore it should contain current map of the place in some representation easy to parse.
+
+
+# Infrastructure:
+
+Mostly based on [Digital ocean tutorial](https://www.digitalocean.com/community/tutorials/how-to-set-up-django-with-postgres-nginx-and-gunicorn-on-ubuntu-16-04).
+Check [Django docs](https://docs.djangoproject.com/en/2.1/intro/) if you have never seen Django before and want to contribute.
+
 
 # API
 

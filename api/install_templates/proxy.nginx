@@ -1,0 +1,17 @@
+server {
+    listen 80;
+    server_name 188.166.173.237 albert.visgean.me;
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+    location /static/ {
+        root /home/albert/sixers/api/;
+    }
+    location /media/ {
+        root /home/albert/sixers/api/;
+    }
+
+    location / {
+        include proxy_params;
+        proxy_pass http://unix:/home/albert/albert.sock;
+    }
+}
