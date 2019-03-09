@@ -66,7 +66,7 @@ public class OrderDrinkHandler implements IntentRequestHandler {
 
         //ordered drink name
 
-        String drinkonName = drinkone.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
+        String drinkoneName = drinkone.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
         if (drinktwo.getValue() != null) {
             drinktwoName = drinktwo.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
         }
@@ -87,7 +87,7 @@ public class OrderDrinkHandler implements IntentRequestHandler {
 
         //Construct respond text
         String speechText = "You have ordered ";
-        speechText = speechText + numoneValue + " " + drinkonName;
+        speechText = speechText + numoneValue + " " + drinkoneName;
         if (!drinktwoName.equals("")) {
             if (drinkthreeName.equals("")) {
                 speechText = speechText + " and " + numtwoValue + " " + drinktwoName;
@@ -97,11 +97,10 @@ public class OrderDrinkHandler implements IntentRequestHandler {
             }
         }
         
-//        String repromptText = "Anything else?";
 
         return handlerInput.getResponseBuilder()
         		.withSpeech(speechText)
-        		.withReprompt(speechText)
+        		.withReprompt("Would you like anything else?")
                 .withShouldEndSession(false)
                 .build();
     }

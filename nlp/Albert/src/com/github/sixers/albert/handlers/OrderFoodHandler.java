@@ -98,10 +98,23 @@ public class OrderFoodHandler implements IntentRequestHandler {
                 speechText = speechText + " and " + numthreeValue + " " + foodthreeName;
             }
         }
+        
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        HttpPost httpPost = new HttpPost("http://albert.visgean.me/api/orders/");
+        httpPost.setHeader("Authorization: Token", "9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b");
+        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+        nameValuePairs.add(new BasicNameValuePair("Item", speechText));
+        try {
+            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+            CloseableHttpResponse response = httpClient.execute(httpPost);
+            httpClient.close();
+        } catch (Exception e){
+        	e.printStackTrace();
+        }
 
         return handlerInput.getResponseBuilder()
         		.withSpeech(speechText)
-                .withReprompt(speechText)
+                .withReprompt("Would you like anything else?")
                 .withShouldEndSession(false)
                 .build();
 
