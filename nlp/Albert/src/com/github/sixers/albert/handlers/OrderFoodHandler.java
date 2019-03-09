@@ -88,7 +88,7 @@ public class OrderFoodHandler implements IntentRequestHandler {
 
         //Construct respond text
         String speechText = "You have ordered ";
-        speechText = speechText + numoneValue +" " + foodoneName;
+        speechText = speechText + numoneValue + " " + foodoneName;
         if (!foodtwoName.equals("")){
             if (foodthreeName.equals("")) {
                 speechText = speechText + " and " + numtwoValue + " " + foodtwoName;
@@ -101,8 +101,8 @@ public class OrderFoodHandler implements IntentRequestHandler {
 
         return handlerInput.getResponseBuilder()
                 .withSpeech(speechText)
+                .withShouldEndSession(false)
                 .build();
-
 
     }
 
