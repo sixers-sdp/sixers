@@ -96,6 +96,7 @@ public class OrderDrinkHandler implements IntentRequestHandler {
                 speechText = speechText + " and " + numthreeValue + " " + drinkthreeName;
             }
         }
+
         
         if (intent.getConfirmationStatus().getValue().toString() == "CONFIRMED") {
         	return handlerInput.getResponseBuilder()
@@ -110,5 +111,6 @@ public class OrderDrinkHandler implements IntentRequestHandler {
                     .withShouldEndSession(false)
                     .build();
         }
+
     }
 }
