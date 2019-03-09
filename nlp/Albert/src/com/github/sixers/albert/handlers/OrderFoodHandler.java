@@ -59,9 +59,9 @@ public class OrderFoodHandler implements IntentRequestHandler {
         String foodtwoName = "";
         String foodthreeName = "";
 
-        String numoneValue = "";
-        String numtwoValue = "";
-        String numthreeValue = "";
+        String numoneValue = "one";
+        String numtwoValue = "one";
+        String numthreeValue = "one";
 
         //Checking slot values and assign the corresponding string value
 
@@ -88,45 +88,20 @@ public class OrderFoodHandler implements IntentRequestHandler {
 
         //Construct respond text
         String speechText = "You have ordered ";
-        if (!numoneValue.equals("")){
-            speechText = speechText+ numoneValue +" ";
-        }
-        speechText = speechText +foodoneName + " ";
-        if (foodtwoName.equals("")){
-            return handlerInput.getResponseBuilder()
-                    .withSpeech(speechText)
-                    .build();
-        }
-        else {
+        speechText = speechText + numoneValue +" " + foodoneName;
+        if (!foodtwoName.equals("")){
             if (foodthreeName.equals("")) {
-                if (!numtwoValue.equals("")) {
-                    speechText = speechText + "and " + numtwoValue + " " + foodtwoName;
-                }
-                else {
-                    speechText = speechText + "and " + foodtwoName;
-                }
-                return handlerInput.getResponseBuilder()
-                        .withSpeech(speechText)
-                        .build();
+                speechText = speechText + " and " + numtwoValue + " " + foodtwoName;
             }
             else {
-                if (!numtwoValue.equals("")) {
-                    speechText = speechText + numtwoValue + " " + foodtwoName;
-                }
-                else {
-                    speechText = speechText + foodtwoName;
-                }
-                if (!numthreeValue.equals("")) {
-                    speechText = speechText + " and " + numthreeValue + " " + foodthreeName;
-                }
-                speechText = speechText + " and " + foodthreeName;
-                return handlerInput.getResponseBuilder()
-                        .withSpeech(speechText)
-                        .build();
+                speechText = speechText + ", " + numtwoValue + " " + foodtwoName;
+                speechText = speechText + " and " + numthreeValue + " " + foodthreeName;
             }
         }
 
-
+        return handlerInput.getResponseBuilder()
+                .withSpeech(speechText)
+                .build();
 
 
     }

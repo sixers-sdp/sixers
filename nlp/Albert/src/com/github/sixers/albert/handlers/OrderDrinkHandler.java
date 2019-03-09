@@ -41,35 +41,63 @@ public class OrderDrinkHandler implements IntentRequestHandler {
     }
 
     @Override
-    public Optional<Response> handle(HandlerInput handlerInput, IntentRequest intentRequest)  {
+    public Optional<Response> handle(HandlerInput handlerInput, IntentRequest intentRequest) {
 //
         Intent intent = intentRequest.getIntent();
-        //Slot number = intent.getSlots().get("Number");
-        Slot drink = intent.getSlots().get("Drink");
+        //Drink names
+        Slot drinkone = intent.getSlots().get("Drinkone");
+        Slot drinktwo = intent.getSlots().get("Drinktwo");
+        Slot drinkthree = intent.getSlots().get("Drinkthree");
 
-        //String drinkName = drink.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
-        String drinkName = drink.getValue();
+        //Number
+        Slot numone = intent.getSlots().get("Numone");
+        Slot numtwo = intent.getSlots().get("Numtwo");
+        Slot numthree = intent.getSlots().get("Numthree");
 
-        //String drinkNumber = number.getValue();
-        String speechText = "You order " + drinkName;
+        //defining default value for strings
+        String drinktwoName = "";
+        String drinkthreeName = "";
 
-        CloseableHttpClient httpClient = HttpClients.createDefault();
-        HttpPost httpPost = new HttpPost("http://albert.visgean.me/api/orders/");
-        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-        nameValuePairs.add(new BasicNameValuePair("table_number", "t1"));
-        nameValuePairs.add(new BasicNameValuePair("state", "new"));
-        nameValuePairs.add(new BasicNameValuePair("products_text", drinkName));
-        try {
-            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
-            CloseableHttpResponse response = httpClient.execute(httpPost);
-            httpClient.close();
-        } catch (Exception e){
-            e.printStackTrace();
+        String numoneValue = "one";
+        String numtwoValue = "one";
+        String numthreeValue = "one";
+
+        //Checking slot values and assign the corresponding string value
+
+        //ordered drink name
+        String drinkonName = drinkone.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
+        if (drinktwo.getValue() != null) {
+            drinktwoName = drinktwo.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
+        }
+        if (drinkthree.getValue() != null) {
+            drinkthreeName = drinkthree.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
+        }
+
+        //ordered number value of food
+        if (numone.getValue() != null) {
+            numoneValue = numone.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
+        }
+        if (numtwo.getValue() != null) {
+            numtwoValue = numtwo.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
+        }
+        if (numthree.getValue() != null) {
+            numthreeValue = numthree.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
+        }
+
+        //Construct respond text
+        String speechText = "You have ordered ";
+        speechText = speechText + numoneValue + " " + drinkonName;
+        if (!drinktwoName.equals("")) {
+            if (drinkthreeName.equals("")) {
+                speechText = speechText + " and " + numtwoValue + " " + drinktwoName;
+            } else {
+                speechText = speechText + ", " + numtwoValue + " " + drinktwoName;
+                speechText = speechText + " and " + numthreeValue + " " + drinkthreeName;
+            }
         }
 
         return handlerInput.getResponseBuilder()
                 .withSpeech(speechText)
                 .build();
     }
-
 }
