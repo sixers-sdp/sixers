@@ -45,38 +45,71 @@ public class OrderFoodHandler implements IntentRequestHandler {
     public Optional<Response> handle(HandlerInput handlerInput, IntentRequest intentRequest)  {
 //
         Intent intent = intentRequest.getIntent();
-        Slot food = intent.getSlots().get("Food");
-        //Slot number = intent.getSlots().get("Number");
-//
-        String foodName = food.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
-//        String foodNumber = number.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
+        //Food names
+        Slot foodone = intent.getSlots().get("Foodone");
+        Slot foodtwo = intent.getSlots().get("Foodtwo");
+        Slot foodthree = intent.getSlots().get("Foodthree");
 
-//        String speechText = "You order " + foodNumber +" " + foodName;
+        //Number
+        Slot numone = intent.getSlots().get("Numberone");
+        Slot numtwo = intent.getSlots().get("Numbertwo");
+        Slot numthree = intent.getSlots().get("Numberthree");
 
-//        CloseableHttpClient httpClient = HttpClients.createDefault();
-//        HttpPost httpPost = new HttpPost("http://albert.visgean.me/api/orders/");
-//        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-//        nameValuePairs.add(new BasicNameValuePair("Number", foodNumber));
-//        nameValuePairs.add(new BasicNameValuePair("Name", foodName));
-//        try {
-//            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
-//            CloseableHttpResponse response = httpClient.execute(httpPost);
-//            httpClient.close();
-//        } catch (Exception e){
-//            e.printStackTrace();
-//        }
+        //defining default value for strings
+        String foodtwoName = "";
+        String foodthreeName = "";
 
-        //String foodName = food.getValue();
-        //String foodNumber = number.getValue();
-        String speechText = "You order " + foodName;
+        String numoneValue = "one";
+        String numtwoValue = "one";
+        String numthreeValue = "one";
+
+        //Checking slot values and assign the corresponding string value
+
+        //ordered food name
+        String foodoneName = foodone.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
+        if (foodtwo.getValue() != null){
+            foodtwoName = foodtwo.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
+        }
+        if (foodthree.getValue() != null){
+            foodthreeName = foodthree.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
+        }
+
+        //ordered number value of food
+        if (numone.getValue() != null){
+            numoneValue = numone.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
+        }
+        if (numtwo.getValue() != null){
+            numtwoValue = numtwo.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
+        }
+        if (numthree.getValue() != null){
+            numthreeValue = numthree.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
+        }
+
+
+        //Construct respond text
+        String speechText = "You have ordered ";
+        speechText = speechText + numoneValue +" " + foodoneName;
+        if (!foodtwoName.equals("")){
+            if (foodthreeName.equals("")) {
+                speechText = speechText + " and " + numtwoValue + " " + foodtwoName;
+            }
+            else {
+                speechText = speechText + ", " + numtwoValue + " " + foodtwoName;
+                speechText = speechText + " and " + numthreeValue + " " + foodthreeName;
+            }
+        }
 
         CloseableHttpClient httpClient = HttpClients.createDefault();
         HttpPost httpPost = new HttpPost("http://albert.visgean.me/api/orders/");
+
+
+        httpPost.addHeader("Authorization", "Token 44c966240e36afad55472971a80208696d71e131");
         List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-        //nameValuePairs.add(new BasicNameValuePair("Number", foodNumber));
         nameValuePairs.add(new BasicNameValuePair("table_number", "t1"));
-        nameValuePairs.add(new BasicNameValuePair("state", "new"));
-        nameValuePairs.add(new BasicNameValuePair("products_text", foodName));
+        // TODO: Should be Modified to addapted new API.
+        nameValuePairs.add(new BasicNameValuePair("products_text", speechText));
+
+
         try {
             httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
             CloseableHttpResponse response = httpClient.execute(httpPost);
@@ -85,9 +118,13 @@ public class OrderFoodHandler implements IntentRequestHandler {
             e.printStackTrace();
         }
 
+
+
         return handlerInput.getResponseBuilder()
                 .withSpeech(speechText)
                 .build();
+
+
     }
 
 }

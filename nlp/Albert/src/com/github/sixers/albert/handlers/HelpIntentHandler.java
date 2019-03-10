@@ -16,6 +16,8 @@ package com.github.sixers.albert.handlers;
 import com.amazon.ask.dispatcher.request.handler.HandlerInput;
 import com.amazon.ask.dispatcher.request.handler.RequestHandler;
 import com.amazon.ask.model.Response;
+import com.amazon.ask.model.services.reminderManagement.PushNotification;
+import com.amazon.ask.model.services.reminderManagement.PushNotificationStatus;
 
 import java.util.Optional;
 
@@ -31,6 +33,11 @@ public class HelpIntentHandler implements RequestHandler {
     @Override
     public Optional<Response> handle(HandlerInput input) {
         String speechText = "You can order foods and order drinks with albert!";
+
+        PushNotificationStatus st = PushNotificationStatus.fromValue("HI");
+        PushNotification.builder().withStatus(st).build();
+
+
         return input.getResponseBuilder()
                 .withSpeech(speechText)
                 .withSimpleCard("HelloWorld", speechText)
