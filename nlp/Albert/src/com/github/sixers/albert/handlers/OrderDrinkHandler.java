@@ -65,6 +65,7 @@ public class OrderDrinkHandler implements IntentRequestHandler {
         //Checking slot values and assign the corresponding string value
 
         //ordered drink name
+
         String drinkonName = drinkone.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
         if (drinktwo.getValue() != null) {
             drinktwoName = drinktwo.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
@@ -113,9 +114,12 @@ public class OrderDrinkHandler implements IntentRequestHandler {
         } catch (Exception e){
             e.printStackTrace();
         }
+        speechText = speechText + ". Anything else?";
 
         return handlerInput.getResponseBuilder()
                 .withSpeech(speechText)
+                .withReprompt(speechText)
+                .withShouldEndSession(false)
                 .build();
     }
 }
