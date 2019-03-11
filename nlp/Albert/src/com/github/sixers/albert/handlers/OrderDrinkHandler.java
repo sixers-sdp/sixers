@@ -97,6 +97,23 @@ public class OrderDrinkHandler implements IntentRequestHandler {
             }
         }
 
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        HttpPost httpPost = new HttpPost("http://albert.visgean.me/api/orders/");
+
+
+        httpPost.addHeader("Authorization", "Token 44c966240e36afad55472971a80208696d71e131");
+        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+        nameValuePairs.add(new BasicNameValuePair("table_number", "t1"));
+        // TODO: Should be Modified to addapted new API.
+        nameValuePairs.add(new BasicNameValuePair("products_text", speechText));
+
+        try {
+            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+            CloseableHttpResponse response = httpClient.execute(httpPost);
+            httpClient.close();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
         speechText = speechText + ". Anything else?";
 
         return handlerInput.getResponseBuilder()
