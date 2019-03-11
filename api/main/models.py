@@ -10,6 +10,7 @@ from map import cafe_map
 
 
 ORDER_STATE_NEW = 'new'
+ORDER_STATE_READY = 'ready'
 ORDER_STATE_DELIVERY = 'delivery'
 ORDER_STATE_FINISHED = 'finished'
 ORDER_STATE_ABORTED = 'aborted'
@@ -104,7 +105,8 @@ class ExecutionPlan(models.Model):
         context = {
             'current_location': cafe_map.CHEF,
             'chef_location': cafe_map.CHEF,
-            'orders': Order.objects.filter(state=ORDER_STATE_DELIVERY),
+            'ready_orders': Order.objects.filter(state=ORDER_STATE_READY),
+            'delivery_orders': Order.objects.filter(state=ORDER_STATE_DELIVERY),
             'locations': cafe_map.current_map.nodes,
             'edges': cafe_map.adjacency,
         }
