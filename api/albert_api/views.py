@@ -1,6 +1,7 @@
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework.status import HTTP_204_NO_CONTENT
 
 from albert_api.serializers import LocationUpdateSerializer
 from main.models import Product, Order, ExecutionPlan, PLAN_STATE_NEW, LocationUpdate
@@ -26,6 +27,8 @@ class PlanView(viewsets.ModelViewSet):
         instance = self.queryset.latest()
         if instance.state != PLAN_STATE_NEW:
             instance = ExecutionPlan.create_new()
+            if not instance:
+                return Response(status=HTTP_204_NO_CONTENT)
 
         serializer = self.get_serializer(instance)
         return Response(serializer.data)

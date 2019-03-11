@@ -33,11 +33,14 @@ class MainControl:
         tasks_handlers = TASKS_REAL
 
     def get_plan(self):
-        plan_r = requests.get(settings.API_CURRENT_PLAN_URL)
-        plan_r.raise_for_status()
-        self.current_plan = plan_r.json()
-        logging.info('Fetched a plan')
+        r = requests.get(settings.API_CURRENT_PLAN_URL)
+        r.raise_for_status()
 
+        if r.status_code == 204:
+            return
+
+        self.current_plan = r.json()
+        logging.info('Fetched a plan')
 
     def update_plan(self, data):
         r = requests.patch(
@@ -51,14 +54,13 @@ class MainControl:
         while True:
             if not self.current_plan:
                 logging.info('Retrieving plan')
-
                 self.get_plan()
 
             if not self.current_plan:
                 logging.info('Waiting for a plan')
                 time.sleep(1)
-
-            self.execute_plan()
+            else:
+                self.execute_plan()
 
     def execute_task(self, task_data):
         task_class = self.tasks_handlers[task_data['action']]
