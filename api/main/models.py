@@ -174,3 +174,8 @@ class ExecutionPlan(models.Model):
                 'args': dict(zip(mapping, args))
             })
         return plan
+
+
+class LocationUpdate(models.Model):
+    update = models.DateTimeField(auto_now_add=True)
+    location = models.CharField(max_length=20)
