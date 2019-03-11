@@ -40,7 +40,7 @@ class MainControl:
 
 
     def update_plan(self, data):
-        r = requests.put(
+        r = requests.patch(
             settings.API_DETAIL_PLAN_URL.format(self.current_plan['id']),
             data=data,
             headers=settings.AUTH_HEADERS
