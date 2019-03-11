@@ -34,7 +34,6 @@ class PlanView(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 
-
 class LocationUpdateViewSet(viewsets.ModelViewSet):
     queryset = LocationUpdate.objects.all()
     serializer_class = LocationUpdateSerializer
