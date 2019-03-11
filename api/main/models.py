@@ -187,6 +187,7 @@ class LocationUpdate(models.Model):
     location = models.CharField(max_length=20)
 
     class Meta:
+        ordering = ('-update',)
         get_latest_by = 'update'
 
     def __str__(self):
