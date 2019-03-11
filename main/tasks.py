@@ -8,10 +8,7 @@ class Task:
     # actions like move are better to be executed all at once instead of considering them separately
     # group_by = False
 
-
-
-    result = None
-
+    success = False
 
     def __init__(self, arguments):
         self.arguments = arguments
@@ -42,15 +39,15 @@ class DumbMoveTask(Task):
     """
 
     def execute(self):
-        pass
+        self.success = True
 
 
 class DumbPickupTask(Task):
     def execute(self):
-        pass
+        self.success = True
 
 
 class DumbHandoverTask(Task):
     def execute(self):
-        pass
+        self.success = True
 

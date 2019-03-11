@@ -16,9 +16,8 @@ class OrderViewSet(viewsets.ModelViewSet):
     serializer_class = OrderSerializer
 
 
-class PlanView(viewsets.ReadOnlyModelViewSet):
+class PlanView(viewsets.ModelViewSet):
     serializer_class = PlanSerializer
-
     queryset = ExecutionPlan.objects.all()
 
     @action(detail=False)

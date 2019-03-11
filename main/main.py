@@ -13,6 +13,7 @@ TASKS_DEBUG = {
 
 TASKS_REAL = {}
 
+
 class MainControl:
     """
     This is the main controller for all the other modules.
@@ -26,7 +27,6 @@ class MainControl:
     """
 
     current_plan = None
-
     if settings.DEBUG:
         tasks_handlers = TASKS_DEBUG
     else:
@@ -49,22 +49,31 @@ class MainControl:
 
             self.execute_plan()
 
-    def execute_task(self, task):
-        task_class = self.tasks_handlers[task['action']]
-        task = task_class(task['args']).run()
+    def execute_task(self, task_data):
+        task_class = self.tasks_handlers[task_data['action']]
+        task = task_class(task_data['args'])
+        task.run()
 
         if task.success:
-            self.report_success(task['sub_id'])
+            self.report_success(task_data['sub_id'])
         else:
-            self.report_failure(task(['sub_id']))
+            self.report_failure(task_data['sub_id'])
 
     def execute_plan(self):
         for step in self.current_plan['steps']:
             logging.info(f'Executing {step}')
-            pass
+            self.execute_task(step)
+
 
     def report_success(self, sub_id):
-        raise NotImplementedError
+        logging.info(f'Task {sub_id} succeeded.')
+
+        r = requests.put(
+            settings.API_DETAIL_PLAN_URL.format(self.current_plan['id']),
+            data={'steps_executed': sub_id},
+            headers=settings.AUTH_HEADERS
+        )
+        r.raise_for_status()
 
     def report_failure(self, sub_id):
         raise NotImplementedError
@@ -73,5 +82,3 @@ class MainControl:
 if __name__ == '__main__':
     logging.info("Starting control loop")
     MainControl().loop()
-
-

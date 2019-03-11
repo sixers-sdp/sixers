@@ -65,6 +65,7 @@ class ExecutionPlan(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     plan_parsed = models.TextField(null=True)
+    steps_executed = models.IntegerField(null=True)
 
     class Meta:
         get_latest_by = 'created_at'
@@ -142,6 +143,10 @@ class ExecutionPlan(models.Model):
             'HANDOVER': ['agent', 'location', 'delivery'],
             'MOVE': ['agent', 'destination', 'origin', 'direction']
         }
+
+        if not self.plan_parsed:
+            return []
+
 
         for counter, step in enumerate(self.plan_parsed.splitlines()):
             action, *args = step.split()
