@@ -1,0 +1,56 @@
+
+
+class Task:
+    """
+    Abstract class for task handlers
+    """
+
+    # actions like move are better to be executed all at once instead of considering them separately
+    # group_by = False
+
+
+
+    result = None
+
+
+    def __init__(self, arguments):
+        self.arguments = arguments
+
+    def post_task(self):
+        """
+        Update API state here
+        """
+        pass
+
+    def pre_task(self):
+        pass
+
+    def execute(self):
+        pass
+
+    def run(self):
+        self.pre_task()
+        self.execute()
+        self.post_task()
+
+
+
+
+class DumbMoveTask(Task):
+    """
+    This just simulates moving
+    """
+
+    def execute(self):
+        pass
+
+
+class DumbPickupTask(Task):
+    def execute(self):
+        pass
+
+
+class DumbHandoverTask(Task):
+    def execute(self):
+        pass
+
