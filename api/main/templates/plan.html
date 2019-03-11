@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Plan{% endblock %}
+
+{% block body %}
+<h1>Plan:</h1>
+	<a href="{% url 'main:new_plan' %}">Create new plan</a>
+
+
+	Current execution plan:
+
+	{% if not current_plan.plan_parsed %}
+		Plan is empty. Nothing to do.
+	{% endif %}
+
+	<pre>
+{{ current_plan.plan_parsed|safe }}
+	</pre>
+
+
+{% endblock %}

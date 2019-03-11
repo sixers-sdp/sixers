@@ -1,0 +1,11 @@
+digraph g {
+    t1 -> t2 [tailport=e headport=w];
+    t1 -> t3 [tailport=s headport=n];
+    t3 -> t4 [tailport=e headport=w];
+    t4 -> t2 [tailport=n headport=s];
+
+    t4 -> Chef [tailport=s headport=n];
+
+	{ rank=same; t1 t2 }
+	{ rank=same; t3 t4 }
+}

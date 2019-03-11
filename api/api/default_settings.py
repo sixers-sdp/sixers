@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 
     # Packages:
     'rest_framework',
+    'rest_framework.authtoken',
 
     'main',
 ]
@@ -124,3 +125,22 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+FF_EXECUTABLE = '/home/visgean/ff'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+LOGIN_URL = '/admin/'
+LOGIN_REDIRECT_URL = '/'
+
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    )
+}

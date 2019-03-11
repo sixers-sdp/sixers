@@ -6,6 +6,9 @@ server {
     location /static/ {
         root /home/albert/sixers/api/;
     }
+    location /media/ {
+        root /home/albert/sixers/api/;
+    }
 
     location / {
         include proxy_params;
