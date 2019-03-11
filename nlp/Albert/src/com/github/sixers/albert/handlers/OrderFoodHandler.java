@@ -88,7 +88,7 @@ public class OrderFoodHandler implements IntentRequestHandler {
 
         //Construct respond text
         String speechText = "You have ordered ";
-        speechText = speechText + numoneValue + " " + foodoneName;
+        speechText = speechText + numoneValue +" " + foodoneName;
         if (!foodtwoName.equals("")){
             if (foodthreeName.equals("")) {
                 speechText = speechText + " and " + numtwoValue + " " + foodtwoName;
@@ -103,7 +103,7 @@ public class OrderFoodHandler implements IntentRequestHandler {
         HttpPost httpPost = new HttpPost("http://albert.visgean.me/api/orders/");
 
 
-        httpPost.addHeader("Authorization", "Token 44c966240e36afad55472971a80208696d71e131");
+        httpPost.addHeader("Authorization", System.getenv("API_TOKEN"));
         List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
         nameValuePairs.add(new BasicNameValuePair("table_number", "t1"));
         // TODO: Should be Modified to addapted new API.
@@ -119,14 +119,10 @@ public class OrderFoodHandler implements IntentRequestHandler {
         }
 
 
-        speechText = speechText + ". Anything else?";
 
         return handlerInput.getResponseBuilder()
                 .withSpeech(speechText)
-                .withReprompt(speechText)
-                .withShouldEndSession(false)
                 .build();
-
     }
 
 }
