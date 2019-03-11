@@ -2,7 +2,8 @@ from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from main.models import Product, Order, ExecutionPlan, PLAN_STATE_NEW
+from albert_api.serializers import LocationUpdateSerializer
+from main.models import Product, Order, ExecutionPlan, PLAN_STATE_NEW, LocationUpdate
 from .serializers import ProductSerializer, OrderSerializer, PlanSerializer
 
 
@@ -28,3 +29,9 @@ class PlanView(viewsets.ModelViewSet):
 
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
+
+
+
+class LocationUpdateViewSet(viewsets.ModelViewSet):
+    queryset = LocationUpdate.objects.all()
+    serializer_class = LocationUpdateSerializer

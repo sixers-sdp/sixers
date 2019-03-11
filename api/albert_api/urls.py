@@ -7,6 +7,7 @@ router = routers.DefaultRouter()
 router.register(r'products', views.ProductViewSet)
 router.register(r'orders', views.OrderViewSet)
 router.register(r'plans', views.PlanView)
+router.register(r'location', views.LocationUpdateViewSet)
 
 
 

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from main.models import Order, Product, ExecutionPlan
+from main.models import Order, Product, ExecutionPlan, LocationUpdate
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -28,3 +28,9 @@ class PlanSerializer(serializers.ModelSerializer):
             'plan_parsed': {'read_only': True},
             'steps': {'read_only': True},
         }
+
+
+class LocationUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LocationUpdate
+        exclude = []
