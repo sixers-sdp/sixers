@@ -10,14 +10,25 @@ from map import cafe_map
 
 
 ORDER_STATE_NEW = 'new'
+ORDER_STATE_READY = 'ready'
 ORDER_STATE_DELIVERY = 'delivery'
 ORDER_STATE_FINISHED = 'finished'
 ORDER_STATE_ABORTED = 'aborted'
 
 ORDER_STATE_CHOICES = [
     (s, s)
-    for s in [ORDER_STATE_NEW, ORDER_STATE_DELIVERY, ORDER_STATE_FINISHED, ORDER_STATE_ABORTED]
+    for s in [ORDER_STATE_NEW, ORDER_STATE_READY, ORDER_STATE_DELIVERY, ORDER_STATE_FINISHED, ORDER_STATE_ABORTED]
 ]
+
+PLAN_STATE_NEW = 'new'
+PLAN_STATE_FINISHED = 'finished'
+PLAN_STATE_ABORTED = 'aborted'
+
+PLAN_STATE_CHOICES = [
+    (s, s)
+    for s in [PLAN_STATE_NEW, PLAN_STATE_FINISHED, PLAN_STATE_ABORTED]
+]
+
 
 
 class Product(models.Model):
@@ -65,10 +76,16 @@ class ExecutionPlan(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     plan_parsed = models.TextField(null=True)
+    steps_executed = models.IntegerField(null=True)
+
+    state = models.CharField(
+        default=PLAN_STATE_NEW,
+        choices=PLAN_STATE_CHOICES,
+        max_length=24
+    )
 
     class Meta:
         get_latest_by = 'created_at'
-
 
     def __str__(self):
         return f'{self.created_at}'
@@ -80,17 +97,24 @@ class ExecutionPlan(models.Model):
         - domain file - static file
         - problem file - rendered template capturing the world right now
         """
-        plan = cls()
-        plan.save()
 
         # 1. generate problem file
         context = {
-            'current_location': cafe_map.CHEF,
+            'current_location': LocationUpdate.objects.latest(),
             'chef_location': cafe_map.CHEF,
-            'orders': Order.objects.filter(state=ORDER_STATE_DELIVERY),
+            'ready_orders': Order.objects.filter(state=ORDER_STATE_READY),
+            'delivery_orders': Order.objects.filter(state=ORDER_STATE_DELIVERY),
             'locations': cafe_map.current_map.nodes,
             'edges': cafe_map.adjacency,
         }
+
+        # if there is nothing to be done do not generate new plan!
+        actions_count = context['ready_orders'].count() + context['delivery_orders'].count()
+        if not actions_count:
+            return None
+
+        plan = cls()
+        plan.save()
 
         problem_content = render_to_string('problem.pddl', context)
         problem_file = os.path.join(settings.MEDIA_ROOT, f'problem_{plan.id}.pddl')
@@ -143,6 +167,9 @@ class ExecutionPlan(models.Model):
             'MOVE': ['agent', 'destination', 'origin', 'direction']
         }
 
+        if not self.plan_parsed:
+            return []
+
         for counter, step in enumerate(self.plan_parsed.splitlines()):
             action, *args = step.split()
 
@@ -153,3 +180,15 @@ class ExecutionPlan(models.Model):
                 'args': dict(zip(mapping, args))
             })
         return plan
+
+
+class LocationUpdate(models.Model):
+    update = models.DateTimeField(auto_now_add=True)
+    location = models.CharField(max_length=20)
+
+    class Meta:
+        ordering = ('-update',)
+        get_latest_by = 'update'
+
+    def __str__(self):
+        return f'{self.location}'
