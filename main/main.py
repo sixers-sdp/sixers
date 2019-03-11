@@ -38,9 +38,20 @@ class MainControl:
         self.current_plan = plan_r.json()
         logging.info('Fetched a plan')
 
+
+    def update_plan(self, data):
+        r = requests.put(
+            settings.API_DETAIL_PLAN_URL.format(self.current_plan['id']),
+            data=data,
+            headers=settings.AUTH_HEADERS
+        )
+        r.raise_for_status()
+
     def loop(self):
         while True:
             if not self.current_plan:
+                logging.info('Retrieving plan')
+
                 self.get_plan()
 
             if not self.current_plan:
@@ -53,30 +64,37 @@ class MainControl:
         task_class = self.tasks_handlers[task_data['action']]
         task = task_class(task_data['args'])
         task.run()
-
-        if task.success:
-            self.report_success(task_data['sub_id'])
-        else:
-            self.report_failure(task_data['sub_id'])
+        return task
 
     def execute_plan(self):
         for step in self.current_plan['steps']:
+            time.sleep(1)
+
             logging.info(f'Executing {step}')
-            self.execute_task(step)
+            task = self.execute_task(step)
+            if task.success:
+                self.report_success(step['sub_id'])
+            else:
+                self.report_failure(step['sub_id'])
+                break
+
+        self.update_plan({'state': 'finished'})
+        self.current_plan = None
 
 
     def report_success(self, sub_id):
         logging.info(f'Task {sub_id} succeeded.')
 
-        r = requests.put(
-            settings.API_DETAIL_PLAN_URL.format(self.current_plan['id']),
-            data={'steps_executed': sub_id},
-            headers=settings.AUTH_HEADERS
-        )
-        r.raise_for_status()
+        self.update_plan({'steps_executed': sub_id})
 
     def report_failure(self, sub_id):
-        raise NotImplementedError
+        logging.error(f'Task {sub_id} failed.')
+
+        self.update_plan({
+            'steps_executed': sub_id,
+            'state': 'aborted'
+        })
+        self.current_plan = None
 
 
 if __name__ == '__main__':

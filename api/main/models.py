@@ -19,6 +19,16 @@ ORDER_STATE_CHOICES = [
     for s in [ORDER_STATE_NEW, ORDER_STATE_DELIVERY, ORDER_STATE_FINISHED, ORDER_STATE_ABORTED]
 ]
 
+PLAN_STATE_NEW = 'new'
+PLAN_STATE_FINISHED = 'finished'
+PLAN_STATE_ABORTED = 'aborted'
+
+PLAN_STATE_CHOICES = [
+    (s, s)
+    for s in [PLAN_STATE_NEW, PLAN_STATE_FINISHED, PLAN_STATE_ABORTED]
+]
+
+
 
 class Product(models.Model):
     name = models.CharField(max_length=128)
@@ -66,6 +76,12 @@ class ExecutionPlan(models.Model):
 
     plan_parsed = models.TextField(null=True)
     steps_executed = models.IntegerField(null=True)
+
+    state = models.CharField(
+        default=PLAN_STATE_NEW,
+        choices=PLAN_STATE_CHOICES,
+        max_length=24
+    )
 
     class Meta:
         get_latest_by = 'created_at'

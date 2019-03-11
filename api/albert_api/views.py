@@ -2,7 +2,7 @@ from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from main.models import Product, Order, ExecutionPlan
+from main.models import Product, Order, ExecutionPlan, PLAN_STATE_NEW
 from .serializers import ProductSerializer, OrderSerializer, PlanSerializer
 
 
@@ -23,5 +23,8 @@ class PlanView(viewsets.ModelViewSet):
     @action(detail=False)
     def latest(self, request):
         instance = self.queryset.latest()
+        if instance.state != PLAN_STATE_NEW:
+            instance = ExecutionPlan.create_new()
+
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
