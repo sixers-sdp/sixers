@@ -1,3 +1,5 @@
+import settings
+import requests
 
 
 class Task:
@@ -37,6 +39,14 @@ class DumbMoveTask(Task):
     """
     This just simulates moving
     """
+
+    def post_task(self):
+        r = requests.post(
+            settings.API_LOCATION,
+            data={'location': self.arguments['destination']},
+            headers=settings.AUTH_HEADERS
+        )
+        r.raise_for_status()
 
     def execute(self):
         self.success = True

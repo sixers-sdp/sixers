@@ -23,3 +23,5 @@ API_CURRENT_PLAN_URL = urllib.parse.urljoin(API_URL, 'plans/latest/')
 API_DETAIL_PLAN_URL = urllib.parse.urljoin(API_URL, 'plans/{0}/')
 
 AUTH_HEADERS = {'Authorization': f'Token {AUTH_TOKEN}'}
+
+API_LOCATION = urllib.parse.urljoin(API_URL, 'location/')
