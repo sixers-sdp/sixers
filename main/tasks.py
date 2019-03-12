@@ -11,49 +11,60 @@ class Task:
     # group_by = False
 
     success = False
+    execute_all_at_once = False
 
-    def __init__(self, arguments):
-        self.arguments = arguments
+    def __init__(self, arguments_grouped):
+        self.arguments_grouped = arguments_grouped
 
-    def post_task(self):
+    def post_task(self, task):
         """
         Update API state here
         """
         pass
 
-    def pre_task(self):
+
+    def post_all_tasks(self):
+        """
+        Update API state here
+        """
         pass
 
-    def execute(self):
+    def execute_one(self, task):
+        pass
+
+    def execute_all(self):
         pass
 
     def run(self):
-        self.pre_task()
-        self.execute()
-        self.post_task()
+        if self.execute_all_at_once:
+            self.execute_all()
+            self.post_all_tasks()
+            return
 
+        for task in self.arguments_grouped:
+            self.execute_one(task)
+            self.post_task(task)
 
 class AbstractMoveTask(Task):
     """
     This just simulates moving
     """
+    execute_all_at_once = True
 
-    def post_task(self):
+    def post_all_tasks(self):
         r = requests.post(
             settings.API_LOCATION,
-            data={'location': self.arguments['destination']},
+            data={'location': self.arguments_grouped[-1]['destination']},
             headers=settings.AUTH_HEADERS
         )
         r.raise_for_status()
-
-    def execute(self):
         self.success = True
 
 
 class AbstractPickupTask(Task):
-    def post_task(self):
+    def post_task(self, task):
         # needs to update order state
-        order_id = self.arguments['order'].strip('ORDER')
+        order_id = task['order'].strip('ORDER')
         url = settings.API_DETAIL_ORDER_URL.format(order_id)
         r = requests.patch(
             url,
@@ -62,15 +73,13 @@ class AbstractPickupTask(Task):
         )
         print(r.content)
         r.raise_for_status()
-
-    def execute(self):
         self.success = True
 
 
 class AbstractHandoverTask(Task):
-    def post_task(self):
+    def post_task(self, task):
         # needs to update order state
-        order_id = self.arguments['delivery'].strip('ORDER')
+        order_id = task['delivery'].strip('ORDER')
         url = settings.API_DETAIL_ORDER_URL.format(order_id)
         r = requests.patch(
             url,
@@ -78,21 +87,14 @@ class AbstractHandoverTask(Task):
             headers=settings.AUTH_HEADERS
         )
         r.raise_for_status()
-
-    def execute(self):
         self.success = True
 
 
 class MoveTask(AbstractMoveTask):
-    def execute(self):
-        super(MoveTask, self).execute()
-
+    pass
 
 class PickupTask(AbstractPickupTask):
-    def execute(self):
-        super(PickupTask, self).execute()
+    pass
 
 class HandoverTask(AbstractHandoverTask):
-    def execute(self):
-        super(HandoverTask, self).execute()
-
+    pass

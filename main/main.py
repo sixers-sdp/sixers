@@ -3,7 +3,7 @@ import requests
 import logging
 import settings
 import tasks
-
+# from vision.pi.server import start_threads
 
 TASKS_DEBUG = {
     'MOVE': tasks.AbstractMoveTask,
@@ -16,6 +16,8 @@ TASKS_REAL = {
     'PICKUP': tasks.PickupTask,
     'HANDOVER': tasks.HandoverTask
 }
+
+GROUP_TASKS = ['MOVE']
 
 
 class MainControl:
@@ -31,6 +33,8 @@ class MainControl:
     """
 
     current_plan = None
+    plan_grouped = []
+
     if settings.DEBUG:
         tasks_handlers = TASKS_DEBUG
     else:
@@ -44,6 +48,7 @@ class MainControl:
             return
 
         self.current_plan = r.json()
+        self.group_plan()
         logging.info('Fetched a plan')
 
     def update_plan(self, data):
@@ -66,22 +71,41 @@ class MainControl:
             else:
                 self.execute_plan()
 
-    def execute_task(self, task_data):
-        task_class = self.tasks_handlers[task_data['action']]
-        task = task_class(task_data['args'])
+    def group_plan(self):
+        """
+        Move tasks are special - we should execute all following moves at once
+        """
+        self.plan_grouped = []
+
+        current_group = None
+        current_tasks = []
+        for step in self.current_plan['steps']:
+            if not current_group:
+                current_group = step['action']
+
+            if current_group == step['action']:
+                current_tasks.append(step)
+            else:
+                self.plan_grouped.append(current_tasks)
+                current_group = step['action']
+                current_tasks = [step]
+
+    def execute_group(self, action, group_data):
+        task_class = self.tasks_handlers[action]
+        task = task_class(None, [t['args'] for t in group_data])
         task.run()
         return task
 
     def execute_plan(self):
-        for step in self.current_plan['steps']:
-            time.sleep(1)
-
-            logging.info('Executing {0}'.format(step))
-            task = self.execute_task(step)
+        for group in self.plan_grouped:
+            action = group[0]['action']
+            task = self.execute_group(action, group)
+            last_id = group[-1]['args']['sub_id']
+            logging.info('Executing {0}'.format(action))
             if task.success:
-                self.report_success(step['sub_id'])
+                self.report_success(last_id)
             else:
-                self.report_failure(step['sub_id'])
+                self.report_failure(last_id)
                 break
 
         self.update_plan({'state': 'finished'})
@@ -105,4 +129,8 @@ class MainControl:
 
 if __name__ == '__main__':
     logging.info("Starting control loop")
+    logging.info("Starting camera thread")
+    #
+    # start_threads()
+
     MainControl().loop()
