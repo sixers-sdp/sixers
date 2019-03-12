@@ -72,7 +72,7 @@ class MainControl:
         for step in self.current_plan['steps']:
             time.sleep(1)
 
-            logging.info(f'Executing {step}')
+            logging.info('Executing {0}'.format(step))
             task = self.execute_task(step)
             if task.success:
                 self.report_success(step['sub_id'])
@@ -85,12 +85,12 @@ class MainControl:
 
 
     def report_success(self, sub_id):
-        logging.info(f'Task {sub_id} succeeded.')
+        logging.info('Task {0} succeeded.'.format(sub_id))
 
         self.update_plan({'steps_executed': sub_id})
 
     def report_failure(self, sub_id):
-        logging.error(f'Task {sub_id} failed.')
+        logging.error('Task {0} failed.'.format(sub_id))
 
         self.update_plan({
             'steps_executed': sub_id,

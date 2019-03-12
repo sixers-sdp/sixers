@@ -81,5 +81,3 @@ class DumbHandoverTask(Task):
 
     def execute(self):
         self.success = True
-
-
