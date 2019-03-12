@@ -16,6 +16,11 @@ class OrderSerializer(serializers.ModelSerializer):
         model = Order
         exclude = []
 
+        extra_kwargs = {
+            'table_number': {'read_only': True},
+        }
+
+
 
 class PlanSerializer(serializers.ModelSerializer):
     steps = serializers.JSONField(source='plan_as_json', read_only=True)
