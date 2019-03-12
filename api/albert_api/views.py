@@ -24,7 +24,7 @@ class PlanView(viewsets.ModelViewSet):
 
     @action(detail=False)
     def latest(self, request):
-        instance = self.queryset.latest()
+        instance = ExecutionPlan.objects.latest()
         if instance.state != PLAN_STATE_NEW:
             instance = ExecutionPlan.create_new()
             if not instance:
