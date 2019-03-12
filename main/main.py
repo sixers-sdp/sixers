@@ -92,7 +92,7 @@ class MainControl:
 
     def execute_group(self, action, group_data):
         task_class = self.tasks_handlers[action]
-        task = task_class(None, [t['args'] for t in group_data])
+        task = task_class(group_data)
         task.run()
         return task
 
@@ -100,7 +100,7 @@ class MainControl:
         for group in self.plan_grouped:
             action = group[0]['action']
             task = self.execute_group(action, group)
-            last_id = group[-1]['args']['sub_id']
+            last_id = group[-1]['sub_id']
             logging.info('Executing {0}'.format(action))
             if task.success:
                 self.report_success(last_id)

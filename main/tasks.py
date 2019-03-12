@@ -42,8 +42,8 @@ class Task:
             return
 
         for task in self.arguments_grouped:
-            self.execute_one(task)
-            self.post_task(task)
+            self.execute_one(task['args'])
+            self.post_task(task['args'])
 
 class AbstractMoveTask(Task):
     """
