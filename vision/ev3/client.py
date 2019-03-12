@@ -10,7 +10,7 @@ us.mode='US-DIST-CM'
 units = us.units
 
 PORT = 50000
-data = {"server-end": False, "obstacle-found": False, "said": False}
+data = {"server-end": False, "obstacle-found": False, "said": False, "last-command": None, "time-said": time.time()}
 BRAKING_TYPE='brake'
 MOVING_CORNER = False
 
@@ -86,14 +86,23 @@ def check_for_obstacle(m, m1, m2, m3):
     while not data["server-end"]:
         distance = us.value()/10
         if distance < 20:
+            print("whatttt")
             data["obstacle-found"] = True
             stop(m, m1, m2, m3)
-            if not data["said"]:
-                ev3.Sound.speak("Could you please get the fuck out!").wait()
+            if not data["said"] and time.time() - data["time-said"] > 5:
+                try:
+                    ev3.Sound.speak("Could you please get the fuck out!").wait()
+                    data["time-said"] = time.time()
+                except:
+                    pass
                 data["said"] = True
         else:
             data["obstacle-found"] = False
             data["said"] = False
+            if data["last-command"] != None:
+                print(data["last-command"])
+                move_albert(data["last-command"], m, m1, m2, m3)
+                data["last-command"]=None
 
         time.sleep(0.05)
 
@@ -108,12 +117,13 @@ def start_socket(m, m1, m2, m3):
              continue
          move = int(data_type)
          print(move)
+         data["last-command"]=move
          if (data["obstacle-found"]): continue
          move_albert(move, m, m1, m2, m3)
      sock.close()
 
 
-if __name__ == "__main__":
+if _name_ == "_main_":
     try:
         m=ev3.LargeMotor('outA')
         m1=ev3.LargeMotor('outB')

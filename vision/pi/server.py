@@ -123,7 +123,7 @@ def start_threads():
 
     vc.release()
 
-if __name__ == "__main__":
+if _name_ == "_main_":
     try:
         start_threads()
     except Exception as e:
