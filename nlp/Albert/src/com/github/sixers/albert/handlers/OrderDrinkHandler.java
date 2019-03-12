@@ -43,6 +43,7 @@ public class OrderDrinkHandler implements IntentRequestHandler {
     @Override
     public Optional<Response> handle(HandlerInput handlerInput, IntentRequest intentRequest) {
 //
+
         Intent intent = intentRequest.getIntent();
         //Drink names
         Slot drinkone = intent.getSlots().get("Drinkone");
@@ -67,6 +68,7 @@ public class OrderDrinkHandler implements IntentRequestHandler {
         //ordered drink name
 
         String drinkonName = drinkone.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
+
         if (drinktwo.getValue() != null) {
             drinktwoName = drinktwo.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
         }
