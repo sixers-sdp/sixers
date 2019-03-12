@@ -2,10 +2,15 @@ import socket
 import threading
 from enum import Enum
 import ev3dev.ev3 as ev3
+import threading
+import time
 
+us = ev3.UltrasonicSensor()
+us.mode='US-DIST-CM'
+units = us.units
 
 PORT = 50000
-data = {"server-end": False}
+data = {"server-end": False, "obstacle-found": False, "said": False}
 BRAKING_TYPE='brake'
 MOVING_CORNER = False
 
@@ -40,11 +45,11 @@ def align(m, m1, m2, m3, left_value, right_value):
 
 
 class Type(Enum):
-    FORWARD=5
+    QR=1
     STOP=2
     ALIGN_LEFT=3
     ALIGN_RIGHT=4
-    QR=1
+    FORWARD=5
     CORNER_LEFT=6
     CORNER_RIGHT=7
 
@@ -55,10 +60,10 @@ def move_albert(move, m, m1, m2, m3):
         go_forward(m, m1, m2, m3, 300)
     elif move == Type.ALIGN_LEFT.value:
         #print(response, "ALIGN LEFT")
-        align(m, m1, m2, m3, 150, 250)
+        align(m, m1, m2, m3, 100, 250)
     elif move == Type.ALIGN_RIGHT.value:
         #print(response, "ALIGN RIGHT")
-        align(m, m1, m2, m3, 250, 150)
+        align(m, m1, m2, m3, 250, 100)
     elif(move==Type.STOP.value):
         #print(response, "STOP")
         stop(m, m1, m2, m3)
@@ -76,15 +81,34 @@ def corner_type(m, m1, m2, m3, c_type):
         move_left(m, m1, -75)
         move_right(m2, m3, 75)
 
+def check_for_obstacle(m, m1, m2, m3):
+    global data
+    while not data["server-end"]:
+        distance = us.value()/10
+        if distance < 20:
+            data["obstacle-found"] = True
+            stop(m, m1, m2, m3)
+            if not data["said"]:
+                ev3.Sound.speak("Could you please get the fuck out!").wait()
+                data["said"] = True
+        else:
+            data["obstacle-found"] = False
+            data["said"] = False
+
+        time.sleep(0.05)
+
+
 def start_socket(m, m1, m2, m3):
+     global data
      sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
      sock.connect(('192.168.105.135', PORT))
      while not data['server-end']:
          data_type = sock.recv(1).decode()
          if len(data_type)!=1:
-             continue 
+             continue
          move = int(data_type)
          print(move)
+         if (data["obstacle-found"]): continue
          move_albert(move, m, m1, m2, m3)
      sock.close()
 
@@ -104,6 +128,9 @@ if __name__ == "__main__":
         elif not (m3.connected):
             print("Plug a motor into port D")
         else:
+            obstacle_thread = threading.Thread(target=check_for_obstacle, args=(m, m1, m2, m3, ))
+            obstacle_thread.daemon = True
+            obstacle_thread.start()
             start_socket(m, m1, m2, m3)
     except Exception as e:
         data["server-end"] = True

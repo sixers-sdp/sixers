@@ -9,14 +9,15 @@ camera={"frame": None}
 
 PORT = 50000
 data = {"server-end": False}
-
-next_cmd = "EAST"
+SEEN_YELLOW = False
+cmds = ["LEFT","LEFT","END"]
 corner_detected = False
 corner_detected_once = False
 old_type = None
 check_if_stops_after_switch=False
-
+w = 160
 is_current_color_green = True
+yellow_threshed = None
 
 def start_camera(cam):
     global camera
@@ -50,13 +51,19 @@ def calculate_frame():
 
     bottom_left_index = np.argmax(frame_threshed[-1] == 255)
 
+    vert_list =  frame_threshed.sum(axis=0)
+    vert_idx = np.argmax(vert_list)+1
+    print(np.abs(w//2-vert_idx))
+
 
     seen_qr = False
 
     #print(1/(time.time()-prev_time))
     #print(top_left_index, bottom_left_index)
+
     if corner_detected and not corner_detected_once and top_left_index!=0 and bottom_left_index!=0:
-        if abs(top_left_index - bottom_left_index) < 100:
+        if np.abs(w//2-vert_idx) < 35:
+            cmds.pop(0)
             corner_detected = False
 
     if corner_detected and corner_detected_once:
@@ -64,28 +71,31 @@ def calculate_frame():
         is_current_color_green = not is_current_color_green
         print("whattt")
         corner_detected_once = False
-        if next_cmd == "EAST":
+        if cmds[0] == "LEFT":
             return 6
-        elif next_cmd == "WEST":
+        elif cmds[0] == "RIGHT":
             return 7
 
     if not corner_detected:
         decoded_frame = decode(frame)
+        print(1/(time.time()-prev_time))
         if len(decoded_frame)>0:
             corner_detected = True
             corner_detected_once = True
             check_if_stops_after_switch=True
-	    return 5
+            return 5
         elif top_left_index == 0 and bottom_left_index == 0:
             return 2
-        elif top_left_index < bottom_left_index and abs(top_left_index - bottom_left_index) > 50:
-            return 3
-        elif top_left_index > bottom_left_index and abs(top_left_index - bottom_left_index) > 50:
-            return 4
+        if (np.abs(w//2-vert_idx)>20):
+            if w//2-vert_idx > 0:
+                return 3
+            else:
+                return 4
         else:
             return 5
     else:
         return old_type
+
 
 def start_socket():
      global old_type
@@ -103,6 +113,8 @@ def start_socket():
 
 def start_threads():
     vc = cv2.VideoCapture(0)
+    vc.set(3, 160)
+    vc.set(4, 120)
     camera_thread = threading.Thread(target=start_camera, args=(vc,))
     camera_thread.daemon = True
     camera_thread.start()
