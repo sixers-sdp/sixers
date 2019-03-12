@@ -2,16 +2,20 @@ import time
 import requests
 import logging
 import settings
-from tasks import DumbMoveTask, DumbPickupTask, DumbHandoverTask
+import tasks
 
 
 TASKS_DEBUG = {
-    'MOVE': DumbMoveTask,
-    'PICKUP': DumbPickupTask,
-    'HANDOVER': DumbHandoverTask
+    'MOVE': tasks.AbstractMoveTask,
+    'PICKUP': tasks.AbstractPickupTask,
+    'HANDOVER': tasks.AbstractHandoverTask
 }
 
-TASKS_REAL = {}
+TASKS_REAL = {
+    'MOVE': tasks.MoveTask,
+    'PICKUP': tasks.PickupTask,
+    'HANDOVER': tasks.HandoverTask
+}
 
 
 class MainControl:

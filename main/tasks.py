@@ -33,7 +33,7 @@ class Task:
         self.post_task()
 
 
-class DumbMoveTask(Task):
+class AbstractMoveTask(Task):
     """
     This just simulates moving
     """
@@ -50,7 +50,7 @@ class DumbMoveTask(Task):
         self.success = True
 
 
-class DumbPickupTask(Task):
+class AbstractPickupTask(Task):
     def post_task(self):
         # needs to update order state
         order_id = self.arguments['order'].strip('ORDER')
@@ -67,7 +67,7 @@ class DumbPickupTask(Task):
         self.success = True
 
 
-class DumbHandoverTask(Task):
+class AbstractHandoverTask(Task):
     def post_task(self):
         # needs to update order state
         order_id = self.arguments['delivery'].strip('ORDER')
@@ -81,3 +81,18 @@ class DumbHandoverTask(Task):
 
     def execute(self):
         self.success = True
+
+
+class MoveTask(AbstractMoveTask):
+    def execute(self):
+        super(MoveTask, self).execute()
+
+
+class PickupTask(AbstractPickupTask):
+    def execute(self):
+        super(PickupTask, self).execute()
+
+class HandoverTask(AbstractHandoverTask):
+    def execute(self):
+        super(HandoverTask, self).execute()
+
