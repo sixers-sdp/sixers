@@ -20,7 +20,7 @@ class OrderViewSet(viewsets.ModelViewSet):
 
 class PlanView(viewsets.ModelViewSet):
     serializer_class = PlanSerializer
-    queryset = ExecutionPlan.objects.all()
+    queryset = ExecutionPlan.objects.all()[:3]
 
     @action(detail=False)
     def latest(self, request):

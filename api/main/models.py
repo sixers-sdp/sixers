@@ -86,6 +86,7 @@ class ExecutionPlan(models.Model):
 
     class Meta:
         get_latest_by = 'created_at'
+        ordering = ['-id']
 
     def __str__(self):
         return f'{self.created_at}'
