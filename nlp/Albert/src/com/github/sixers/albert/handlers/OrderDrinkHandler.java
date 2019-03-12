@@ -73,7 +73,6 @@ public class OrderDrinkHandler implements IntentRequestHandler {
         if (drinkthree.getValue() != null) {
             drinkthreeName = drinkthree.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
         }
-
         //ordered number value of food
         if (numone.getValue() != null) {
             numoneValue = numone.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
@@ -84,6 +83,10 @@ public class OrderDrinkHandler implements IntentRequestHandler {
         if (numthree.getValue() != null) {
             numthreeValue = numthree.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
         }
+
+
+        String deviceID = handlerInput.getRequestEnvelope().getContext().getSystem().getDevice().getDeviceId();
+
 
         //Construct respond text
         String speechText = "You have ordered ";
@@ -101,9 +104,12 @@ public class OrderDrinkHandler implements IntentRequestHandler {
         HttpPost httpPost = new HttpPost("http://albert.visgean.me/api/orders/");
 
 
+
+
+
         httpPost.addHeader("Authorization", System.getenv("API_TOKEN"));
         List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-        nameValuePairs.add(new BasicNameValuePair("table_number", "t1"));
+        nameValuePairs.add(new BasicNameValuePair("table_number", deviceID));
         // TODO: Should be Modified to addapted new API.
         nameValuePairs.add(new BasicNameValuePair("products_text", speechText));
 

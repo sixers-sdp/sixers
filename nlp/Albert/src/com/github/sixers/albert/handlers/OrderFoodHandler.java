@@ -85,6 +85,7 @@ public class OrderFoodHandler implements IntentRequestHandler {
             numthreeValue = numthree.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
         }
 
+        String deviceID = handlerInput.getRequestEnvelope().getContext().getSystem().getDevice().getDeviceId();
 
         //Construct respond text
         String speechText = "You have ordered ";
@@ -107,7 +108,7 @@ public class OrderFoodHandler implements IntentRequestHandler {
         List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
         nameValuePairs.add(new BasicNameValuePair("table_number", "t1"));
         // TODO: Should be Modified to addapted new API.
-        nameValuePairs.add(new BasicNameValuePair("products_text", speechText));
+        nameValuePairs.add(new BasicNameValuePair("products_text", speechText +  deviceID));
 
 
         try {
@@ -117,8 +118,6 @@ public class OrderFoodHandler implements IntentRequestHandler {
         } catch (Exception e){
             e.printStackTrace();
         }
-
-
 
         return handlerInput.getResponseBuilder()
                 .withSpeech(speechText)
