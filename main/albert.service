@@ -3,7 +3,7 @@ Description=Albert's main process
 After=network.target
 
 [Service]
-ExecStart=/home/sixers/venv/bin/python main/main.py
+ExecStart=/home/student/venv/bin/python main/main.py
 Restart=always
 
 User=student
