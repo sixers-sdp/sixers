@@ -30,6 +30,10 @@ PLAN_STATE_CHOICES = [
 ]
 
 
+class DotAssociation(models.Model):
+    dot_id = models.CharField(max_length=248)
+    location = models.CharField(max_length=20)
+
 
 class Product(models.Model):
     name = models.CharField(max_length=128)
@@ -51,7 +55,7 @@ class Order(models.Model):
 
     table_number = models.CharField(
         max_length=30,
-        choices=[(t,t) for t in  cafe_map.tables]
+        choices=[(t, t) for t in  cafe_map.tables]
     )
 
     products = models.ManyToManyField(Product, blank=True)
