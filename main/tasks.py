@@ -54,7 +54,7 @@ class AbstractMoveTask(Task):
     def post_all_tasks(self):
         r = requests.post(
             settings.API_LOCATION,
-            data={'location': self.arguments_grouped[-1]['destination']},
+            data={'location': self.arguments_grouped[-1]['args']['destination']},
             headers=settings.AUTH_HEADERS
         )
         r.raise_for_status()

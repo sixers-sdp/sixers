@@ -114,7 +114,6 @@ class MainControl:
 
     def report_success(self, sub_id):
         logging.info('Task {0} succeeded.'.format(sub_id))
-
         self.update_plan({'steps_executed': sub_id})
 
     def report_failure(self, sub_id):
