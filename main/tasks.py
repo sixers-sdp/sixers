@@ -1,9 +1,10 @@
+import socket
 import threading
 
 import settings
 import requests
 
-from vision.pi.server import start_socket
+from vision.pi.server import start_socket, EV3_PORT
 
 
 class Task:

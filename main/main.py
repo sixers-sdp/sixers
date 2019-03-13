@@ -1,4 +1,5 @@
 import os
+import socket
 import time
 import requests
 import logging
@@ -10,7 +11,12 @@ from api.map.east_right import convert_plan_to_relative_orientation
 
 sys.path.append(os.path.abspath('..'))
 
-from vision.pi.server import start_threads
+from vision.pi.server import start_threads, EV3_PORT
+
+
+GLOBAL_EV3_SOCKET = None
+GLOBAL_EV3_CONN = None
+GLOBAL_EV3_ADDRESS = None
 
 
 TASKS_DEBUG = {
@@ -26,6 +32,8 @@ TASKS_REAL = {
 }
 
 GROUP_TASKS = ['MOVE']
+
+
 
 
 class MainControl:
@@ -134,11 +142,16 @@ class MainControl:
         self.current_plan = None
 
 
+
 if __name__ == '__main__':
     logging.info("Starting control loop")
     logging.info("Starting camera thread")
 
     start_threads()
 
+    GLOBAL_EV3_SOCKET = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    GLOBAL_EV3_SOCKET.bind(('0.0.0.0', EV3_PORT))
+    GLOBAL_EV3_SOCKET.listen(1)
+    GLOBAL_EV3_CONN, GLOBAL_EV3_ADDRESS = GLOBAL_EV3_SOCKET.accept()
 
     MainControl().loop()
