@@ -8,6 +8,7 @@ import tasks
 import sys
 
 from api.map.east_right import convert_plan_to_relative_orientation
+from utils import group_plan
 
 sys.path.append(os.path.abspath('..'))
 
@@ -64,7 +65,8 @@ class MainControl:
             return
 
         self.current_plan = convert_plan_to_relative_orientation(r.json())
-        self.group_plan()
+        self.plan_grouped = group_plan(self.current_plan)
+
         logging.info('Fetched a plan')
 
     def update_plan(self, data):
@@ -87,24 +89,6 @@ class MainControl:
             else:
                 self.execute_plan()
 
-    def group_plan(self):
-        """
-        Move tasks are special - we should execute all following moves at once
-        """
-        self.plan_grouped = []
-
-        current_group = None
-        current_tasks = []
-        for step in self.current_plan['steps']:
-            if not current_group:
-                current_group = step['action']
-
-            if current_group == step['action']:
-                current_tasks.append(step)
-            else:
-                self.plan_grouped.append(current_tasks)
-                current_group = step['action']
-                current_tasks = [step]
 
     def execute_group(self, action, group_data):
         task_class = self.tasks_handlers[action]
@@ -148,13 +132,15 @@ class MainControl:
 
 if __name__ == '__main__':
     logging.info("Starting control loop")
-    logging.info("Starting camera thread")
 
-    start_threads()
+    if not settings.DEBUG:
+        logging.info("Starting camera thread")
 
-    GLOBAL_EV3_SOCKET = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    GLOBAL_EV3_SOCKET.bind(('0.0.0.0', EV3_PORT))
-    GLOBAL_EV3_SOCKET.listen(1)
-    GLOBAL_EV3_CONN, GLOBAL_EV3_ADDRESS = GLOBAL_EV3_SOCKET.accept()
+        start_threads()
+
+        GLOBAL_EV3_SOCKET = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        GLOBAL_EV3_SOCKET.bind(('0.0.0.0', EV3_PORT))
+        GLOBAL_EV3_SOCKET.listen(1)
+        GLOBAL_EV3_CONN, GLOBAL_EV3_ADDRESS = GLOBAL_EV3_SOCKET.accept()
 
     MainControl().loop()

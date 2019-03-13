@@ -90,7 +90,6 @@ def convert_plan_to_relative_orientation(plan):
 
         CURRENT_ORIENTATION = orientation_conversion_table[CURRENT_ORIENTATION][converted]
         task['relative_direction'] = converted
-
         plan_changed.append(task)
 
     plan['steps'] = plan_changed
