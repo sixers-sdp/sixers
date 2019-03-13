@@ -13,8 +13,6 @@ sys.path.append(os.path.abspath('..'))
 from vision.pi.server import start_threads
 
 
-
-
 TASKS_DEBUG = {
     'MOVE': tasks.AbstractMoveTask,
     'PICKUP': tasks.AbstractPickupTask,

@@ -10,7 +10,9 @@ camera={"frame": None}
 PORT = 50000
 data = {"server-end": False}
 SEEN_YELLOW = False
-cmds = ["FORWARD","LEFT", "RIGHT","END"]
+# cmds = ["FORWARD","LEFT", "RIGHT","END"]
+cmds = None
+
 corner_detected = False
 corner_detected_once = False
 old_type = None
@@ -112,8 +114,11 @@ def calculate_frame():
         return old_type
 
 
-def start_socket():
+def start_socket(directions):
      global old_type
+     global cmds
+
+     cmds = directions
      sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
      sock.bind(('0.0.0.0', PORT))
      sock.listen(1)
@@ -125,6 +130,8 @@ def start_socket():
          conn.sendall(str(new_type).encode())
          old_type = new_type
      sock.close()
+
+     return True
 
 def start_threads():
     vc = cv2.VideoCapture(0)

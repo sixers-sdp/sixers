@@ -69,9 +69,10 @@ class AbstractMoveTask(Task):
         directions.append('END')
         directions.pop(0)
 
-        socket_thread = threading.Thread(target=start_socket, args=(directions,))
-        socket_thread.daemon = True
-        socket_thread.start()
+        start_socket(directions)
+        # socket_thread = threading.Thread(target=start_socket, args=(directions,))
+        # socket_thread.daemon = True
+        # socket_thread.start()
 
 
 class AbstractPickupTask(Task):

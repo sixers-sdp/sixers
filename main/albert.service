@@ -5,11 +5,11 @@ After=network.target
 [Service]
 Restart=always
 User=student
-WorkingDirectory=/home/student/sixers
+WorkingDirectory=/home/student/sixers/main
 EnvironmentFile=/home/student/envrc_systemd
 
 ExecStartPre=git pull && /home/student/venv/bin/pip install -r /home/student/sixers/main/requirements.txt
-ExecStart=/home/student/venv/bin/python main/main.py
+ExecStart=/home/student/venv/bin/python main.py
 
 [Install]
 WantedBy=multi-user.target
