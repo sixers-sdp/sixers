@@ -1,7 +1,8 @@
 import os
 import sys
-import urllib.parse
 import logging
+
+
 
 sys.path.append(os.path.abspath('..'))
 
@@ -22,10 +23,10 @@ else:
     API_URL = os.getenv('ALBERT_URL', 'http://albert.visgean.me/api/')
 
 
-API_CURRENT_PLAN_URL = urllib.parse.urljoin(API_URL, 'plans/latest/')
-API_DETAIL_PLAN_URL = urllib.parse.urljoin(API_URL, 'plans/{0}/')
+API_CURRENT_PLAN_URL = API_URL + 'plans/latest/'
+API_DETAIL_PLAN_URL = API_URL + 'plans/{0}/'
 
 AUTH_HEADERS = {'Authorization': 'Token {0}'.format(AUTH_TOKEN)}
 
-API_LOCATION = urllib.parse.urljoin(API_URL, 'location/')
-API_DETAIL_ORDER_URL = urllib.parse.urljoin(API_URL, 'orders/{0}/')
+API_LOCATION = API_URL + 'location/'
+API_DETAIL_ORDER_URL = API_URL + 'orders/{0}/'
