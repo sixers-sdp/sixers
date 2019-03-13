@@ -42,6 +42,7 @@ def start_camera():
                 vc.release()
                 sys.exit(1)
 
+        time.sleep(0.05)
 
     vc.release()
 
