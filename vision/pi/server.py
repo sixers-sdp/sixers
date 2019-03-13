@@ -50,7 +50,7 @@ def calculate_frame():
     global is_current_color_green
     global corner_detected, corner_detected_once
     global next_cmd, old_type
-    global check_if_stops_after_switch, sleep
+    global check_if_stops_after_switch, sleep, camera
     prev_time = time.time()
     frame = camera["frame"]
     if frame is None: return 2
@@ -113,6 +113,7 @@ def calculate_frame():
         elif cmds[0] == "END":
             END = True
             return 6
+        return 2
 
     if not corner_detected:
         decoded_frame = decode(frame)
