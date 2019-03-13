@@ -1,0 +1,19 @@
+
+{% if orders.exists %}
+	<div class="my-3 p-3 bg-white rounded box-shadow">
+		<h2 class="border-bottom border-gray pb-2 mb-0">{{ label }}</h2>
+		{% for order in orders %}
+			<div class="media text-muted pt-3">
+				<p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+					<strong class="d-block text-gray-dark">Table {{ order.table_number }}</strong>
+					{% for product in order.products.all %}
+						{{ product }},
+					{% endfor %}
+					{% if order.products_text %}
+						{{ order.products_text }}
+					{% endif %}
+				</p>
+			</div>
+		{% endfor %}
+	</div>
+{% endif %}
