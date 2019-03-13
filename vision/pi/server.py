@@ -37,7 +37,7 @@ def start_camera():
         if frame is None:
             camera_fail_counter += 1
 
-            if camera_fail_counter > 100:
+            if camera_fail_counter > 100000:
                 raise Exception('Camera aint working :* ')
 
     vc.release()
