@@ -109,6 +109,9 @@ class MainControl:
     def execute_group(self, action, group_data):
         task_class = self.tasks_handlers[action]
         task = task_class(group_data)
+        task.ev3_conn = GLOBAL_EV3_CONN
+        task.ev3_address = GLOBAL_EV3_ADDRESS
+
         task.run()
         return task
 

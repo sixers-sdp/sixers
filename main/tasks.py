@@ -18,6 +18,9 @@ class Task:
     success = False
     execute_all_at_once = False
 
+    ev3_conn = None
+    ev3_address = None
+
     def __init__(self, arguments_grouped):
         self.arguments_grouped = arguments_grouped
 
@@ -70,8 +73,7 @@ class AbstractMoveTask(Task):
         directions.append('END')
         directions.pop(0)
 
-        from main.main import GLOBAL_EV3_CONN, GLOBAL_EV3_ADDRESS
-        start_socket(directions, GLOBAL_EV3_CONN, GLOBAL_EV3_ADDRESS)
+        start_socket(directions, self.ev3_conn, self.ev3_address)
         # socket_thread = threading.Thread(target=start_socket, args=(directions,))
         # socket_thread.daemon = True
         # socket_thread.start()
