@@ -118,6 +118,7 @@ def calculate_frame():
 def start_socket(directions, ev3_conn, ev3_address):
      global old_type
      global cmds
+     global data
 
      cmds = directions
      # sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -125,6 +126,7 @@ def start_socket(directions, ev3_conn, ev3_address):
      # sock.listen(1)
      # conn, addr = sock.accept()
      print("Connected from ", ev3_address)
+     print('Commands', directions)
      while not data['server-end']:
          new_type = calculate_frame()
          if old_type == new_type: continue
