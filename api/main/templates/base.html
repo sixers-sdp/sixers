@@ -1,23 +1,35 @@
-<!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>{% block title %} Welcome {% endblock %} | Albert</title>
-    <meta name="description" content="Webpage for xxxx">
+{% extends 'bootstrap4/bootstrap4.html' %}
+{% load bootstrap4 %}
 
-	{% block extra_head %}{% endblock %}
-  </head>
-  <body>
-    <h1>Hello, I am albert.</h1>
-    <ul>
-	    <li><a href="/api">API</a></li>
-	    <li><a href="/admin">Admin</a></li>
-	    <li><a href="{% url "main:plan" %}">Plan</a></li>
-    </ul>
 
-    {% block body%}
+{% block bootstrap4_title %}{% block title %}{% endblock %}{% endblock %}
 
-    {% endblock %}
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
 
-  </body>
-</html>
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+{% block bootstrap4_content %}
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<a class="navbar-brand" href="/">Albert</a>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item"><a class="nav-link" href="/api">API</a></li>
+				<li class="nav-item"><a class="nav-link" href="/admin">Admin</a></li>
+				<li class="nav-item"><a class="nav-link" href="{% url "main:plan" %}">Plan</a></li>
+			</ul>
+		</div>
+	</nav>
+
+    <div class="container">
+	{% block body %}
+	{% endblock %}
+    </div>
+
+
+
+{% endblock %}
+
