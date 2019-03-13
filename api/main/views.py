@@ -3,11 +3,12 @@ from django.utils.decorators import method_decorator
 from django.views.generic import ListView, TemplateView, DetailView, RedirectView
 
 # from map.utils import map_text
+from main.models import ORDER_STATE_NEW
 from . import models
 
 
 class OrderView(ListView):
-    queryset = models.Order.objects.all()
+    queryset = models.Order.objects.filter(state=ORDER_STATE_NEW)
     context_object_name = 'orders'
     template_name = 'orders.html'
 

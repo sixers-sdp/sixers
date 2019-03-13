@@ -2,9 +2,11 @@
 {% load bootstrap4 %}
 
 
-{% block bootstrap4_title %}{% block title %}{% endblock %}{% endblock %}
+{% block bootstrap4_extra_head %}
 
-{# Display django.contrib.messages as Bootstrap alerts #}
+{% block title %}<title>Albert</title>{% endblock %}
+{% endblock %}
+
 
 {% block bootstrap4_content %}
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -20,6 +22,7 @@
 	</nav>
 
     <div class="container">
+	{# Display django.contrib.messages as Bootstrap alerts #}
 	{% bootstrap_messages %}
 	{% block body %}
 	{% endblock %}
