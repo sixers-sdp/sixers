@@ -3,6 +3,9 @@ import sys
 import urllib.parse
 import logging
 
+sys.path.append(os.path.abspath('..'))
+
+
 
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 

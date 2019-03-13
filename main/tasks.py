@@ -1,5 +1,9 @@
+import threading
+
 import settings
 import requests
+
+from vision.pi.server import start_socket
 
 
 class Task:
@@ -60,6 +64,12 @@ class AbstractMoveTask(Task):
         r.raise_for_status()
         self.success = True
 
+    def execute_all(self):
+        instructions = [t['args'] for t in self.arguments_grouped]
+        socket_thread = threading.Thread(target=start_socket, args=(instructions,))
+        socket_thread.daemon = True
+        socket_thread.start()
+
 
 class AbstractPickupTask(Task):
     def post_task(self, task):
@@ -91,7 +101,12 @@ class AbstractHandoverTask(Task):
 
 
 class MoveTask(AbstractMoveTask):
-    pass
+    def execute_all(self):
+        instructions = (t['args'] for t in self.arguments_grouped)
+        socket_thread = threading.Thread(target=start_socket, args=(instructions,))
+        socket_thread.daemon = True
+        socket_thread.start()
+
 
 class PickupTask(AbstractPickupTask):
     pass

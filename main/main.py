@@ -1,9 +1,17 @@
+import os
 import time
 import requests
 import logging
 import settings
 import tasks
-# from vision.pi.server import start_threads
+import sys
+
+sys.path.append(os.path.abspath('..'))
+
+from vision.pi.server import start_threads
+
+
+
 
 TASKS_DEBUG = {
     'MOVE': tasks.AbstractMoveTask,
@@ -129,7 +137,8 @@ class MainControl:
 if __name__ == '__main__':
     logging.info("Starting control loop")
     logging.info("Starting camera thread")
-    #
-    # start_threads()
+
+    start_threads()
+
 
     MainControl().loop()
