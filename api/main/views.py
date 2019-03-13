@@ -1,9 +1,11 @@
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
 from django.utils.decorators import method_decorator
+from django.views import View
 from django.views.generic import ListView, TemplateView, DetailView, RedirectView
 
 # from map.utils import map_text
-from main.models import ORDER_STATE_NEW, ORDER_STATE_DELIVERY, ORDER_STATE_READY
+from main.models import ORDER_STATE_NEW, ORDER_STATE_DELIVERY, ORDER_STATE_READY, ORDER_STATES
 from . import models
 
 
@@ -16,6 +18,20 @@ class OrderView(TemplateView):
         c['ready_orders'] = models.Order.objects.filter(state=ORDER_STATE_READY)
         c['delivery_orders'] = models.Order.objects.filter(state=ORDER_STATE_DELIVERY)
         return c
+
+
+@method_decorator(login_required, name='dispatch')
+class OrderChangeStateView(View):
+    template_name = 'orders.html'
+    http_method_names = ['post']
+
+    def post(self, request, id, **kwargs):
+        state = request.POST.get('state', '')
+        if state in ORDER_STATES:
+           models.Order.objects.filter(pk=id).update(state=state)
+
+        return HttpResponseRedirect('/')
+
 
 
 
