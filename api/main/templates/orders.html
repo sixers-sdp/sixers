@@ -3,5 +3,5 @@
 {% block body %}
 	{% include "includes/orders_sublist.html" with label="Orders in delivery" orders=delivery_orders button_hide='hide' %}
 	{% include "includes/orders_sublist.html" with label="Ready orders" orders=ready_orders %}
-	{% include "includes/orders_sublist.html" with label="New orders" orders=new_orders button_text="Mark ready" button_state='ready'   %}
+	{% include "includes/orders_sublist.html" with label="New orders" orders=new_orders button_text="Mark ready" button_state='ready' %}
 {% endblock %}
