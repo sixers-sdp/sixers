@@ -121,10 +121,12 @@ def calculate_frame():
         return old_type
 
 
-def start_socket(directions, ev3_conn, ev3_address):
+def start_socket(directions, ev3_conn, ev3_address, is_green):
     global old_type
     global cmds
     global data
+    global is_current_color_green
+    is_current_color_green = is_green
 
     cmds = directions
     # sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
