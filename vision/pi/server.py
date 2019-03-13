@@ -1,4 +1,5 @@
 import socket
+import sys
 import threading
 import cv2
 from pyzbar.pyzbar import decode
@@ -39,7 +40,7 @@ def start_camera():
 
             if camera_fail_counter > 100000:
                 vc.release()
-                raise Exception('Camera aint working :* ')
+                sys.exit(1)
 
 
     vc.release()
