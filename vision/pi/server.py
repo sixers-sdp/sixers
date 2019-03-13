@@ -136,6 +136,7 @@ def start_socket(directions, ev3_conn, ev3_address, is_green):
     global cmds
     global data
     global is_current_color_green
+    global END
     is_current_color_green = is_green
 
     cmds = directions
@@ -151,6 +152,7 @@ def start_socket(directions, ev3_conn, ev3_address, is_green):
         ev3_conn.sendall(str(new_type).encode())
         old_type = new_type
     data['server-end'] = False
+    END = False
     return True
 
 
