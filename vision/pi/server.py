@@ -10,7 +10,7 @@ camera={"frame": None}
 PORT = 50000
 data = {"server-end": False}
 SEEN_YELLOW = False
-cmds = ["LEFT","LEFT","END"]
+cmds = ["FORWARD","LEFT", "RIGHT","END"]
 corner_detected = False
 corner_detected_once = False
 old_type = None
@@ -18,6 +18,7 @@ check_if_stops_after_switch=False
 w = 160
 is_current_color_green = True
 yellow_threshed = None
+END = False
 
 def start_camera(cam):
     global camera
@@ -25,6 +26,7 @@ def start_camera(cam):
         camera["frame"] = cam.read()[1]
 
 def calculate_frame():
+    global END
     global is_current_color_green
     global corner_detected, corner_detected_once
     global next_cmd, old_type
@@ -61,25 +63,38 @@ def calculate_frame():
     #print(1/(time.time()-prev_time))
     #print(top_left_index, bottom_left_index)
 
+    if END:
+        if top_left_index!=0 and bottom_left_index!=0 and np.abs(w//2-vert_idx) < 35:
+            data["server-end"] = True
+            return 2
+        return 6
+
     if corner_detected and not corner_detected_once and top_left_index!=0 and bottom_left_index!=0:
         if np.abs(w//2-vert_idx) < 35:
             cmds.pop(0)
             corner_detected = False
 
     if corner_detected and corner_detected_once:
-        time.sleep(1)
-        is_current_color_green = not is_current_color_green
+        time.sleep(2)
         print("whattt")
         corner_detected_once = False
         if cmds[0] == "LEFT":
+            is_current_color_green = not is_current_color_green
             return 6
         elif cmds[0] == "RIGHT":
+            is_current_color_green = not is_current_color_green
             return 7
+        elif cmds[0] == "FORWARD":
+            return 5
+        elif cmds[0] == "END":
+            END = True
+            return 6
 
     if not corner_detected:
         decoded_frame = decode(frame)
         print(1/(time.time()-prev_time))
         if len(decoded_frame)>0:
+            print("QR")
             corner_detected = True
             corner_detected_once = True
             check_if_stops_after_switch=True
@@ -123,7 +138,7 @@ def start_threads():
 
     vc.release()
 
-if _name_ == "_main_":
+if __name__ == "__main__":
     try:
         start_threads()
     except Exception as e:

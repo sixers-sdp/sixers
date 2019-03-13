@@ -57,7 +57,7 @@ class Type(Enum):
 def move_albert(move, m, m1, m2, m3):
     if(move==Type.FORWARD.value):
         #motors["running"]=True
-        go_forward(m, m1, m2, m3, 300)
+        go_forward(m, m1, m2, m3, 200)
     elif move == Type.ALIGN_LEFT.value:
         #print(response, "ALIGN LEFT")
         align(m, m1, m2, m3, 100, 250)
@@ -75,11 +75,11 @@ def move_albert(move, m, m1, m2, m3):
 
 def corner_type(m, m1, m2, m3, c_type):
     if c_type == Type.CORNER_RIGHT.value:
-        move_left(m, m1, 75)
-        move_right(m2, m3, -75)
+        move_left(m, m1, 100)
+        move_right(m2, m3, -100)
     elif c_type == Type.CORNER_LEFT.value:
-        move_left(m, m1, -75)
-        move_right(m2, m3, 75)
+        move_left(m, m1, -100)
+        move_right(m2, m3, 100)
 
 def check_for_obstacle(m, m1, m2, m3):
     global data
@@ -92,17 +92,17 @@ def check_for_obstacle(m, m1, m2, m3):
             if not data["said"] and time.time() - data["time-said"] > 5:
                 try:
                     ev3.Sound.speak("Could you please get the fuck out!").wait()
-                    data["time-said"] = time.time()
                 except:
                     pass
+                data["time-said"] = time.time()
                 data["said"] = True
         else:
-            data["obstacle-found"] = False
             data["said"] = False
             if data["last-command"] != None:
                 print(data["last-command"])
                 move_albert(data["last-command"], m, m1, m2, m3)
                 data["last-command"]=None
+                data["obstacle-found"] = False
 
         time.sleep(0.05)
 
@@ -123,7 +123,7 @@ def start_socket(m, m1, m2, m3):
      sock.close()
 
 
-if _name_ == "_main_":
+if __name__ == "__main__":
     try:
         m=ev3.LargeMotor('outA')
         m1=ev3.LargeMotor('outB')
