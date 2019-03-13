@@ -76,8 +76,8 @@ class AbstractMoveTask(Task):
         # is green:
         # if currently at table: its blue
         # if at chefs: we look for green
-
-        is_green = self.arguments_grouped[0]['args']['origin'] == 'chef'
+        
+        is_green = self.arguments_grouped[0]['args']['origin'].lower() == 'chef'
         start_socket(directions, self.ev3_conn, self.ev3_address, is_green)
         # socket_thread = threading.Thread(target=start_socket, args=(directions,))
         # socket_thread.daemon = True
