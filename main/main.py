@@ -6,7 +6,7 @@ import settings
 import tasks
 import sys
 
-from map.east_right import convert_plan_to_relative_orientation
+from api.map.east_right import convert_plan_to_relative_orientation
 
 sys.path.append(os.path.abspath('..'))
 

@@ -79,13 +79,19 @@ def convert_plan_to_relative_orientation(plan):
 
     plan_changed = []
 
-    for task in plan.plan_generated['steps']:
+    for task in plan['steps']:
         action = task['action']
         if action != 'MOVE':
             plan_changed.append(task)
+            continue
 
         direction = task['args']['direction']
         converted = conversion_table[CURRENT_ORIENTATION][direction]
 
         CURRENT_ORIENTATION = orientation_conversion_table[CURRENT_ORIENTATION][converted]
-        task['relative_orientation'] = converted
+        task['relative_direction'] = converted
+
+        plan_changed.append(task)
+
+    plan['steps'] = plan_changed
+    return plan

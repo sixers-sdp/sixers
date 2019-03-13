@@ -65,8 +65,11 @@ class AbstractMoveTask(Task):
         self.success = True
 
     def execute_all(self):
-        instructions = [t['args'] for t in self.arguments_grouped]
-        socket_thread = threading.Thread(target=start_socket, args=(instructions,))
+        directions = [f['relative_direction'] for f in self.arguments_grouped]
+        directions.append('END')
+        directions.pop(0)
+
+        socket_thread = threading.Thread(target=start_socket, args=(directions,))
         socket_thread.daemon = True
         socket_thread.start()
 
