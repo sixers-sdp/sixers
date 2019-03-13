@@ -5,7 +5,6 @@ from pyzbar.pyzbar import decode
 import numpy as np
 import time
 
-from main.main import GLOBAL_EV3_ADDRESS, GLOBAL_EV3_CONN
 
 camera={"frame": None}
 
@@ -116,7 +115,7 @@ def calculate_frame():
         return old_type
 
 
-def start_socket(directions):
+def start_socket(directions, ev3_conn, ev3_address):
      global old_type
      global cmds
 
@@ -125,11 +124,11 @@ def start_socket(directions):
      # sock.bind(('0.0.0.0', EV3_PORT))
      # sock.listen(1)
      # conn, addr = sock.accept()
-     print("Connected from ", GLOBAL_EV3_ADDRESS)
+     print("Connected from ", ev3_address)
      while not data['server-end']:
          new_type = calculate_frame()
          if old_type == new_type: continue
-         GLOBAL_EV3_CONN.sendall(str(new_type).encode())
+         ev3_conn.sendall(str(new_type).encode())
          old_type = new_type
 
      return True

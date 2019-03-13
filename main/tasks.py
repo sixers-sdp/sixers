@@ -4,7 +4,7 @@ import threading
 import settings
 import requests
 
-from vision.pi.server import start_socket, EV3_PORT
+from vision.pi.server import start_socket
 
 
 class Task:
@@ -70,7 +70,8 @@ class AbstractMoveTask(Task):
         directions.append('END')
         directions.pop(0)
 
-        start_socket(directions)
+        from main.main import GLOBAL_EV3_CONN, GLOBAL_EV3_ADDRESS
+        start_socket(directions, GLOBAL_EV3_CONN, GLOBAL_EV3_ADDRESS)
         # socket_thread = threading.Thread(target=start_socket, args=(directions,))
         # socket_thread.daemon = True
         # socket_thread.start()
