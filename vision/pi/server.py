@@ -30,8 +30,16 @@ def start_camera():
     vc.set(3, 160)
     vc.set(4, 120)
 
+    camera_fail_counter = 0
     while not data['server-end']:
-        camera["frame"] = vc.read()[1]
+        frame = vc.read()[1]
+        camera["frame"] = frame
+        if frame is None:
+            camera_fail_counter += 1
+
+            if camera_fail_counter > 100:
+                raise Exception('Camera aint working :* ')
+
     vc.release()
 
 
