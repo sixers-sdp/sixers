@@ -6,6 +6,8 @@ import settings
 import tasks
 import sys
 
+from map.east_right import convert_plan_to_relative_orientation
+
 sys.path.append(os.path.abspath('..'))
 
 from vision.pi.server import start_threads
@@ -55,7 +57,7 @@ class MainControl:
         if r.status_code == 204:
             return
 
-        self.current_plan = r.json()
+        self.current_plan = convert_plan_to_relative_orientation(r.json())
         self.group_plan()
         logging.info('Fetched a plan')
 
