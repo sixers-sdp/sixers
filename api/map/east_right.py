@@ -82,7 +82,7 @@ def convert_plan_to_relative_orientation(plan):
     for task in plan['steps']:
         action = task['action']
         if action != 'MOVE':
-            # plan_changed.append(task)
+            plan_changed.append(task)
             continue
 
         direction = task['args']['direction']
