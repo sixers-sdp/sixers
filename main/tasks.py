@@ -1,5 +1,7 @@
+import os
 import socket
 import threading
+import time
 
 import settings
 import requests
@@ -116,7 +118,9 @@ class MoveTask(AbstractMoveTask):
 
 
 class PickupTask(AbstractPickupTask):
-    pass
+    def execute_one(self, task):
+        time.sleep(10)
 
 class HandoverTask(AbstractHandoverTask):
-    pass
+    def execute_one(self, task):
+        time.sleep(10)
