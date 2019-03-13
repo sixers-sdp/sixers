@@ -141,7 +141,7 @@ def start_threads():
     camera_thread.daemon = True
     camera_thread.start()
 
-    start_socket()
+    # start_socket()
 
     vc.release()
 
