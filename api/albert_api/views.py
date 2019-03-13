@@ -21,12 +21,12 @@ class OrderViewSet(viewsets.ModelViewSet):
 
 class PlanView(viewsets.ModelViewSet):
     serializer_class = PlanSerializer
-    queryset = ExecutionPlan.objects.filter(state=PLAN_STATE_NEW)
+    queryset = ExecutionPlan.objects.all()
 
     @action(detail=False)
     def latest(self, request):
         try:
-            instance = self.queryset.latest()
+            instance = self.queryset.filter(state=PLAN_STATE_NEW).latest()
         except ExecutionPlan.DoesNotExist:
             instance = ExecutionPlan.create_new()
         if not instance:
