@@ -29,6 +29,9 @@ class PlanView(viewsets.ModelViewSet):
             instance = self.queryset.latest()
         except ExecutionPlan.DoesNotExist:
             instance = ExecutionPlan.create_new()
+        if not instance:
+            return Response(status=HTTP_204_NO_CONTENT)
+
         if instance.state != PLAN_STATE_NEW:
             instance = ExecutionPlan.create_new()
             if not instance:
