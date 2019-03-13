@@ -107,11 +107,12 @@ class AbstractHandoverTask(Task):
 
 
 class MoveTask(AbstractMoveTask):
-    def execute_all(self):
-        instructions = (t['args'] for t in self.arguments_grouped)
-        socket_thread = threading.Thread(target=start_socket, args=(instructions,))
-        socket_thread.daemon = True
-        socket_thread.start()
+    pass
+    # def execute_all(self):
+    #     instructions = (t['args'] for t in self.arguments_grouped)
+    #     socket_thread = threading.Thread(target=start_socket, args=(instructions,))
+    #     socket_thread.daemon = True
+    #     socket_thread.start()
 
 
 class PickupTask(AbstractPickupTask):
