@@ -23,10 +23,16 @@ is_current_color_green = True
 yellow_threshed = None
 END = False
 
-def start_camera(cam):
+def start_camera():
     global camera
+
+    vc = cv2.VideoCapture(0)
+    vc.set(3, 160)
+    vc.set(4, 120)
+
     while not data['server-end']:
-        camera["frame"] = cam.read()[1]
+        camera["frame"] = vc.read()[1]
+    vc.release()
 
 def calculate_frame():
     global END
@@ -136,16 +142,13 @@ def start_socket(directions, ev3_conn, ev3_address):
      return True
 
 def start_threads():
-    vc = cv2.VideoCapture(0)
-    vc.set(3, 160)
-    vc.set(4, 120)
-    camera_thread = threading.Thread(target=start_camera, args=(vc,))
+    camera_thread = threading.Thread(target=start_camera)
     camera_thread.daemon = True
     camera_thread.start()
 
     # start_socket()
 
-    vc.release()
+    # vc.release()
 
 if __name__ == "__main__":
     try:
