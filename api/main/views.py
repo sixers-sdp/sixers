@@ -38,7 +38,11 @@ class OrderChangeStateView(View):
 class OrderEditView(UpdateView):
     template_name = 'order_update.html'
     form = OrderForm
+    queryset = models.Order.objects.all()
+    fields = ['table_number', 'products', 'products_text', 'state']
 
+    def get_success_url(self):
+        return '/'
 
 
 class PlanView(DetailView):

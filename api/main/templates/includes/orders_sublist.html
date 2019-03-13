@@ -14,7 +14,7 @@
 					{% endif %}
 				</p>
 				{% if user.is_authenticated %}
-					<a class="btn btn-primary btn-warning" href="{% url "main:order_edit" id=order.id %}" style="margin-right: 10px">Edit</a>
+					<a class="btn btn-primary btn-warning" href="{% url "main:order_edit" pk=order.id %}" style="margin-right: 10px">Edit</a>
 					{% if button_text %}
 						<form action="{% url 'main:change_order_state' id=order.id %}" method="post">
 							{% csrf_token %}

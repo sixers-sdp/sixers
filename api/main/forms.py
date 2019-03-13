@@ -5,5 +5,5 @@ from main.models import Order
 class OrderForm(forms.ModelForm):
     class Meta:
         model = Order
-        exclude = []
+        fields = ['table_number', 'products', 'products_text', 'state']
 
