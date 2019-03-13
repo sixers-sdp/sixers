@@ -21,7 +21,7 @@ w = 160
 is_current_color_green = True
 yellow_threshed = None
 END = False
-
+sleep = False
 
 def start_camera():
     global camera
@@ -50,7 +50,7 @@ def calculate_frame():
     global is_current_color_green
     global corner_detected, corner_detected_once
     global next_cmd, old_type
-    global check_if_stops_after_switch
+    global check_if_stops_after_switch, sleep
     prev_time = time.time()
     frame = camera["frame"]
     if frame is None: return 2
@@ -82,6 +82,10 @@ def calculate_frame():
     # print(1/(time.time()-prev_time))
     # print(top_left_index, bottom_left_index)
 
+    if sleep:
+        time.sleep(1)
+        sleep = False
+
     if END:
         if top_left_index != 0 and bottom_left_index != 0 and np.abs(w // 2 - vert_idx) < 35:
             data["server-end"] = True
@@ -104,6 +108,7 @@ def calculate_frame():
             is_current_color_green = not is_current_color_green
             return 7
         elif cmds[0] == "FORWARD":
+            sleep = True
             return 5
         elif cmds[0] == "END":
             END = True
