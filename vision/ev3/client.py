@@ -4,6 +4,8 @@ from enum import Enum
 import ev3dev.ev3 as ev3
 import threading
 import time
+import select
+
 
 us = ev3.UltrasonicSensor()
 us.mode='US-DIST-CM'
@@ -91,7 +93,7 @@ def check_for_obstacle(m, m1, m2, m3):
             stop(m, m1, m2, m3)
             if not data["said"] and time.time() - data["time-said"] > 5:
                 try:
-                    ev3.Sound.speak("Could you please get the fuck out!").wait()
+                    ev3.Sound.speak("Could you please move out!").wait()
                 except:
                     pass
                 data["time-said"] = time.time()
@@ -112,14 +114,26 @@ def start_socket(m, m1, m2, m3):
      sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
      sock.connect(('192.168.105.135', PORT))
      while not data['server-end']:
-         data_type = sock.recv(1).decode()
-         if len(data_type)!=1:
-             continue
-         move = int(data_type)
-         print(move)
-         data["last-command"]=move
-         if (data["obstacle-found"]): continue
-         move_albert(move, m, m1, m2, m3)
+         try:
+             ready_to_read, ready_to_write, in_error = select.select([sock, ], [sock, ], [], 5)
+         except select.error:
+             sock.shutdown(2)  # 0 = done receiving, 1 = done sending, 2 = both
+             sock.close()
+             # connection error event here, maybe reconnect
+             print('connection error')
+             data['server-end'] = True
+             stop(m, m1, m2, m3)
+             break
+
+         if len(ready_to_read) > 0:
+             data_type = sock.recv(1).decode()
+             if len(data_type)!=1:
+                 continue
+             move = int(data_type)
+             print(move)
+             data["last-command"]=move
+             if (data["obstacle-found"]): continue
+             move_albert(move, m, m1, m2, m3)
      sock.close()
 
 
