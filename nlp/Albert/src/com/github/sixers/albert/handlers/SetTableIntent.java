@@ -19,7 +19,16 @@ import com.amazon.ask.model.Intent;
 import com.amazon.ask.model.IntentRequest;
 import com.amazon.ask.model.Response;
 import com.amazon.ask.model.Slot;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.message.BasicNameValuePair;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static com.amazon.ask.request.Predicates.intentName;
@@ -48,10 +57,30 @@ public class SetTableIntent implements IntentRequestHandler {
                     .build();
         }
 
+        String deviceID = handlerInput.getRequestEnvelope().getContext().getSystem().getDevice().getDeviceId();
+
+
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        HttpPost httpPost = new HttpPost("http://albert.visgean.me/api/dots/");
+
+        httpPost.addHeader("Authorization", System.getenv("API_TOKEN"));
+        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+        nameValuePairs.add(new BasicNameValuePair("dot_id", deviceID));
+        nameValuePairs.add(new BasicNameValuePair("location", tableNUM));
+
+
+
+        try {
+            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+            CloseableHttpResponse response = httpClient.execute(httpPost);
+            httpClient.close();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
 
 
         return handlerInput.getResponseBuilder()
-                .withSpeech("succes")
+                .withSpeech("Set up confirmed.")
                 .build();
     }
 

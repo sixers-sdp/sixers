@@ -49,10 +49,13 @@ public class OrderByNumberHandler implements IntentRequestHandler {
 
         String itemNumber = item.getValue();
         String speechText = "You order item " + itemNumber;
+        String deviceID = handlerInput.getRequestEnvelope().getContext().getSystem().getDevice().getDeviceId();
 
         CloseableHttpClient httpClient = HttpClients.createDefault();
         HttpPost httpPost = new HttpPost("http://albert.visgean.me/api/orders/");
         List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+        nameValuePairs.add(new BasicNameValuePair("device_id", deviceID));
+
         nameValuePairs.add(new BasicNameValuePair("ItemNumber", itemNumber));
         try {
             httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));

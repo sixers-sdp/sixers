@@ -106,9 +106,9 @@ public class OrderFoodHandler implements IntentRequestHandler {
 
         httpPost.addHeader("Authorization", System.getenv("API_TOKEN"));
         List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-        nameValuePairs.add(new BasicNameValuePair("table_number", "t1"));
+        nameValuePairs.add(new BasicNameValuePair("device_id", deviceID));
         // TODO: Should be Modified to addapted new API.
-        nameValuePairs.add(new BasicNameValuePair("products_text", speechText +  deviceID));
+        nameValuePairs.add(new BasicNameValuePair("products_text", speechText));
 
 
         try {
