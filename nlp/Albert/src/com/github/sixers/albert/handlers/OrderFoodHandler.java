@@ -99,6 +99,7 @@ public class OrderFoodHandler implements IntentRequestHandler {
                 speechText = speechText + " and " + numthreeValue + " " + foodthreeName;
             }
         }
+       
 
         CloseableHttpClient httpClient = HttpClients.createDefault();
         HttpPost httpPost = new HttpPost("http://albert.visgean.me/api/orders/");
@@ -107,7 +108,7 @@ public class OrderFoodHandler implements IntentRequestHandler {
         httpPost.addHeader("Authorization", System.getenv("API_TOKEN"));
         List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
         nameValuePairs.add(new BasicNameValuePair("device_id", deviceID));
-        // TODO: Should be Modified to addapted new API.
+        // TODO: Should be Modified to adapted new API.
         nameValuePairs.add(new BasicNameValuePair("products_text", speechText));
 
 
@@ -119,9 +120,19 @@ public class OrderFoodHandler implements IntentRequestHandler {
             e.printStackTrace();
         }
 
-        return handlerInput.getResponseBuilder()
-                .withSpeech(speechText)
-                .build();
+        if (intent.getConfirmationStatus().getValue().toString() == "CONFIRMED") {
+        	return handlerInput.getResponseBuilder()
+            		.withSpeech(speechText)
+            		.withReprompt("Would you like anything else?")
+                    .withShouldEndSession(false)
+                    .build();
+        } else {
+        	return handlerInput.getResponseBuilder()
+            		.withSpeech("Okay, I've cancelled that request. Would you like something else?")
+            		.withReprompt("Would you like anything else?")
+                    .withShouldEndSession(false)
+                    .build();
+        }
     }
 
 }

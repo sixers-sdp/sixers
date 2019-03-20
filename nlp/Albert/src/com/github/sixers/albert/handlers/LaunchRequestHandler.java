@@ -31,12 +31,12 @@ public class LaunchRequestHandler implements RequestHandler {
 
     @Override
     public Optional<Response> handle(HandlerInput input) {
-        String speechText = "Hello, I am albert. Nice to meet you! What would like to order?";
+        String speechText = "Hello, I'm Albert. What would you like to order?";
 
         return input.getResponseBuilder()
                 .withSpeech(speechText)
                 .withSimpleCard("HelloWorld", speechText)
-                .withReprompt(speechText)
+                .withReprompt("Do you need a few more minutes to decide?")
                 .withShouldEndSession(false)
                 .build();
     }

@@ -67,7 +67,7 @@ public class OrderDrinkHandler implements IntentRequestHandler {
 
         //ordered drink name
 
-        String drinkonName = drinkone.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
+        String drinkoneName = drinkone.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
 
         if (drinktwo.getValue() != null) {
             drinktwoName = drinktwo.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
@@ -92,7 +92,7 @@ public class OrderDrinkHandler implements IntentRequestHandler {
 
         //Construct respond text
         String speechText = "You have ordered ";
-        speechText = speechText + numoneValue + " " + drinkonName;
+        speechText = speechText + numoneValue + " " + drinkoneName;
         if (!drinktwoName.equals("")) {
             if (drinkthreeName.equals("")) {
                 speechText = speechText + " and " + numtwoValue + " " + drinktwoName;
@@ -102,18 +102,17 @@ public class OrderDrinkHandler implements IntentRequestHandler {
             }
         }
 
+
         CloseableHttpClient httpClient = HttpClients.createDefault();
         HttpPost httpPost = new HttpPost("http://albert.visgean.me/api/orders/");
-
-
-
 
 
         httpPost.addHeader("Authorization", System.getenv("API_TOKEN"));
         List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
         nameValuePairs.add(new BasicNameValuePair("device_id", deviceID));
-        // TODO: Should be Modified to addapted new API.
+        // TODO: Should be Modified to adapted new API.
         nameValuePairs.add(new BasicNameValuePair("products_text", speechText));
+        
 
         try {
             httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
@@ -122,12 +121,20 @@ public class OrderDrinkHandler implements IntentRequestHandler {
         } catch (Exception e){
             e.printStackTrace();
         }
-        speechText = speechText + ". Anything else?";
+      
+      if (intent.getConfirmationStatus().getValue().toString() == "CONFIRMED") {
+        	return handlerInput.getResponseBuilder()
+            		.withSpeech(speechText)
+            		.withReprompt("Would you like anything else?")
+                    .withShouldEndSession(false)
+                    .build();
+        } else {
+        	return handlerInput.getResponseBuilder()
+            		.withSpeech("Okay, I've cancelled that request. Would you like something else?")
+            		.withReprompt("Would you like anything else?")
+                    .withShouldEndSession(false)
+                    .build();
+        }
 
-        return handlerInput.getResponseBuilder()
-                .withSpeech(speechText)
-                .withReprompt(speechText)
-                .withShouldEndSession(false)
-                .build();
     }
 }
