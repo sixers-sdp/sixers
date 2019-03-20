@@ -11,3 +11,5 @@ tables = [n for n in current_map.nodes if n.lower().startswith('t')]
 CHEF = 'chef'
 
 adjacency = utils.get_adjacency_with_direction(current_map)
+
+all_locations = current_map.nodes

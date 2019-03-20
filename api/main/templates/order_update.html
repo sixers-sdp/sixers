@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+
+{% block body %}
+	<br>
+<h2>Edit order</h2>
+	<br>
+
+	<form action="" method="post">
+	{% csrf_token %}
+		{% bootstrap_form form=form %}
+		<button type="submit" class="btn btn-primary btn-block">Submit</button>
+	</form>
+
+	<br>
+	<br>
+	<br>
+
+{% endblock %}

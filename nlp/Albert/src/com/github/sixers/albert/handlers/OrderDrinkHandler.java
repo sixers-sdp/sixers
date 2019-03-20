@@ -43,6 +43,7 @@ public class OrderDrinkHandler implements IntentRequestHandler {
     @Override
     public Optional<Response> handle(HandlerInput handlerInput, IntentRequest intentRequest) {
 //
+
         Intent intent = intentRequest.getIntent();
         //Drink names
         Slot drinkone = intent.getSlots().get("Drinkone");
@@ -67,13 +68,13 @@ public class OrderDrinkHandler implements IntentRequestHandler {
         //ordered drink name
 
         String drinkoneName = drinkone.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
+
         if (drinktwo.getValue() != null) {
             drinktwoName = drinktwo.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
         }
         if (drinkthree.getValue() != null) {
             drinkthreeName = drinkthree.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
         }
-
         //ordered number value of food
         if (numone.getValue() != null) {
             numoneValue = numone.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
@@ -84,6 +85,10 @@ public class OrderDrinkHandler implements IntentRequestHandler {
         if (numthree.getValue() != null) {
             numthreeValue = numthree.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
         }
+
+
+        String deviceID = handlerInput.getRequestEnvelope().getContext().getSystem().getDevice().getDeviceId();
+
 
         //Construct respond text
         String speechText = "You have ordered ";
@@ -97,8 +102,26 @@ public class OrderDrinkHandler implements IntentRequestHandler {
             }
         }
 
-        
-        if (intent.getConfirmationStatus().getValue().toString() == "CONFIRMED") {
+
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        HttpPost httpPost = new HttpPost("http://albert.visgean.me/api/orders/");
+
+
+        httpPost.addHeader("Authorization", System.getenv("API_TOKEN"));
+        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+        nameValuePairs.add(new BasicNameValuePair("device_id", deviceID));
+        // TODO: Should be Modified to addapted new API.
+        nameValuePairs.add(new BasicNameValuePair("products_text", speechText));
+
+        try {
+            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+            CloseableHttpResponse response = httpClient.execute(httpPost);
+            httpClient.close();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+      
+      if (intent.getConfirmationStatus().getValue().toString() == "CONFIRMED") {
         	return handlerInput.getResponseBuilder()
             		.withSpeech(speechText)
             		.withReprompt("Would you like anything else?")

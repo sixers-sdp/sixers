@@ -1,8 +1,11 @@
 /*
      Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+
      Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file
      except in compliance with the License. A copy of the License is located at
+
          http://aws.amazon.com/apache2.0/
+
      or in the "license" file accompanying this file. This file is distributed on an "AS IS" BASIS,
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for
      the specific language governing permissions and limitations under the License.
@@ -29,11 +32,12 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.amazon.ask.request.Predicates.intentName;
-public class OrderByNumberHandler implements IntentRequestHandler {
+
+public class SetTableIntent implements IntentRequestHandler {
 
     @Override
     public boolean canHandle(HandlerInput handlerInput, IntentRequest intentRequest) {
-        return (handlerInput.matches(intentName("OrderByNumber")));
+        return (handlerInput.matches(intentName("SetTableIntent")));
 
     }
 
@@ -41,19 +45,31 @@ public class OrderByNumberHandler implements IntentRequestHandler {
     public Optional<Response> handle(HandlerInput handlerInput, IntentRequest intentRequest)  {
 //
         Intent intent = intentRequest.getIntent();
-        Slot item = intent.getSlots().get("Number");
+        Slot tableNo = intent.getSlots().get("TableNUM");
+        String tableNUM = tableNo.getValue();
 
+        Slot password = intent.getSlots().get("password");
+        String passwordValue = password.getValue();
 
-        String itemNumber = item.getValue();
-        String speechText = "You order item " + itemNumber;
+        if (!passwordValue.equals(System.getenv("SetUpPW"))){
+            return handlerInput.getResponseBuilder()
+                    .withSpeech("This is an invalid password")
+                    .build();
+        }
+
         String deviceID = handlerInput.getRequestEnvelope().getContext().getSystem().getDevice().getDeviceId();
 
-        CloseableHttpClient httpClient = HttpClients.createDefault();
-        HttpPost httpPost = new HttpPost("http://albert.visgean.me/api/orders/");
-        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-        nameValuePairs.add(new BasicNameValuePair("device_id", deviceID));
 
-        nameValuePairs.add(new BasicNameValuePair("ItemNumber", itemNumber));
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        HttpPost httpPost = new HttpPost("http://albert.visgean.me/api/dots/");
+
+        httpPost.addHeader("Authorization", System.getenv("API_TOKEN"));
+        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+        nameValuePairs.add(new BasicNameValuePair("dot_id", deviceID));
+        nameValuePairs.add(new BasicNameValuePair("location", tableNUM));
+
+
+
         try {
             httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
             CloseableHttpResponse response = httpClient.execute(httpPost);
@@ -62,8 +78,9 @@ public class OrderByNumberHandler implements IntentRequestHandler {
             e.printStackTrace();
         }
 
+
         return handlerInput.getResponseBuilder()
-                .withSpeech(speechText)
+                .withSpeech("Set up confirmed.")
                 .build();
     }
 

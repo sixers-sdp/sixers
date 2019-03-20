@@ -49,7 +49,7 @@ public class OrderFoodHandler implements IntentRequestHandler {
         Slot foodone = intent.getSlots().get("Foodone");
         Slot foodtwo = intent.getSlots().get("Foodtwo");
         Slot foodthree = intent.getSlots().get("Foodthree");
-        
+
         //Number
         Slot numone = intent.getSlots().get("Numberone");
         Slot numtwo = intent.getSlots().get("Numbertwo");
@@ -85,10 +85,11 @@ public class OrderFoodHandler implements IntentRequestHandler {
             numthreeValue = numthree.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
         }
 
+        String deviceID = handlerInput.getRequestEnvelope().getContext().getSystem().getDevice().getDeviceId();
 
         //Construct respond text
         String speechText = "You have ordered ";
-        speechText = speechText + numoneValue + " " + foodoneName;
+        speechText = speechText + numoneValue +" " + foodoneName;
         if (!foodtwoName.equals("")){
             if (foodthreeName.equals("")) {
                 speechText = speechText + " and " + numtwoValue + " " + foodtwoName;
@@ -112,6 +113,25 @@ public class OrderFoodHandler implements IntentRequestHandler {
         	e.printStackTrace();
         }
 
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        HttpPost httpPost = new HttpPost("http://albert.visgean.me/api/orders/");
+
+
+        httpPost.addHeader("Authorization", System.getenv("API_TOKEN"));
+        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+        nameValuePairs.add(new BasicNameValuePair("device_id", deviceID));
+        // TODO: Should be Modified to addapted new API.
+        nameValuePairs.add(new BasicNameValuePair("products_text", speechText));
+
+
+        try {
+            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+            CloseableHttpResponse response = httpClient.execute(httpPost);
+            httpClient.close();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
         if (intent.getConfirmationStatus().getValue().toString() == "CONFIRMED") {
         	return handlerInput.getResponseBuilder()
             		.withSpeech(speechText)
@@ -125,8 +145,6 @@ public class OrderFoodHandler implements IntentRequestHandler {
                     .withShouldEndSession(false)
                     .build();
         }
-
-
     }
 
 }

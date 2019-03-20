@@ -3,8 +3,7 @@
 {% block title %}Plan{% endblock %}
 
 {% block body %}
-<h1>Plan:</h1>
-	<a href="{% url 'main:new_plan' %}">Create new plan</a>
+	<h1>Plan:</h1>
 
 
 	Current execution plan:
@@ -18,4 +17,5 @@
 	</pre>
 
 
+	<a href="{% url 'main:new_plan' %}">Create new plan</a>
 {% endblock %}

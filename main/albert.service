@@ -1,0 +1,13 @@
+[Unit]
+Description=Albert's main process
+After=network.target
+
+[Service]
+Restart=always
+User=student
+WorkingDirectory=/home/student/sixers/main
+EnvironmentFile=/home/student/envrc_systemd
+ExecStart=python main.py
+
+[Install]
+WantedBy=multi-user.target
