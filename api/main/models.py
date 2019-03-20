@@ -68,6 +68,9 @@ class Order(models.Model):
         max_length=24
     )
 
+    class Meta:
+        get_latest_by = ['updated_at']
+
     def __str__(self):
         return f"order{self.pk}"
 
@@ -108,18 +111,18 @@ class ExecutionPlan(models.Model):
         graph = latest_map.get_networkx_graph()
 
         # 1. generate problem file
+        delivery_order = Order.objects.filter(state=ORDER_STATE_DELIVERY).latest()
+
         context = {
             'current_location': LocationUpdate.objects.latest(),
             'chef_location': latest_map.chef_node,
-            'ready_orders': Order.objects.filter(state=ORDER_STATE_READY),
-            'delivery_orders': Order.objects.filter(state=ORDER_STATE_DELIVERY),
+            'delivery_order': delivery_order,
             'locations': graph.nodes,
             'edges': latest_map.get_adjacency(),
         }
 
         # if there is nothing to be done do not generate new plan!
-        actions_count = context['ready_orders'].count() + context['delivery_orders'].count()
-        if not actions_count:
+        if not delivery_order:
             return None
 
         plan = cls()
