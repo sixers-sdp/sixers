@@ -2,12 +2,14 @@ import os
 import re
 import subprocess
 
+import pydot
 from django.db import models
-
 from django.conf import settings
 from django.template.loader import render_to_string
-from map import cafe_map
 
+from networkx.drawing.nx_pydot import read_dot, from_pydot
+
+from map.utils import get_adjacency_with_direction
 
 ORDER_STATE_NEW = 'new'
 ORDER_STATE_READY = 'ready'
@@ -199,3 +201,34 @@ class LocationUpdate(models.Model):
 
     def __str__(self):
         return f'{self.location}'
+
+
+
+class Map(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    dot_content = models.TextField()
+    chef_node = models.CharField(max_length=32, default='chef')
+
+    @classmethod
+    def latest(cls):
+        cls.objects.latest('created_at')
+
+    def __str__(self):
+        return f"map_{self.pk}"
+
+    def get_networkx_graph(self):
+        # List of one or more "pydot.Dot" instances deserialized from this file.
+        P_list = pydot.graph_from_dot_data(self.dot_content)
+        # Convert only the first such instance into a NetworkX graph.
+        return from_pydot(P_list[0])
+
+    def get_tables(self):
+        return [n for n in self.get_networkx_graph().nodes if n.lower().startswith('t')]
+
+    def get_adjacency_with_direction(self):
+        return get_adjacency_with_direction(self.get_networkx_graph())
+
+    def get_all_locations(self):
+        return self.get_networkx_graph().nodes
