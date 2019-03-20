@@ -57,10 +57,7 @@ class Order(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    table_number = models.CharField(
-        max_length=30,
-        choices=[(t, t) for t in  cafe_map.tables]
-    )
+    table_number = models.CharField(max_length=30)
 
     products = models.ManyToManyField(Product, blank=True)
     products_text = models.TextField(null=True)
@@ -107,14 +104,17 @@ class ExecutionPlan(models.Model):
         - problem file - rendered template capturing the world right now
         """
 
+        latest_map = CafeMap.objects.latest()
+        graph = latest_map.get_networkx_graph()
+
         # 1. generate problem file
         context = {
             'current_location': LocationUpdate.objects.latest(),
-            'chef_location': cafe_map.CHEF,
+            'chef_location': latest_map.chef_node,
             'ready_orders': Order.objects.filter(state=ORDER_STATE_READY),
             'delivery_orders': Order.objects.filter(state=ORDER_STATE_DELIVERY),
-            'locations': cafe_map.current_map.nodes,
-            'edges': cafe_map.adjacency,
+            'locations': graph.nodes,
+            'edges': latest_map.get_adjacency(),
         }
 
         # if there is nothing to be done do not generate new plan!
@@ -204,16 +204,15 @@ class LocationUpdate(models.Model):
 
 
 
-class Map(models.Model):
+class CafeMap(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     dot_content = models.TextField()
     chef_node = models.CharField(max_length=32, default='chef')
 
-    @classmethod
-    def latest(cls):
-        cls.objects.latest('created_at')
+    class Meta:
+        get_latest_by = ['updated_at']
 
     def __str__(self):
         return f"map_{self.pk}"
@@ -227,7 +226,7 @@ class Map(models.Model):
     def get_tables(self):
         return [n for n in self.get_networkx_graph().nodes if n.lower().startswith('t')]
 
-    def get_adjacency_with_direction(self):
+    def get_adjacency(self):
         return get_adjacency_with_direction(self.get_networkx_graph())
 
     def get_all_locations(self):
