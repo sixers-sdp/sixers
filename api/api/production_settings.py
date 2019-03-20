@@ -16,6 +16,7 @@ DEBUG = False
 ALLOWED_HOSTS = [
     '188.166.173.237',
     'albert.visgean.me',
+    'albertwaitfor.me',
 ]
 
 DATABASES = {
