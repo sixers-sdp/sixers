@@ -38,6 +38,9 @@ class DotAssociation(models.Model):
     dot_id = models.CharField(max_length=248)
     location = models.CharField(max_length=20)
 
+    def __str__(self):
+        return self.location
+
 
 class Product(models.Model):
     name = models.CharField(max_length=128)
