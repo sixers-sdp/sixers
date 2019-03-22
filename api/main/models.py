@@ -42,9 +42,25 @@ class DotAssociation(models.Model):
         return self.location
 
 
+class ProductCategory(models.Model):
+    name = models.CharField(max_length=128)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = 'product categories'
+
+
 class Product(models.Model):
+    category = models.ForeignKey(ProductCategory, null=True, on_delete=models.SET_NULL)
+
     name = models.CharField(max_length=128)
     price = models.IntegerField()
+
+    synonyms = models.TextField(help_text='comma separated list of synonyms', null=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
