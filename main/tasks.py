@@ -1,5 +1,9 @@
+import time
+
 import settings
 import requests
+
+from vision.pi.server import start_socket
 
 
 class Task:
@@ -11,49 +15,66 @@ class Task:
     # group_by = False
 
     success = False
+    execute_all_at_once = False
 
-    def __init__(self, arguments):
-        self.arguments = arguments
+    ev3_conn = None
+    ev3_address = None
 
-    def post_task(self):
+    def __init__(self, arguments_grouped):
+        self.arguments_grouped = arguments_grouped
+
+    def post_task(self, task):
         """
         Update API state here
         """
         pass
 
-    def pre_task(self):
+
+    def post_all_tasks(self):
+        """
+        Update API state here
+        """
         pass
 
-    def execute(self):
+    def execute_one(self, task):
+        pass
+
+    def execute_all(self):
         pass
 
     def run(self):
-        self.pre_task()
-        self.execute()
-        self.post_task()
+        if self.execute_all_at_once:
+            self.execute_all()
+            self.post_all_tasks()
+            return
 
+        for task in self.arguments_grouped:
+            self.execute_one(task['args'])
+            self.post_task(task['args'])
 
-class DumbMoveTask(Task):
+class AbstractMoveTask(Task):
     """
     This just simulates moving
     """
+    execute_all_at_once = True
 
-    def post_task(self):
+    def post_all_tasks(self):
         r = requests.post(
             settings.API_LOCATION,
-            data={'location': self.arguments['destination']},
+            data={'location': self.arguments_grouped[-1]['args']['destination']},
             headers=settings.AUTH_HEADERS
         )
         r.raise_for_status()
-
-    def execute(self):
         self.success = True
 
+    def execute_all(self):
+        pass
 
-class DumbPickupTask(Task):
-    def post_task(self):
+
+class AbstractPickupTask(Task):
+    def post_task(self, task):
         # needs to update order state
-        order_id = self.arguments['order'].strip('ORDER')
+        order_id = task['order'].strip('ORDER')
         url = settings.API_DETAIL_ORDER_URL.format(order_id)
         r = requests.patch(
             url,
@@ -62,15 +83,13 @@ class DumbPickupTask(Task):
         )
         print(r.content)
         r.raise_for_status()
-
-    def execute(self):
         self.success = True
 
 
-class DumbHandoverTask(Task):
-    def post_task(self):
+class AbstractHandoverTask(Task):
+    def post_task(self, task):
         # needs to update order state
-        order_id = self.arguments['delivery'].strip('ORDER')
+        order_id = task['delivery'].strip('ORDER')
         url = settings.API_DETAIL_ORDER_URL.format(order_id)
         r = requests.patch(
             url,
@@ -78,8 +97,27 @@ class DumbHandoverTask(Task):
             headers=settings.AUTH_HEADERS
         )
         r.raise_for_status()
-
-    def execute(self):
         self.success = True
 
 
+class MoveTask(AbstractMoveTask):
+    def execute_all(self):
+        directions = [f['relative_direction'] for f in self.arguments_grouped]
+        directions.append('END')
+        directions.pop(0)
+
+        # is green:
+        # if currently at table: its blue
+        # if at chefs: we look for green
+
+        is_green = self.arguments_grouped[0]['args']['origin'].lower() == 'chef'
+        start_socket(directions, self.ev3_conn, self.ev3_address, is_green)
+
+
+class PickupTask(AbstractPickupTask):
+    def execute_one(self, task):
+        time.sleep(10)
+
+class HandoverTask(AbstractHandoverTask):
+    def execute_one(self, task):
+        time.sleep(10)

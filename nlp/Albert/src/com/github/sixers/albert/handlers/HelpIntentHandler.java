@@ -32,11 +32,11 @@ public class HelpIntentHandler implements RequestHandler {
 
     @Override
     public Optional<Response> handle(HandlerInput input) {
-        String speechText = "You can order foods and order drinks with albert!";
 
+        String speechText = "You can order food and drink with me! Follow the instructions on the menu if you are unsure how to communicate with me.";
+      
         PushNotificationStatus st = PushNotificationStatus.fromValue("HI");
         PushNotification.builder().withStatus(st).build();
-
 
         return input.getResponseBuilder()
                 .withSpeech(speechText)

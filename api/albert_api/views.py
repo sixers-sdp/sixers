@@ -1,10 +1,11 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, mixins
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.status import HTTP_204_NO_CONTENT
+from rest_framework.viewsets import GenericViewSet
 
-from albert_api.serializers import LocationUpdateSerializer
-from main.models import Product, Order, ExecutionPlan, PLAN_STATE_NEW, LocationUpdate
+from albert_api.serializers import LocationUpdateSerializer, DotAssociationSerializer
+from main.models import Product, Order, ExecutionPlan, PLAN_STATE_NEW, LocationUpdate, DotAssociation
 from .serializers import ProductSerializer, OrderSerializer, PlanSerializer
 
 
@@ -24,7 +25,13 @@ class PlanView(viewsets.ModelViewSet):
 
     @action(detail=False)
     def latest(self, request):
-        instance = self.queryset.latest()
+        try:
+            instance = self.queryset.filter(state=PLAN_STATE_NEW).latest()
+        except ExecutionPlan.DoesNotExist:
+            instance = ExecutionPlan.create_new()
+        if not instance:
+            return Response(status=HTTP_204_NO_CONTENT)
+
         if instance.state != PLAN_STATE_NEW:
             instance = ExecutionPlan.create_new()
             if not instance:
@@ -37,3 +44,8 @@ class PlanView(viewsets.ModelViewSet):
 class LocationUpdateViewSet(viewsets.ModelViewSet):
     queryset = LocationUpdate.objects.all()
     serializer_class = LocationUpdateSerializer
+
+
+class DotAssociationViewSet(mixins.CreateModelMixin, GenericViewSet):
+    queryset = DotAssociation.objects.all()
+    serializer_class = DotAssociationSerializer

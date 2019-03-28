@@ -1,11 +1,16 @@
 digraph g {
-    t1 -> t2 [tailport=e headport=w];
-    t1 -> t3 [tailport=s headport=n];
-    t3 -> t4 [tailport=e headport=w];
-    t4 -> t2 [tailport=n headport=s];
+    t1 -> c1 [tailport=e headport=w];
 
-    t4 -> Chef [tailport=s headport=n];
+    c1 -> c2 [tailport=e headport=w];
+    c2 -> t2 [tailport=e headport=w]
 
-	{ rank=same; t1 t2 }
-	{ rank=same; t3 t4 }
+    c1 -> c3 [tailport=s headport=n];
+    c3 -> c4 [tailport=e headport=w];
+    c4 -> c2 [tailport=n headport=s];
+    c4 -> t3 [tailport=e headport=w]
+
+    c4 -> Chef [tailport=s headport=n];
+
+	{ rank=same; t1 c1 c2 t2}
+	{ rank=same; c3 c4 t3}
 }

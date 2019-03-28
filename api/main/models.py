@@ -2,12 +2,14 @@ import os
 import re
 import subprocess
 
+import pydot
 from django.db import models
-
 from django.conf import settings
 from django.template.loader import render_to_string
-from map import cafe_map
 
+from networkx.drawing.nx_pydot import read_dot, from_pydot
+
+from map.utils import get_adjacency_with_direction
 
 ORDER_STATE_NEW = 'new'
 ORDER_STATE_READY = 'ready'
@@ -15,9 +17,11 @@ ORDER_STATE_DELIVERY = 'delivery'
 ORDER_STATE_FINISHED = 'finished'
 ORDER_STATE_ABORTED = 'aborted'
 
+ORDER_STATES = [ORDER_STATE_NEW, ORDER_STATE_READY, ORDER_STATE_DELIVERY, ORDER_STATE_FINISHED, ORDER_STATE_ABORTED]
+
 ORDER_STATE_CHOICES = [
     (s, s)
-    for s in [ORDER_STATE_NEW, ORDER_STATE_READY, ORDER_STATE_DELIVERY, ORDER_STATE_FINISHED, ORDER_STATE_ABORTED]
+    for s in ORDER_STATES
 ]
 
 PLAN_STATE_NEW = 'new'
@@ -30,10 +34,33 @@ PLAN_STATE_CHOICES = [
 ]
 
 
+class DotAssociation(models.Model):
+    dot_id = models.CharField(max_length=248)
+    location = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.location
+
+
+class ProductCategory(models.Model):
+    name = models.CharField(max_length=128)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = 'product categories'
+
 
 class Product(models.Model):
+    category = models.ForeignKey(ProductCategory, null=True, on_delete=models.SET_NULL)
+
     name = models.CharField(max_length=128)
     price = models.IntegerField()
+
+    synonyms = models.TextField(help_text='comma separated list of synonyms', null=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -49,10 +76,7 @@ class Order(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    table_number = models.CharField(
-        max_length=30,
-        choices=[(t,t) for t in  cafe_map.tables]
-    )
+    table_number = models.CharField(max_length=30)
 
     products = models.ManyToManyField(Product, blank=True)
     products_text = models.TextField(null=True)
@@ -62,6 +86,9 @@ class Order(models.Model):
         choices=ORDER_STATE_CHOICES,
         max_length=24
     )
+
+    class Meta:
+        get_latest_by = ['updated_at']
 
     def __str__(self):
         return f"order{self.pk}"
@@ -86,6 +113,7 @@ class ExecutionPlan(models.Model):
 
     class Meta:
         get_latest_by = 'created_at'
+        ordering = ['-id']
 
     def __str__(self):
         return f'{self.created_at}'
@@ -98,19 +126,22 @@ class ExecutionPlan(models.Model):
         - problem file - rendered template capturing the world right now
         """
 
+        latest_map = CafeMap.objects.latest()
+        graph = latest_map.get_networkx_graph()
+
         # 1. generate problem file
+        delivery_order = Order.objects.filter(state=ORDER_STATE_DELIVERY).latest()
+
         context = {
             'current_location': LocationUpdate.objects.latest(),
-            'chef_location': cafe_map.CHEF,
-            'ready_orders': Order.objects.filter(state=ORDER_STATE_READY),
-            'delivery_orders': Order.objects.filter(state=ORDER_STATE_DELIVERY),
-            'locations': cafe_map.current_map.nodes,
-            'edges': cafe_map.adjacency,
+            'chef_location': latest_map.chef_node,
+            'delivery_order': delivery_order,
+            'locations': graph.nodes,
+            'edges': latest_map.get_adjacency(),
         }
 
         # if there is nothing to be done do not generate new plan!
-        actions_count = context['ready_orders'].count() + context['delivery_orders'].count()
-        if not actions_count:
+        if not delivery_order:
             return None
 
         plan = cls()
@@ -192,3 +223,33 @@ class LocationUpdate(models.Model):
 
     def __str__(self):
         return f'{self.location}'
+
+
+
+class CafeMap(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    dot_content = models.TextField()
+    chef_node = models.CharField(max_length=32, default='chef')
+
+    class Meta:
+        get_latest_by = ['updated_at']
+
+    def __str__(self):
+        return f"map_{self.pk}"
+
+    def get_networkx_graph(self):
+        # List of one or more "pydot.Dot" instances deserialized from this file.
+        P_list = pydot.graph_from_dot_data(self.dot_content)
+        # Convert only the first such instance into a NetworkX graph.
+        return from_pydot(P_list[0])
+
+    def get_tables(self):
+        return [n for n in self.get_networkx_graph().nodes if n.lower().startswith('t')]
+
+    def get_adjacency(self):
+        return get_adjacency_with_direction(self.get_networkx_graph())
+
+    def get_all_locations(self):
+        return self.get_networkx_graph().nodes

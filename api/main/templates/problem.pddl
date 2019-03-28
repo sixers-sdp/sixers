@@ -5,13 +5,7 @@
 			{{ node }} - location
 		{% endfor %}
 
-		{% for order in ready_orders %}
-			{{ order }}	- delivery
-		{% endfor %}
-		{% for order in delivery_orders %}
-			{{ order }}	- delivery
-		{% endfor %}
-
+		{{ delivery_order }} - delivery
     )
 
     (:init
@@ -21,15 +15,8 @@
 
 		(at {{ current_location }} Albert)
 
-		{% for order in ready_orders %}
-            (at {{ chef_location }} {{ order }})
-			(awaiting {{ order.table_number }} {{ order }})
-		{% endfor %}
-
-		{% for order in delivery_orders %}
-			(awaiting {{ order.table_number }} {{ order }})
-	        (holding Albert {{ order }})
-		{% endfor %}
+		(awaiting {{ delivery_order.table_number }} {{ delivery_order }})
+        (holding Albert {{ delivery_order }})
 
     )
 

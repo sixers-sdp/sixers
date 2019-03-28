@@ -1,15 +1,11 @@
 {% extends 'base.html' %}
 
 {% block body %}
-	<h3>Current orders</h3>
-	<ul>
-		{% for order in orders %}
-			<li>{{ order}}</li>
-			<ul>
-				{% for product in order.products.all %}
-					<li>{{ product }}</li>
-				{% endfor %}
-			</ul>
-		{% endfor %}
-	</ul>
+	{% include "includes/orders_sublist.html" with label="Order in delivery" orders=delivery_orders button_hide='hide' %}
+	{% if albert_is_empty %}
+		{% include "includes/orders_sublist.html" with label="Ready orders" orders=ready_orders button_text="Mark for delivery" button_state='delivery'%}
+	{% else %}
+		{% include "includes/orders_sublist.html" with label="Ready orders" orders=ready_orders %}
+	{% endif %}
+	{% include "includes/orders_sublist.html" with label="New orders" orders=new_orders button_text="Mark ready" button_state='ready' %}
 {% endblock %}

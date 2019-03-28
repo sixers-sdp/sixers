@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     # Packages:
     'rest_framework',
     'rest_framework.authtoken',
+    'bootstrap4',
 
     'main',
 ]
