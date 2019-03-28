@@ -108,11 +108,11 @@ public class OrderDrinkHandler implements IntentRequestHandler {
 
 
         httpPost.addHeader("Authorization", System.getenv("API_TOKEN"));
-        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+        List<NameValuePair> nameValuePairs = new ArrayList<>();
         nameValuePairs.add(new BasicNameValuePair("device_id", deviceID));
         // TODO: Should be Modified to adapted new API.
         nameValuePairs.add(new BasicNameValuePair("products_text", speechText));
-        
+
 
         try {
             httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
@@ -121,8 +121,8 @@ public class OrderDrinkHandler implements IntentRequestHandler {
         } catch (Exception e){
             e.printStackTrace();
         }
-      
-      if (intent.getConfirmationStatus().getValue().toString() == "CONFIRMED") {
+
+      if (intent.getConfirmationStatus().getValue().toString().equals("CONFIRMED")) {
         	return handlerInput.getResponseBuilder()
             		.withSpeech(speechText)
             		.withReprompt("Would you like anything else?")
