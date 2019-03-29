@@ -5,10 +5,10 @@ PORT = 50000
 
 
 class MoveCommand(Enum):
-    QR=1
-    STOP=2
-    ALIGN_LEFT=3
-    ALIGN_RIGHT=4
-    FORWARD=5
-    CORNER_LEFT=6
-    CORNER_RIGHT=7
+    QR = 1
+    STOP = 2
+    ALIGN_LEFT = 3
+    ALIGN_RIGHT = 4
+    FORWARD = 5
+    CORNER_LEFT = 6
+    CORNER_RIGHT = 7
