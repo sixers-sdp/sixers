@@ -6,7 +6,7 @@ import time
 
 from pyzbar.pyzbar import decode
 
-from .constants import *
+import constants
 
 
 camera = {"frame": None}
