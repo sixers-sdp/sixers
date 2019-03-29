@@ -12,7 +12,8 @@ from utils import group_plan
 
 sys.path.append(os.path.abspath('..'))
 
-from vision.pi.server import start_threads, EV3_PORT
+from vision.server import start_threads
+from vision.constants import PORT
 
 
 GLOBAL_EV3_SOCKET = None
@@ -139,7 +140,7 @@ if __name__ == '__main__':
         start_threads()
 
         GLOBAL_EV3_SOCKET = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        GLOBAL_EV3_SOCKET.bind(('0.0.0.0', EV3_PORT))
+        GLOBAL_EV3_SOCKET.bind(('0.0.0.0', PORT))
         GLOBAL_EV3_SOCKET.listen(1)
         GLOBAL_EV3_CONN, GLOBAL_EV3_ADDRESS = GLOBAL_EV3_SOCKET.accept()
 
