@@ -164,6 +164,7 @@ def start_socket(directions, ev3_conn, ev3_address, is_green):
         new_type = calculate_frame()
         if old_type == new_type:
             continue
+        print('New command is', new_type)
         ev3_conn.sendall(str(new_type).encode())
         old_type = new_type
     data['server-end'] = False
