@@ -1,14 +1,16 @@
-import socket
 import sys
 import threading
 import cv2
-from pyzbar.pyzbar import decode
 import numpy as np
 import time
 
+from pyzbar.pyzbar import decode
+
+from .constants import *
+
+
 camera = {"frame": None}
 
-EV3_PORT = 50000
 data = {"server-end": False}
 SEEN_YELLOW = False
 # cmds = ["FORWARD","LEFT", "RIGHT","END"]
@@ -23,6 +25,7 @@ is_current_color_green = True
 yellow_threshed = None
 END = False
 sleep = False
+
 
 def start_camera():
     global camera
@@ -55,7 +58,10 @@ def calculate_frame():
     global check_if_stops_after_switch, sleep, camera
     prev_time = time.time()
     frame = camera["frame"]
-    if frame is None: return 2
+
+    if frame is None:
+        return MoveCommand.STOP
+
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
     if is_current_color_green:
@@ -91,8 +97,8 @@ def calculate_frame():
     if END:
         if top_left_index != 0 and bottom_left_index != 0 and np.abs(w // 2 - vert_idx) < 35:
             data["server-end"] = True
-            return 2
-        return 6
+            return MoveCommand.STOP
+        return MoveCommand.CORNER_LEFT
 
     if corner_detected and not corner_detected_once and top_left_index != 0 and bottom_left_index != 0:
         if np.abs(w // 2 - vert_idx) < 35:
@@ -105,17 +111,17 @@ def calculate_frame():
         corner_detected_once = False
         if cmds[0] == "LEFT":
             is_current_color_green = not is_current_color_green
-            return 6
+            return MoveCommand.CORNER_LEFT
         elif cmds[0] == "RIGHT":
             is_current_color_green = not is_current_color_green
-            return 7
+            return MoveCommand.CORNER_RIGHT
         elif cmds[0] == "FORWARD":
             sleep = True
-            return 5
+            return MoveCommand.FORWARD
         elif cmds[0] == "END":
             END = True
-            return 6
-        return 2
+            return MoveCommand.CORNER_LEFT
+        return MoveCommand.STOP
 
     if not corner_detected:
         decoded_frame = decode(frame)
@@ -125,16 +131,16 @@ def calculate_frame():
             corner_detected = True
             corner_detected_once = True
             check_if_stops_after_switch = True
-            return 5
+            return MoveCommand.FORWARD
         elif top_left_index == 0 and bottom_left_index == 0:
             return 2
-        if (np.abs(w // 2 - vert_idx) > 20):
+        if np.abs(w // 2 - vert_idx) > 20:
             if w // 2 - vert_idx > 0:
-                return 3
+                return MoveCommand.ALIGN_LEFT
             else:
-                return 4
+                return MoveCommand.ALIGN_RIGHT
         else:
-            return 5
+            return MoveCommand.FORWARD
     else:
         return old_type
 
@@ -156,7 +162,8 @@ def start_socket(directions, ev3_conn, ev3_address, is_green):
     print('Commands', directions)
     while not data['server-end']:
         new_type = calculate_frame()
-        if old_type == new_type: continue
+        if old_type == new_type:
+            continue
         ev3_conn.sendall(str(new_type).encode())
         old_type = new_type
     data['server-end'] = False
