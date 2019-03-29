@@ -98,7 +98,7 @@ def calculate_frame():
         if top_left_index != 0 and bottom_left_index != 0 and np.abs(w // 2 - vert_idx) < 35:
             data["server-end"] = True
             return constants.MoveCommand.STOP
-        return constants..CORNER_LEFT
+        return constants.MoveCommand.CORNER_LEFT
 
     if corner_detected and not corner_detected_once and top_left_index != 0 and bottom_left_index != 0:
         if np.abs(w // 2 - vert_idx) < 35:
