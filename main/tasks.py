@@ -3,7 +3,7 @@ import time
 import settings
 import requests
 
-from vision.pi.server import start_socket
+from vision.server import start_socket
 
 
 class Task:
