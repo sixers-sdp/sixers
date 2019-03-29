@@ -26,6 +26,11 @@ yellow_threshed = None
 END = False
 sleep = False
 
+def crash():
+    print("Crashing.")
+    data["server-end"] = True
+    sys.exit(1)
+
 
 def start_camera():
     global camera
@@ -36,7 +41,7 @@ def start_camera():
 
     if vc is None or not vc.isOpened():
         vc.release()
-        sys.exit(1)
+        crash()
 
     camera_fail_counter = 0
     while not data['server-end']:
@@ -47,7 +52,7 @@ def start_camera():
 
             if camera_fail_counter > 100000:
                 vc.release()
-                sys.exit(1)
+                crash()
 
         time.sleep(0.05)
 
