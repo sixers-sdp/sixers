@@ -6,7 +6,7 @@ After=network.target
 Restart=always
 User=robot
 WorkingDirectory=/home/robot/sixers/vision
-ExecStart=python3.4 ev3_client.py
+ExecStart=/usr/bin/python3.4 ev3_client.py
 
 [Install]
 WantedBy=multi-user.target
