@@ -30,7 +30,6 @@ class Server:
         self.start_threads()
 
     def setup_order(self, directions, is_current_color_green):
-
         self.directions = directions
         self.is_current_color_green = is_current_color_green
         self.start_order()
@@ -47,12 +46,13 @@ class Server:
         self.listen_for_connections()
 
     def listen_for_connections(self):
+        print("Listening for connections...")
         self.socket.listen(1)
         self.conn, self.addr = self.socket.accept()
         print("Connected from ", self.addr)
         print('Commands', self.directions)
-        
-        
+
+
     def crash(self):
         print("Crashing.")
         self.server_end = True
@@ -63,12 +63,19 @@ class Server:
 
 
     def start_camera(self):
-        
         self.vc = cv2.VideoCapture(0)
+        if not self.vc.isOpened():
+            print("Camera did not open! Trying again in 3 2 1...")
+            self.vc.release()
+            time.sleep(3)
+            self.start_camera()
+            return
+        else:
+            print("Camera ready")
         self.vc.set(3, 160)
         self.vc.set(4, 120)
 
-        if self.vc is None or not self.vc.isOpened():
+        if self.vc is None:
             self.vc.release()
             self.crash()
 
@@ -128,6 +135,7 @@ class Server:
         if self.end:
             if top_left_index != 0 and bottom_left_index != 0 and np.abs(self.w // 2 - vert_idx) < 35:
                 self.server_end = True
+                self.socket.close()
                 return constants.MoveCommand.STOP
             return constants.MoveCommand.CORNER_LEFT
 
@@ -181,11 +189,16 @@ class Server:
             if self.old_type == new_type:
                 continue
             print('New command is', new_type)
-            if isinstance(new_type, int):
-                print('received int type command from calculate_frame, use enum!')
-                self.conn.sendall(str(new_type).encode())
-            if new_type is not None:
-                self.conn.sendall(str(new_type.value).encode())
+            try:
+                if isinstance(new_type, int):
+                    print('received int type command from calculate_frame, use enum!')
+                    self.conn.sendall(str(new_type).encode())
+                if new_type is not None:
+                    self.conn.sendall(str(new_type.value).encode())
+            except Exception as e:
+                self.listen_for_connections()
+                self.conn.sendall(str(self.calculate_frame().value).encode())
+                continue
             self.old_type = new_type
         self.server_end = False
         self.end = False

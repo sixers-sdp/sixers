@@ -13,10 +13,8 @@ commands = ['LEFT', 'LEFT', 'END']
 
 server = Server()
 
-print("woah")
-sys.exit(0)
 try:
     server.setup_order(commands, True)
 except Exception as e:
+    print(e)
     server.crash()
-    raise e
