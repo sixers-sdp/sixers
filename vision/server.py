@@ -74,7 +74,7 @@ def calculate_frame():
     frame = camera["frame"]
 
     if frame is None:
-        return constants.MoveCommand.STOP
+        return constants.MoveCommand.FRAME_EMPTY
 
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
