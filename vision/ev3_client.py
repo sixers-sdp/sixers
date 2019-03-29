@@ -4,7 +4,7 @@ import threading
 import time
 import select
 
-from .constants import *
+from . import constants
 
 us = ev3.UltrasonicSensor()
 us.mode = 'US-DIST-CM'
@@ -49,19 +49,19 @@ def align(m, m1, m2, m3, left_value, right_value):
 
 
 def move_albert(move, m, m1, m2, m3):
-    if (move == MoveCommand.FORWARD.value):
+    if (move == constants.MoveCommand.FORWARD.value):
         # motors["running"]=True
         go_forward(m, m1, m2, m3, 200)
-    elif move == MoveCommand.ALIGN_LEFT.value:
+    elif move == constants.MoveCommand.ALIGN_LEFT.value:
         # print(response, "ALIGN LEFT")
         align(m, m1, m2, m3, 100, 250)
-    elif move == MoveCommand.ALIGN_RIGHT.value:
+    elif move == constants.MoveCommand.ALIGN_RIGHT.value:
         # print(response, "ALIGN RIGHT")
         align(m, m1, m2, m3, 250, 100)
-    elif (move == MoveCommand.STOP.value):
+    elif (move == constants.MoveCommand.STOP.value):
         # print(response, "STOP")
         stop(m, m1, m2, m3)
-    elif (move == MoveCommand.QR.value):
+    elif (move == constants.MoveCommand.QR.value):
         # print(response, "QR")
         stop(m, m1, m2, m3)
     else:
@@ -69,10 +69,10 @@ def move_albert(move, m, m1, m2, m3):
 
 
 def corner_type(m, m1, m2, m3, c_type):
-    if c_type == MoveCommand.CORNER_RIGHT.value:
+    if c_type == constants.MoveCommand.CORNER_RIGHT.value:
         move_left(m, m1, 100)
         move_right(m2, m3, -100)
-    elif c_type == MoveCommand.CORNER_LEFT.value:
+    elif c_type == constants.MoveCommand.CORNER_LEFT.value:
         move_left(m, m1, -100)
         move_right(m2, m3, 100)
 
@@ -106,7 +106,7 @@ def check_for_obstacle(m, m1, m2, m3):
 def start_socket(m, m1, m2, m3):
     global data
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.connect((RPI_ADDRESS, PORT))
+    sock.connect((constants.RPI_ADDRESS, constants.PORT))
     while not data['server-end']:
         try:
             ready_to_read, ready_to_write, in_error = select.select([sock, ], [sock, ], [], 5)
