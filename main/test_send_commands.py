@@ -11,6 +11,7 @@ from vision.server import start_socket, start_threads
 start_threads()
 
 GLOBAL_EV3_SOCKET = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+GLOBAL_EV3_SOCKET.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 GLOBAL_EV3_SOCKET.bind(('0.0.0.0', PORT))
 GLOBAL_EV3_SOCKET.listen(1)
 GLOBAL_EV3_CONN, GLOBAL_EV3_ADDRESS = GLOBAL_EV3_SOCKET.accept()
