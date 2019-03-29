@@ -1,10 +1,11 @@
-import socket
 import sys
 import threading
 import cv2
-from pyzbar.pyzbar import decode
 import numpy as np
 import time
+
+from pyzbar.pyzbar import decode
+
 from .constants import *
 
 
@@ -24,6 +25,7 @@ is_current_color_green = True
 yellow_threshed = None
 END = False
 sleep = False
+
 
 def start_camera():
     global camera
@@ -56,7 +58,10 @@ def calculate_frame():
     global check_if_stops_after_switch, sleep, camera
     prev_time = time.time()
     frame = camera["frame"]
-    if frame is None: return 2
+
+    if frame is None:
+        return MoveCommand.STOP
+
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
     if is_current_color_green:
@@ -129,7 +134,7 @@ def calculate_frame():
             return MoveCommand.FORWARD
         elif top_left_index == 0 and bottom_left_index == 0:
             return 2
-        if (np.abs(w // 2 - vert_idx) > 20):
+        if np.abs(w // 2 - vert_idx) > 20:
             if w // 2 - vert_idx > 0:
                 return MoveCommand.ALIGN_LEFT
             else:
@@ -157,7 +162,8 @@ def start_socket(directions, ev3_conn, ev3_address, is_green):
     print('Commands', directions)
     while not data['server-end']:
         new_type = calculate_frame()
-        if old_type == new_type: continue
+        if old_type == new_type:
+            continue
         ev3_conn.sendall(str(new_type).encode())
         old_type = new_type
     data['server-end'] = False
