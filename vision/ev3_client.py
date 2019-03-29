@@ -6,9 +6,13 @@ import select
 
 import constants
 
-us = ev3.UltrasonicSensor()
-us.mode = 'US-DIST-CM'
-units = us.units
+try:
+    us = ev3.UltrasonicSensor()
+    us.mode = 'US-DIST-CM'
+    units = us.units
+except:
+    us = None
+
 
 data = {"server-end": False, "obstacle-found": False, "said": False, "last-command": None, "time-said": time.time()}
 BRAKING_TYPE = 'brake'
@@ -80,14 +84,13 @@ def corner_type(m, m1, m2, m3, c_type):
 def check_for_obstacle(m, m1, m2, m3):
     global data
     while not data["server-end"]:
-        distance = us.value() / 10
-        if distance < 20:
-            print("whatttt")
+        distance = us.value() / 10 if us else None
+        if us and distance < 20:
             data["obstacle-found"] = True
             stop(m, m1, m2, m3)
             if not data["said"] and time.time() - data["time-said"] > 5:
                 try:
-                    ev3.Sound.speak("Could you please move out!").wait()
+                    ev3.Sound.speak("Could you please move out?").wait()
                 except:
                     pass
                 data["time-said"] = time.time()
