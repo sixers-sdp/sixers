@@ -60,7 +60,7 @@ def calculate_frame():
     frame = camera["frame"]
 
     if frame is None:
-        return MoveCommand.STOP
+        return constants.MoveCommand.STOP
 
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
@@ -97,8 +97,8 @@ def calculate_frame():
     if END:
         if top_left_index != 0 and bottom_left_index != 0 and np.abs(w // 2 - vert_idx) < 35:
             data["server-end"] = True
-            return MoveCommand.STOP
-        return MoveCommand.CORNER_LEFT
+            return constants.MoveCommand.STOP
+        return constants.MoveCommand.CORNER_LEFT
 
     if corner_detected and not corner_detected_once and top_left_index != 0 and bottom_left_index != 0:
         if np.abs(w // 2 - vert_idx) < 35:
@@ -111,17 +111,17 @@ def calculate_frame():
         corner_detected_once = False
         if cmds[0] == "LEFT":
             is_current_color_green = not is_current_color_green
-            return MoveCommand.CORNER_LEFT
+            return constants.MoveCommand.CORNER_LEFT
         elif cmds[0] == "RIGHT":
             is_current_color_green = not is_current_color_green
-            return MoveCommand.CORNER_RIGHT
+            return constants.MoveCommand.CORNER_RIGHT
         elif cmds[0] == "FORWARD":
             sleep = True
-            return MoveCommand.FORWARD
+            return constants.MoveCommand.FORWARD
         elif cmds[0] == "END":
             END = True
-            return MoveCommand.CORNER_LEFT
-        return MoveCommand.STOP
+            return constants.MoveCommand.CORNER_LEFT
+        return constants.MoveCommand.STOP
 
     if not corner_detected:
         decoded_frame = decode(frame)
@@ -131,16 +131,16 @@ def calculate_frame():
             corner_detected = True
             corner_detected_once = True
             check_if_stops_after_switch = True
-            return MoveCommand.FORWARD
+            return constants.MoveCommand.FORWARD
         elif top_left_index == 0 and bottom_left_index == 0:
             return 2
         if np.abs(w // 2 - vert_idx) > 20:
             if w // 2 - vert_idx > 0:
-                return MoveCommand.ALIGN_LEFT
+                return constants.MoveCommand.ALIGN_LEFT
             else:
-                return MoveCommand.ALIGN_RIGHT
+                return constants.MoveCommand.ALIGN_RIGHT
         else:
-            return MoveCommand.FORWARD
+            return constants.MoveCommand.FORWARD
     else:
         return old_type
 
