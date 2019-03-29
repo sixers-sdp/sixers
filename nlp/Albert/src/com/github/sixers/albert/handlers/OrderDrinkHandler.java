@@ -32,109 +32,107 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.amazon.ask.request.Predicates.intentName;
+
 public class OrderDrinkHandler implements IntentRequestHandler {
 
-    @Override
-    public boolean canHandle(HandlerInput handlerInput, IntentRequest intentRequest) {
-        return (handlerInput.matches(intentName("OrderDrink")));
+	@Override
+	public boolean canHandle(HandlerInput handlerInput, IntentRequest intentRequest) {
+		return (handlerInput.matches(intentName("OrderDrink")));
 
-    }
+	}
 
-    @Override
-    public Optional<Response> handle(HandlerInput handlerInput, IntentRequest intentRequest) {
+	@Override
+	public Optional<Response> handle(HandlerInput handlerInput, IntentRequest intentRequest) {
 //
 
-        Intent intent = intentRequest.getIntent();
-        //Drink names
-        Slot drinkone = intent.getSlots().get("Drinkone");
-        Slot drinktwo = intent.getSlots().get("Drinktwo");
-        Slot drinkthree = intent.getSlots().get("Drinkthree");
+		Intent intent = intentRequest.getIntent();
+		// Drink names
+		Slot drinkone = intent.getSlots().get("Drinkone");
+		Slot drinktwo = intent.getSlots().get("Drinktwo");
+		Slot drinkthree = intent.getSlots().get("Drinkthree");
 
-        //Number
-        Slot numone = intent.getSlots().get("Numone");
-        Slot numtwo = intent.getSlots().get("Numtwo");
-        Slot numthree = intent.getSlots().get("Numthree");
+		// Number
+		Slot numone = intent.getSlots().get("Numone");
+		Slot numtwo = intent.getSlots().get("Numtwo");
+		Slot numthree = intent.getSlots().get("Numthree");
 
-        //defining default value for strings
-        String drinktwoName = "";
-        String drinkthreeName = "";
+		// defining default value for strings
+		String drinktwoName = "";
+		String drinkthreeName = "";
 
-        String numoneValue = "one";
-        String numtwoValue = "one";
-        String numthreeValue = "one";
+		String numoneValue = "one";
+		String numtwoValue = "one";
+		String numthreeValue = "one";
 
-        //Checking slot values and assign the corresponding string value
+		// Checking slot values and assign the corresponding string value
 
-        //ordered drink name
+		// ordered drink name
 
-        String drinkoneName = drinkone.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
+		String drinkoneName = drinkone.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0)
+				.getValue().getName();
 
-        if (drinktwo.getValue() != null) {
-            drinktwoName = drinktwo.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
-        }
-        if (drinkthree.getValue() != null) {
-            drinkthreeName = drinkthree.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
-        }
-        //ordered number value of food
-        if (numone.getValue() != null) {
-            numoneValue = numone.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
-        }
-        if (numtwo.getValue() != null) {
-            numtwoValue = numtwo.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
-        }
-        if (numthree.getValue() != null) {
-            numthreeValue = numthree.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
-        }
+		if (drinktwo.getValue() != null) {
+			drinktwoName = drinktwo.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue()
+					.getName();
+		}
+		if (drinkthree.getValue() != null) {
+			drinkthreeName = drinkthree.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0)
+					.getValue().getName();
+		}
+		// ordered number value of food
+		if (numone.getValue() != null) {
+			numoneValue = numone.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue()
+					.getName();
+		}
+		if (numtwo.getValue() != null) {
+			numtwoValue = numtwo.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue()
+					.getName();
+		}
+		if (numthree.getValue() != null) {
+			numthreeValue = numthree.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue()
+					.getName();
+		}
 
+		String deviceID = handlerInput.getRequestEnvelope().getContext().getSystem().getDevice().getDeviceId();
 
-        String deviceID = handlerInput.getRequestEnvelope().getContext().getSystem().getDevice().getDeviceId();
+		// Construct respond text
+		String speechText = "You have ordered ";
+		speechText = speechText + numoneValue + " " + drinkoneName;
+		if (!drinktwoName.equals("")) {
+			if (drinkthreeName.equals("")) {
+				speechText = speechText + " and " + numtwoValue + " " + drinktwoName;
+			} else {
+				speechText = speechText + ", " + numtwoValue + " " + drinktwoName;
+				speechText = speechText + " and " + numthreeValue + " " + drinkthreeName;
+			}
+		}
 
+		if (intent.getConfirmationStatus().getValue().toString().equals("CONFIRMED")) {
 
-        //Construct respond text
-        String speechText = "You have ordered ";
-        speechText = speechText + numoneValue + " " + drinkoneName;
-        if (!drinktwoName.equals("")) {
-            if (drinkthreeName.equals("")) {
-                speechText = speechText + " and " + numtwoValue + " " + drinktwoName;
-            } else {
-                speechText = speechText + ", " + numtwoValue + " " + drinktwoName;
-                speechText = speechText + " and " + numthreeValue + " " + drinkthreeName;
-            }
-        }
+			CloseableHttpClient httpClient = HttpClients.createDefault();
+			HttpPost httpPost = new HttpPost("http://albert.visgean.me/api/orders/");
 
+			httpPost.addHeader("Authorization", System.getenv("API_TOKEN"));
+			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+			nameValuePairs.add(new BasicNameValuePair("device_id", deviceID));
+			// TODO: Should be Modified to adapted new API.
+			nameValuePairs.add(new BasicNameValuePair("products_text", speechText));
 
-        CloseableHttpClient httpClient = HttpClients.createDefault();
-        HttpPost httpPost = new HttpPost("http://albert.visgean.me/api/orders/");
+			try {
+				httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+				CloseableHttpResponse response = httpClient.execute(httpPost);
+				httpClient.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 
+			return handlerInput.getResponseBuilder().withSpeech(speechText)
+					.withReprompt("Would you like anything else?").withShouldEndSession(false).build();
+		} else {
+			return handlerInput.getResponseBuilder()
+					.withSpeech("Okay, I've cancelled that request. Would you like something else?")
+					.withReprompt("Would you like anything else?").withShouldEndSession(false).build();
+		}
 
-        httpPost.addHeader("Authorization", System.getenv("API_TOKEN"));
-        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-        nameValuePairs.add(new BasicNameValuePair("device_id", deviceID));
-        // TODO: Should be Modified to adapted new API.
-        nameValuePairs.add(new BasicNameValuePair("products_text", speechText));
-        
-
-        try {
-            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
-            CloseableHttpResponse response = httpClient.execute(httpPost);
-            httpClient.close();
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-      
-      if (intent.getConfirmationStatus().getValue().toString() == "CONFIRMED") {
-        	return handlerInput.getResponseBuilder()
-            		.withSpeech(speechText)
-            		.withReprompt("Would you like anything else?")
-                    .withShouldEndSession(false)
-                    .build();
-        } else {
-        	return handlerInput.getResponseBuilder()
-            		.withSpeech("Okay, I've cancelled that request. Would you like something else?")
-            		.withReprompt("Would you like anything else?")
-                    .withShouldEndSession(false)
-                    .build();
-        }
-
-    }
+	}
 }
