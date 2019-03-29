@@ -126,6 +126,7 @@ def start_socket(m, m1, m2, m3):
             data_type = sock.recv(1).decode()
             if len(data_type) != 1:
                 continue
+            print('received command code', data_type)
             move = int(data_type)
             print(move)
             data["last-command"] = move
