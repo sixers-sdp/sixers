@@ -34,6 +34,10 @@ def start_camera():
     vc.set(3, 160)
     vc.set(4, 120)
 
+    if vc is None or not vc.isOpened():
+        vc.release()
+        sys.exit(1)
+
     camera_fail_counter = 0
     while not data['server-end']:
         frame = vc.read()[1]
