@@ -15,5 +15,8 @@ GLOBAL_EV3_CONN, GLOBAL_EV3_ADDRESS = GLOBAL_EV3_SOCKET.accept()
 
 commands = ['LEFT', 'LEFT', 'END']
 
-
-start_socket(commands, GLOBAL_EV3_CONN, GLOBAL_EV3_ADDRESS, True)
+try:
+    start_socket(commands, GLOBAL_EV3_SOCKET, GLOBAL_EV3_CONN, GLOBAL_EV3_ADDRESS, True)
+except Exception as e:
+    GLOBAL_EV3_SOCKET.close()
+    raise e

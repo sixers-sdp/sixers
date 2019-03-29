@@ -16,6 +16,8 @@ SEEN_YELLOW = False
 # cmds = ["FORWARD","LEFT", "RIGHT","END"]
 cmds = None
 
+EV3_SOCKET = None
+
 corner_detected = False
 corner_detected_once = False
 old_type = None
@@ -29,6 +31,9 @@ sleep = False
 def crash():
     print("Crashing.")
     data["server-end"] = True
+    if EV3_SOCKET:
+        EV3_SOCKET.close()
+
     sys.exit(1)
 
 
@@ -154,12 +159,16 @@ def calculate_frame():
         return old_type
 
 
-def start_socket(directions, ev3_conn, ev3_address, is_green):
+def start_socket(directions, ev3_socket, ev3_conn, ev3_address, is_green):
     global old_type
     global cmds
     global data
     global is_current_color_green
     global END
+    global EV3_SOCKET
+
+    EV3_SOCKET = ev3_socket
+
     is_current_color_green = is_green
 
     cmds = directions
