@@ -165,6 +165,8 @@ def start_socket(directions, ev3_conn, ev3_address, is_green):
         if old_type == new_type:
             continue
         print('New command is', new_type)
+        if isinstance(new_type, int):
+            ev3_conn.sendall(str(new_type).encode())
         if new_type is not None:
             ev3_conn.sendall(str(new_type.value()).encode())
         old_type = new_type
