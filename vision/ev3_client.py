@@ -4,7 +4,7 @@ import threading
 import time
 import select
 
-from . import constants
+import constants
 
 us = ev3.UltrasonicSensor()
 us.mode = 'US-DIST-CM'
