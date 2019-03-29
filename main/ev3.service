@@ -4,9 +4,9 @@ After=network.target
 
 [Service]
 Restart=always
-User=student
-WorkingDirectory=/home/robot/sixers/
-ExecStart=python3.4 vision/ev3_client.py
+User=robot
+WorkingDirectory=/home/robot/sixers/vision
+ExecStart=python3.4 ev3_client.py
 
 [Install]
 WantedBy=multi-user.target
