@@ -147,7 +147,7 @@ def calculate_frame():
             check_if_stops_after_switch = True
             return constants.MoveCommand.FORWARD
         elif top_left_index == 0 and bottom_left_index == 0:
-            return 2
+            return constants.MoveCommand.STOP
         if np.abs(w // 2 - vert_idx) > 20:
             if w // 2 - vert_idx > 0:
                 return constants.MoveCommand.ALIGN_LEFT
