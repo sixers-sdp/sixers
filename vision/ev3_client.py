@@ -141,6 +141,11 @@ if __name__ == "__main__":
         m1 = ev3.LargeMotor('outB')
         m2 = ev3.LargeMotor('outC')
         m3 = ev3.LargeMotor('outD')
+
+        if not us:
+            print("Ultra-sonic sensor not connected. Ignoring for now.")
+
+
         if not m.connected:
             print("Plug a motor into port A")
         elif not m1.connected:
