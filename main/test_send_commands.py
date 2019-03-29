@@ -6,7 +6,9 @@ sys.path.append(os.path.abspath('..'))
 
 from vision.constants import PORT
 
-from vision.server import start_socket
+from vision.server import start_socket, start_threads
+
+start_threads()
 
 GLOBAL_EV3_SOCKET = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 GLOBAL_EV3_SOCKET.bind(('0.0.0.0', PORT))
