@@ -169,7 +169,7 @@ def start_socket(directions, ev3_conn, ev3_address, is_green):
             print('received int type command from calculate_frame, use enum!')
             ev3_conn.sendall(str(new_type).encode())
         if new_type is not None:
-            ev3_conn.sendall(str(new_type.value()).encode())
+            ev3_conn.sendall(str(new_type.value).encode())
         old_type = new_type
     data['server-end'] = False
     END = False
