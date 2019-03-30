@@ -5,12 +5,10 @@ import numpy as np
 import time
 import socket
 from exceptions import IncorrectNode
-from phidget.ForceResistor import WeightSensor
 from pyzbar.pyzbar import decode
 
 import constants
 
-lock = threading.Lock()
 
 class Server:
     def __init__(self):
@@ -31,9 +29,6 @@ class Server:
         self.sleep = False
         self.exception_raised = False
         self.decoded_frame = -1
-        self.last_weight = 0.85
-        self.unusual_change_in_weight = True
-        self.weight_sensor = WeightSensor()
         self.start_threads()
 
     def setup_order(self, directions, is_current_color_green, qr_codes_expected=None):
@@ -41,8 +36,8 @@ class Server:
         self.is_current_color_green = is_current_color_green
         self.qr_codes_expected = qr_codes_expected
         self.exception_raised = False
-        print('Commands', self.directions)
         self.start_order()
+
 
     def start_threads(self):
         camera_thread = threading.Thread(target=self.start_camera)
@@ -53,12 +48,14 @@ class Server:
         self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.socket.bind((self.ip, self.port))
         self.listen_for_connections()
-    
+
     def listen_for_connections(self):
         print("Listening for connections...")
         self.socket.listen(1)
         self.conn, self.addr = self.socket.accept()
         print("Connected from ", self.addr)
+        print('Commands', self.directions)
+
 
     def crash(self):
         print("Crashing.")
@@ -103,7 +100,6 @@ class Server:
 
 
     def calculate_frame(self):
-        print(self.weight_sensor.get_weight_value())
         prev_time = time.time()
         frame = self.frame
 
@@ -209,7 +205,7 @@ class Server:
         correcting_command_sent = False
         while not self.server_end:
             new_type = self.calculate_frame()
-            if not self.unusual_change_in_weight and self.old_type != constants.MoveCommand.STOP \
+            if self.old_type != constants.MoveCommand.STOP \
                       and self.old_type != constants.MoveCommand.FRAME_EMPTY \
                          and new_type == constants.MoveCommand.STOP \
                             and self.old_type != None and not correcting:
@@ -223,7 +219,7 @@ class Server:
                     print("GO BACKWARD")
                     new_type = constants.MoveCommand.BACKWARD
                 correcting = True
-            elif not self.unusual_change_in_weight and new_type != constants.MoveCommand.STOP and correcting:
+            elif new_type != constants.MoveCommand.STOP and correcting:
                 #print("Done correcting!")
                 correcting_command_sent = False
                 correcting = False
@@ -246,7 +242,6 @@ class Server:
             if correcting:
                 correcting_command_sent = True
             self.old_type = new_type
-
         self.server_end = False
         self.end = False
         return True
@@ -258,3 +253,4 @@ if __name__ == "__main__":
     except Exception as e:
         server.crash()
         print(e)
+

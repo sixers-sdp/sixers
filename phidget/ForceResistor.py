@@ -91,6 +91,7 @@ class WeightSensor:
         self.try_weight_sensor()
 
     def try_weight_sensor(self):
+        print("Try Weight Sensor")
         try:
             # Allocate a new Phidget Channel object
             self.ch = VoltageRatioInput()
@@ -111,20 +112,15 @@ class WeightSensor:
             except PhidgetException as e:
                 # PrintOpenErrorMessage(e, self.ch)
                 raise EndProgramSignal("Program Terminated: Open Failed")
-                self.try_conneting_again()
+
+            print("THREAD STARTING")
 
             weight_thread = threading.Thread(target=self.start_getting_weight_value)
             weight_thread.daemon = True
             weight_thread.start()
 
-        except PhidgetException as e:
+        except Exception as e:
             self.ch.close()
-            self.try_conneting_again()
-        except EndProgramSignal as e:
-            self.ch.close()
-            self.try_conneting_again()
-        except RuntimeError as e:
-            traceback.print_exc()
             self.try_conneting_again()
 
     def start_getting_weight_value(self):
@@ -132,9 +128,9 @@ class WeightSensor:
             try:
                 self.weight_value = self.ch.getVoltageRatio()
             except:
-                self.has_ended = True
                 self.ch.close()
-            time.sleep(0.5)
+                break
+            time.sleep(0.25)
         self.try_conneting_again()
 
     def try_conneting_again(self):
