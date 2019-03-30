@@ -8,7 +8,7 @@ from vision.server2 import Server
 commands = ['FORWARD', 'LEFT', 'FORWARD', 'END']
 
 #commands = ['LEFT', 'LEFT', 'END']
-qr_codes = ['t1', 't2']
+qr_codes = ['c4', 'c2', 'c1', 't1']
 
 server = Server()
 

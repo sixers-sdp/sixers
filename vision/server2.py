@@ -4,7 +4,7 @@ import cv2
 import numpy as np
 import time
 import socket
-
+from exceptions import IncorrectNode
 from pyzbar.pyzbar import decode
 
 import constants
@@ -27,12 +27,15 @@ class Server:
         self.w = 160
         self.old_type = None
         self.sleep = False
+        self.exception_raised = False
+        self.decoded_frame = -1
         self.start_threads()
 
     def setup_order(self, directions, is_current_color_green, qr_codes_expected=None):
         self.directions = directions
         self.is_current_color_green = is_current_color_green
         self.qr_codes_expected = qr_codes_expected
+        self.exception_raised = False
         self.start_order()
 
 
@@ -129,6 +132,10 @@ class Server:
         # print(1/(time.time()-prev_time))
         # print(top_left_index, bottom_left_index)
 
+        if self.exception_raised:
+            print("Wrong QR Code found...")
+            raise IncorrectNode(self.decoded_frame.data)
+
         if self.sleep:
             time.sleep(1)
             self.sleep = False
@@ -171,10 +178,15 @@ class Server:
             decoded_frame = decode(frame)
             #print(1 / (time.time() - prev_time))
             if len(decoded_frame) > 0:
-                #print("QR")
-                self.corner_detected = True
-                self.corner_detected_once = True
-                return constants.MoveCommand.FORWARD
+                self.decoded_frame = decoded_frame[0]
+                if self.decoded_frame.data == self.qr_codes_expected[0]:
+                    self.qr_codes_expected.pop(0)
+                    self.corner_detected = True
+                    self.corner_detected_once = True
+                    return constants.MoveCommand.FORWARD
+                else:
+                    self.exception_raised = True
+                    return constants.MoveCommand.END
             elif top_left_index == 0 and bottom_left_index == 0:
                 return constants.MoveCommand.STOP
             if np.abs(self.w // 2 - vert_idx) > 20:
