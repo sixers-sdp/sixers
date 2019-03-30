@@ -192,13 +192,13 @@ public class CancelDrinkHandler implements IntentRequestHandler {
 		if (intent.getConfirmationStatus().getValue().toString().equals("CONFIRMED")) {
 
 			CloseableHttpClient httpClient = HttpClients.createDefault();
-			HttpPost httpPost = new HttpPost("http://albert.visgean.me/api/orders/");
+			HttpPost httpPost = new HttpPost("http://albert.visgean.me/api/cancel/");
 
 			httpPost.addHeader("Authorization", System.getenv("API_TOKEN"));
 			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 			nameValuePairs.add(new BasicNameValuePair("device_id", deviceID));
 			// TODO: Should be Modified to adapted new API.
-			nameValuePairs.add(new BasicNameValuePair("products_text", chefText));
+			nameValuePairs.add(new BasicNameValuePair("text", chefText));
 
 			try {
 				httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));

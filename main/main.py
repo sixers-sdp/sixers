@@ -14,13 +14,7 @@ sys.path.append(os.path.abspath('..'))
 from vision.server2 import Server
 
 
-TASKS_DEBUG = {
-    'MOVE': tasks.AbstractMoveTask,
-    'PICKUP': tasks.AbstractPickupTask,
-    'HANDOVER': tasks.AbstractHandoverTask
-}
-
-TASKS_REAL = {
+TASKS = {
     'MOVE': tasks.MoveTask,
     'PICKUP': tasks.PickupTask,
     'HANDOVER': tasks.HandoverTask
@@ -46,11 +40,7 @@ class MainControl:
     current_plan = None
     plan_grouped = []
 
-    if settings.DEBUG:
-        tasks_handlers = TASKS_DEBUG
-    else:
-        tasks_handlers = TASKS_REAL
-
+    tasks_handlers = tasks
 
     def __init__(self):
         self.server = Server()

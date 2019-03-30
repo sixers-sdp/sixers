@@ -52,7 +52,7 @@ class Task:
             self.post_task(task['args'])
 
 
-class AbstractMoveTask(Task):
+class MoveTask(Task):
     """
     This just simulates moving
     """
@@ -71,10 +71,28 @@ class AbstractMoveTask(Task):
         self.success = True
 
     def execute_all(self):
-        pass
+        directions = [f['relative_direction'] for f in self.arguments_grouped]
+        directions.append('END')
+        directions.pop(0)
+
+        nodes_expected = [f['args']['destination'] for f in self.arguments_grouped]
+
+        # is green:
+        # if currently at table: its blue
+        # if at chefs: we look for green
+
+        is_green = self.arguments_grouped[0]['args']['origin'].lower() == 'chef'
+
+        assert isinstance(self.server, Server), "Did you forgot to set up Server instance?"
+        try:
+            self.server.setup_order(directions, is_green, nodes_expected)
+        except IncorrectNode as e:
+            self.post_new_location(e.node_seen.lower())
+            self.success = False
+        self.success = True
 
 
-class AbstractPickupTask(Task):
+class PickupTask(Task):
     def post_task(self, task):
         # needs to update order state
         order_id = task['order'].strip('ORDER')
@@ -88,8 +106,12 @@ class AbstractPickupTask(Task):
         r.raise_for_status()
         self.success = True
 
+    def execute_one(self, task):
+        time.sleep(10)
+        self.success = True
 
-class AbstractHandoverTask(Task):
+
+class HandoverTask(Task):
     def post_task(self, task):
         # needs to update order state
         order_id = task['delivery'].strip('ORDER')
@@ -102,41 +124,6 @@ class AbstractHandoverTask(Task):
         r.raise_for_status()
         self.success = True
 
-
-class MoveTask(AbstractMoveTask):
-    def execute_all(self):
-        directions = [f['relative_direction'] for f in self.arguments_grouped]
-        directions.append('END')
-        directions.pop(0)
-
-        nodes_expected = [f['args']['destination'] for f in self.arguments_grouped]
-        #     (
-        #     set(f['args']['destination'] for f in self.arguments_grouped) |
-        #     set(f['args']['origin'] for f in self.arguments_grouped)
-        # )
-
-        # is green:
-        # if currently at table: its blue
-        # if at chefs: we look for green
-
-        is_green = self.arguments_grouped[0]['args']['origin'].lower() == 'chef'
-
-        assert isinstance(self.server, Server), "Did you forgot to set up Server instance?"
-        try:
-            self.server.setup_order(directions, is_green, nodes_expected)
-        except IncorrectNode as e:
-            self.post_new_location(e.node_seen)
-            self.success = False
-        self.success = True
-
-
-class PickupTask(AbstractPickupTask):
-    def execute_one(self, task):
-        time.sleep(10)
-        self.success = True
-
-
-class HandoverTask(AbstractHandoverTask):
     def execute_one(self, task):
         time.sleep(10)
         self.success = True
