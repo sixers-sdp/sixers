@@ -5,6 +5,7 @@ import numpy as np
 import time
 import socket
 from exceptions import IncorrectNode
+from phidget.ForceResistor import WeightSensor
 from pyzbar.pyzbar import decode
 
 import constants
@@ -29,6 +30,7 @@ class Server:
         self.sleep = False
         self.exception_raised = False
         self.decoded_frame = -1
+        self.weight_sensor = WeightSensor()
         self.start_threads()
 
     def setup_order(self, directions, is_current_color_green, qr_codes_expected=None):
@@ -44,10 +46,19 @@ class Server:
         camera_thread.daemon = True
         camera_thread.start()
 
+        weight_sensor_thread = threading.Thread(target=self.start_weight_sensor)
+        weight_sensor_thread.daemon = True
+        weight_sensor_thread.start()
+
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.socket.bind((self.ip, self.port))
         self.listen_for_connections()
+    
+    def start_weight_sensor(self):
+        while not self.server_end:
+            print("The current weight is: "+str(self.weight_sensor.get_weight_value()))
+            time.sleep(1)
 
     def listen_for_connections(self):
         print("Listening for connections...")
@@ -55,7 +66,6 @@ class Server:
         self.conn, self.addr = self.socket.accept()
         print("Connected from ", self.addr)
         print('Commands', self.directions)
-
 
     def crash(self):
         print("Crashing.")
