@@ -109,10 +109,11 @@ class MoveTask(AbstractMoveTask):
         directions.append('END')
         directions.pop(0)
 
-        nodes_expected = (
-            set(f['args']['destination'] for f in self.arguments_grouped) |
-            set(f['args']['origin'] for f in self.arguments_grouped)
-        )
+        nodes_expected = [f['args']['destination'] for f in self.arguments_grouped]
+        #     (
+        #     set(f['args']['destination'] for f in self.arguments_grouped) |
+        #     set(f['args']['origin'] for f in self.arguments_grouped)
+        # )
 
         # is green:
         # if currently at table: its blue
