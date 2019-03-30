@@ -3,8 +3,8 @@ import time
 import settings
 import requests
 
-from exceptions import IncorrectNode
-from server2 import Server
+from vision.exceptions import IncorrectNode
+from vision.server2 import Server
 
 
 class Task:
@@ -29,7 +29,6 @@ class Task:
         """
         pass
 
-
     def post_all_tasks(self):
         """
         Update API state here
@@ -52,12 +51,12 @@ class Task:
             self.execute_one(task['args'])
             self.post_task(task['args'])
 
+
 class AbstractMoveTask(Task):
     """
     This just simulates moving
     """
     execute_all_at_once = True
-
 
     def post_new_location(self, location):
         r = requests.post(
@@ -66,7 +65,6 @@ class AbstractMoveTask(Task):
             headers=settings.AUTH_HEADERS
         )
         r.raise_for_status()
-
 
     def post_all_tasks(self):
         self.post_new_location(self.arguments_grouped[-1]['args']['destination'])
@@ -122,7 +120,7 @@ class MoveTask(AbstractMoveTask):
 
         is_green = self.arguments_grouped[0]['args']['origin'].lower() == 'chef'
 
-        assert isinstance(self.server, Server), "Did you forgot to set up Server instance"
+        assert isinstance(self.server, Server), "Did you forgot to set up Server instance?"
         try:
             self.server.setup_order(directions, is_green, nodes_expected)
         except IncorrectNode as e:
@@ -131,11 +129,10 @@ class MoveTask(AbstractMoveTask):
         self.success = True
 
 
-
-
 class PickupTask(AbstractPickupTask):
     def execute_one(self, task):
         time.sleep(10)
+
 
 class HandoverTask(AbstractHandoverTask):
     def execute_one(self, task):
