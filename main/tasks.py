@@ -3,6 +3,7 @@ import time
 import settings
 import requests
 
+from exceptions import IncorrectNode
 from server2 import Server
 
 
@@ -57,13 +58,18 @@ class AbstractMoveTask(Task):
     """
     execute_all_at_once = True
 
-    def post_all_tasks(self):
+
+    def post_new_location(self, location):
         r = requests.post(
             settings.API_LOCATION,
-            data={'location': self.arguments_grouped[-1]['args']['destination']},
+            data={'location': location},
             headers=settings.AUTH_HEADERS
         )
         r.raise_for_status()
+
+
+    def post_all_tasks(self):
+        self.post_new_location(self.arguments_grouped[-1]['args']['destination'])
         self.success = True
 
     def execute_all(self):
@@ -117,7 +123,14 @@ class MoveTask(AbstractMoveTask):
         is_green = self.arguments_grouped[0]['args']['origin'].lower() == 'chef'
 
         assert isinstance(self.server, Server), "Did you forgot to set up Server instance"
-        self.server.setup_order(directions, is_green, nodes_expected)
+        try:
+            self.server.setup_order(directions, is_green, nodes_expected)
+        except IncorrectNode as e:
+            self.post_new_location(e.node_seen)
+            self.success = False
+        self.success = True
+
+
 
 
 class PickupTask(AbstractPickupTask):
