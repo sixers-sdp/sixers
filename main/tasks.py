@@ -133,8 +133,10 @@ class MoveTask(AbstractMoveTask):
 class PickupTask(AbstractPickupTask):
     def execute_one(self, task):
         time.sleep(10)
+        self.success = True
 
 
 class HandoverTask(AbstractHandoverTask):
     def execute_one(self, task):
         time.sleep(10)
+        self.success = True
