@@ -13,3 +13,4 @@ class MoveCommand(Enum):
     CORNER_LEFT = 6
     CORNER_RIGHT = 7
     FRAME_EMPTY = 8
+    END = 9

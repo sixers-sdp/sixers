@@ -136,11 +136,11 @@ class Server:
             if top_left_index != 0 and bottom_left_index != 0 and np.abs(self.w // 2 - vert_idx) < 35:
                 self.server_end = True
                 self.socket.close()
-                return constants.MoveCommand.STOP
+                return constants.MoveCommand.END
             return constants.MoveCommand.CORNER_LEFT
 
         if self.corner_detected and not self.corner_detected_once and top_left_index != 0 and bottom_left_index != 0:
-            if np.abs(self.w // 2 - vert_idx) < 35:
+            if np.abs(self.w // 2 - vert_idx) < 35 or self.directions[0] == "FORWARD":
                 self.directions.pop(0)
                 self.corner_detected = False
 
