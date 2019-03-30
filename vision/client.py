@@ -1,15 +1,19 @@
-import socket
+#import socket
 import threading
 from enum import Enum
 import ev3dev.ev3 as ev3
 import threading
 import time
-import select
+import socket
 
-
-us = ev3.UltrasonicSensor()
-us.mode='US-DIST-CM'
-units = us.units
+try:
+    us = ev3.UltrasonicSensor()
+    us.mode='US-DIST-CM'
+    units = us.units
+except:
+    import sys
+    print("Ultrasonic sensor is not connected")
+    sys.exit(1)
 
 PORT = 50000
 data = {"server-end": False, "obstacle-found": False, "said": False, "last-command": None, "time-said": time.time()}
@@ -54,18 +58,32 @@ class Type(Enum):
     FORWARD=5
     CORNER_LEFT=6
     CORNER_RIGHT=7
+    FRAME_EMPTY = 8
+    END = 9
+    BACKWARD = "a"
+    BACKWARD_ALIGN_LEFT="b"
+    BACKWARD_ALIGN_RIGHT="c"
 
 
 def move_albert(move, m, m1, m2, m3):
     if(move==Type.FORWARD.value):
         #motors["running"]=True
         go_forward(m, m1, m2, m3, 200)
+    elif(move==Type.BACKWARD.value):
+        #motors["running"]=True
+        go_forward(m, m1, m2, m3, -200)
     elif move == Type.ALIGN_LEFT.value:
         #print(response, "ALIGN LEFT")
         align(m, m1, m2, m3, 100, 250)
     elif move == Type.ALIGN_RIGHT.value:
         #print(response, "ALIGN RIGHT")
         align(m, m1, m2, m3, 250, 100)
+    elif move == Type.BACKWARD_ALIGN_LEFT.value:
+        #print(response, "BACKWARD ALIGN LEFT")
+        align(m, m1, m2, m3, -100, -500)
+    elif move == Type.BACKWARD_ALIGN_RIGHT.value:
+        #print(response, "BACKWARD ALIGN RIGHT")
+        align(m, m1, m2, m3, -500, -100)
     elif(move==Type.STOP.value):
         #print(response, "STOP")
         stop(m, m1, m2, m3)
@@ -117,22 +135,24 @@ def start_socket(m, m1, m2, m3):
      printed = False
      #old_move = None
      while not data['server-end']:
-         try:
-             sock.connect(('192.168.105.135', PORT))
-             socket_is_connected = True
-         except Exception as e:
-             #print("---"+str(e)+"---")
-             if str(e) != "[Errno 106] Transport endpoint is already connected":
-                 # connection error event here, maybe reconnect
-                 print('Connection lost! Trying again in 3 2 1...')
-                 time.sleep(3)
-                 printed = False
-                 sock.close()
-                 old_move = None
-                 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                 socket_is_connected = False
-                 stop(m, m1, m2, m3)
-                 continue
+         if not socket_is_connected:
+             try:
+                 sock.connect(('192.168.105.135', PORT))
+                 socket_is_connected = True
+             except Exception as e:
+                 #print("---"+str(e)+"---")
+                 if str(e) != "[Errno 106] Transport endpoint is already connected":
+                     stop(m, m1, m2, m3)
+                     # connection error event here, maybe reconnect
+                     print('Connection lost! Trying again in 3 2 1...')
+                     time.sleep(3)
+                     printed = False
+                     sock.close()
+                     old_move = None
+                     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                     socket_is_connected = False
+                     stop(m, m1, m2, m3)
+                     continue
 
          if socket_is_connected:
              if not printed:
@@ -141,6 +161,7 @@ def start_socket(m, m1, m2, m3):
              try:
                  data_type = sock.recv(1).decode()
              except Exception as e:
+                 stop(m, m1, m2, m3)
                  print("---"+str(e)+"---")
                  print('Connection lost! Trying again in 3 2 1...')
                  time.sleep(3)
@@ -149,15 +170,24 @@ def start_socket(m, m1, m2, m3):
                  old_move = None
                  sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                  socket_is_connected = False
-                 stop(m, m1, m2, m3)
                  continue
 
              if len(data_type)!=1:
                  continue
-             move = int(data_type)
+             move = data_type if not data_type.isdigit() else int(data_type)
              #if move == old_move:
              #    continue
              print(move)
+             if(move==9):
+                 stop(m, m1, m2, m3)
+                 print('End of order! Trying new order in 3 2 1...')
+                 time.sleep(3)
+                 printed = False
+                 sock.close()
+                 old_move = None
+                 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                 socket_is_connected = False
+                 continue
              data["last-command"]=move
              #old_move = move
              if (data["obstacle-found"]): continue
