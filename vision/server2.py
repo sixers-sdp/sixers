@@ -124,7 +124,7 @@ class Server:
 
         vert_list = frame_threshed.sum(axis=0)
         vert_idx = np.argmax(vert_list) + 1
-        print(np.abs(self.w // 2 - vert_idx))
+        #print(np.abs(self.w // 2 - vert_idx))
 
         # print(1/(time.time()-prev_time))
         # print(top_left_index, bottom_left_index)
@@ -141,13 +141,17 @@ class Server:
             return constants.MoveCommand.CORNER_LEFT
 
         if self.corner_detected and not self.corner_detected_once and top_left_index != 0 and bottom_left_index != 0:
-            if np.abs(self.w // 2 - vert_idx) < 35 or self.directions[0] == "FORWARD":
+            if np.abs(self.w // 2 - vert_idx) < 35:
                 self.directions.pop(0)
                 self.corner_detected = False
 
+        if self.corner_detected and not self.corner_detected_once and self.directions[0] == "FORWARD":
+            self.directions.pop(0)
+            self.corner_detected = False
+
         if self.corner_detected and self.corner_detected_once:
-            time.sleep(2)
-            print("Choosing to turn in the corner...")
+            time.sleep(1)
+            #print("Choosing to turn in the corner...")
             self.corner_detected_once = False
             if self.directions[0] == "LEFT":
                 self.is_current_color_green = not self.is_current_color_green
@@ -165,9 +169,9 @@ class Server:
 
         if not self.corner_detected:
             decoded_frame = decode(frame)
-            print(1 / (time.time() - prev_time))
+            #print(1 / (time.time() - prev_time))
             if len(decoded_frame) > 0:
-                print("QR")
+                #print("QR")
                 self.corner_detected = True
                 self.corner_detected_once = True
                 return constants.MoveCommand.FORWARD
@@ -185,9 +189,32 @@ class Server:
 
 
     def start_order(self):
+        correcting = False
+        correcting_command_sent = False
         while not self.server_end:
             new_type = self.calculate_frame()
-            if self.old_type == new_type:
+            if self.old_type != constants.MoveCommand.STOP \
+                      and self.old_type != constants.MoveCommand.FRAME_EMPTY \
+                         and new_type == constants.MoveCommand.STOP \
+                            and self.old_type != None and not correcting:
+                if self.old_type == constants.MoveCommand.ALIGN_RIGHT:
+                    print("GO BACKWARD_ALIGN_LEFT")
+                    new_type = constants.MoveCommand.BACKWARD_ALIGN_LEFT
+                elif self.old_type == constants.MoveCommand.ALIGN_LEFT:
+                    print("GO BACKWARD_ALIGN_RIGHT")
+                    new_type = constants.MoveCommand.BACKWARD_ALIGN_RIGHT
+                elif self.old_type == constants.MoveCommand.FORWARD:
+                    print("GO BACKWARD")
+                    new_type = constants.MoveCommand.BACKWARD
+                correcting = True
+            elif new_type != constants.MoveCommand.STOP and correcting:
+                #print("Done correcting!")
+                correcting_command_sent = False
+                correcting = False
+            if correcting and correcting_command_sent:
+                new_type = self.old_type
+                continue
+            if self.old_type == new_type and not correcting:
                 continue
             print('New command is', new_type)
             try:
@@ -200,6 +227,8 @@ class Server:
                 self.listen_for_connections()
                 self.conn.sendall(str(self.calculate_frame().value).encode())
                 continue
+            if correcting:
+                correcting_command_sent = True
             self.old_type = new_type
         self.server_end = False
         self.end = False
