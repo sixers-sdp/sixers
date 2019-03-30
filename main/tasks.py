@@ -3,7 +3,7 @@ import time
 import settings
 import requests
 
-from vision.server import start_socket
+from server2 import Server
 
 
 class Task:
@@ -17,8 +17,7 @@ class Task:
     success = False
     execute_all_at_once = False
 
-    ev3_conn = None
-    ev3_address = None
+    server = None
 
     def __init__(self, arguments_grouped):
         self.arguments_grouped = arguments_grouped
@@ -106,12 +105,19 @@ class MoveTask(AbstractMoveTask):
         directions.append('END')
         directions.pop(0)
 
+        nodes_expected = (
+            set(f['args']['destination'] for f in self.arguments_grouped) |
+            set(f['args']['origin'] for f in self.arguments_grouped)
+        )
+
         # is green:
         # if currently at table: its blue
         # if at chefs: we look for green
 
         is_green = self.arguments_grouped[0]['args']['origin'].lower() == 'chef'
-        start_socket(directions, self.ev3_conn, self.ev3_address, is_green)
+
+        assert isinstance(self.server, Server), "Did you forgot to set up Server instance"
+        self.server.setup_order(directions, is_green, nodes_expected)
 
 
 class PickupTask(AbstractPickupTask):

@@ -1,11 +1,7 @@
 import os
-import socket
 import sys
 
 sys.path.append(os.path.abspath('..'))
-
-from vision.constants import PORT
-
 from vision.server2 import Server
 
 
