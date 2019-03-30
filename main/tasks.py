@@ -3,7 +3,8 @@ import time
 import settings
 import requests
 
-from vision.server import start_socket
+from vision.exceptions import IncorrectNode
+from vision.server2 import Server
 
 
 class Task:
@@ -17,8 +18,7 @@ class Task:
     success = False
     execute_all_at_once = False
 
-    ev3_conn = None
-    ev3_address = None
+    server = None
 
     def __init__(self, arguments_grouped):
         self.arguments_grouped = arguments_grouped
@@ -28,7 +28,6 @@ class Task:
         Update API state here
         """
         pass
-
 
     def post_all_tasks(self):
         """
@@ -52,19 +51,23 @@ class Task:
             self.execute_one(task['args'])
             self.post_task(task['args'])
 
+
 class AbstractMoveTask(Task):
     """
     This just simulates moving
     """
     execute_all_at_once = True
 
-    def post_all_tasks(self):
+    def post_new_location(self, location):
         r = requests.post(
             settings.API_LOCATION,
-            data={'location': self.arguments_grouped[-1]['args']['destination']},
+            data={'location': location},
             headers=settings.AUTH_HEADERS
         )
         r.raise_for_status()
+
+    def post_all_tasks(self):
+        self.post_new_location(self.arguments_grouped[-1]['args']['destination'])
         self.success = True
 
     def execute_all(self):
@@ -106,17 +109,30 @@ class MoveTask(AbstractMoveTask):
         directions.append('END')
         directions.pop(0)
 
+        nodes_expected = (
+            set(f['args']['destination'] for f in self.arguments_grouped) |
+            set(f['args']['origin'] for f in self.arguments_grouped)
+        )
+
         # is green:
         # if currently at table: its blue
         # if at chefs: we look for green
 
         is_green = self.arguments_grouped[0]['args']['origin'].lower() == 'chef'
-        start_socket(directions, self.ev3_conn, self.ev3_address, is_green)
+
+        assert isinstance(self.server, Server), "Did you forgot to set up Server instance?"
+        try:
+            self.server.setup_order(directions, is_green, nodes_expected)
+        except IncorrectNode as e:
+            self.post_new_location(e.node_seen)
+            self.success = False
+        self.success = True
 
 
 class PickupTask(AbstractPickupTask):
     def execute_one(self, task):
         time.sleep(10)
+
 
 class HandoverTask(AbstractHandoverTask):
     def execute_one(self, task):

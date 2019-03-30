@@ -1,5 +1,4 @@
 import os
-import socket
 import time
 import requests
 import logging
@@ -12,13 +11,7 @@ from utils import group_plan
 
 sys.path.append(os.path.abspath('..'))
 
-from vision.server import start_threads
-from vision.constants import PORT
-
-
-GLOBAL_EV3_SOCKET = None
-GLOBAL_EV3_CONN = None
-GLOBAL_EV3_ADDRESS = None
+from vision.server2 import Server
 
 
 TASKS_DEBUG = {
@@ -58,6 +51,10 @@ class MainControl:
     else:
         tasks_handlers = TASKS_REAL
 
+
+    def __init__(self):
+        self.server = Server()
+
     def get_plan(self):
         r = requests.get(settings.API_CURRENT_PLAN_URL)
         r.raise_for_status()
@@ -94,8 +91,7 @@ class MainControl:
     def execute_group(self, action, group_data):
         task_class = self.tasks_handlers[action]
         task = task_class(group_data)
-        task.ev3_conn = GLOBAL_EV3_CONN
-        task.ev3_address = GLOBAL_EV3_ADDRESS
+        task.server = self.server
 
         task.run()
         return task
@@ -133,15 +129,4 @@ class MainControl:
 
 if __name__ == '__main__':
     logging.info("Starting control loop")
-
-    if not settings.DEBUG:
-        logging.info("Starting camera thread")
-
-        start_threads()
-
-        GLOBAL_EV3_SOCKET = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        GLOBAL_EV3_SOCKET.bind(('0.0.0.0', PORT))
-        GLOBAL_EV3_SOCKET.listen(1)
-        GLOBAL_EV3_CONN, GLOBAL_EV3_ADDRESS = GLOBAL_EV3_SOCKET.accept()
-
     MainControl().loop()

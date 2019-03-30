@@ -29,9 +29,10 @@ class Server:
         self.sleep = False
         self.start_threads()
 
-    def setup_order(self, directions, is_current_color_green):
+    def setup_order(self, directions, is_current_color_green, qr_codes_expected=None):
         self.directions = directions
         self.is_current_color_green = is_current_color_green
+        self.qr_codes_expected = qr_codes_expected
         self.start_order()
 
 
