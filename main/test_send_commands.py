@@ -9,7 +9,7 @@ from vision.constants import PORT
 from vision.server2 import Server
 
 
-commands = ['LEFT', 'LEFT', 'END']
+commands = ['FORWARD', 'LEFT', 'FORWARD', 'END']
 
 server = Server()
 
