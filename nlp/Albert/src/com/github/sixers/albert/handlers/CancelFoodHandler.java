@@ -33,11 +33,11 @@ import java.util.Optional;
 
 import static com.amazon.ask.request.Predicates.intentName;
 
-public class OrderFoodHandler implements IntentRequestHandler {
+public class CancelFoodHandler implements IntentRequestHandler {
 
 	@Override
 	public boolean canHandle(HandlerInput handlerInput, IntentRequest intentRequest) {
-		return (handlerInput.matches(intentName("OrderFood")));
+		return (handlerInput.matches(intentName("CancelFood")));
 
 	}
 
@@ -95,24 +95,28 @@ public class OrderFoodHandler implements IntentRequestHandler {
 		String deviceID = handlerInput.getRequestEnvelope().getContext().getSystem().getDevice().getDeviceId();
 
 		// Construct respond text
-		String speechText = "You have ordered ";
-		List<String> products = new ArrayList<>();
-		products.add("" + numoneValue + " " + foodoneName);
+		String speechText = "You have cancelled ";
 		speechText = speechText + numoneValue + " " + foodoneName;
 		if (!foodtwoName.equals("")) {
 			if (foodthreeName.equals("")) {
 				speechText = speechText + " and " + numtwoValue + " " + foodtwoName;
-				products.add("" + numtwoValue + " " + foodtwoName);
 			} else {
 				speechText = speechText + ", " + numtwoValue + " " + foodtwoName;
 				speechText = speechText + " and " + numthreeValue + " " + foodthreeName;
-				products.add("" + numtwoValue + " " + foodtwoName);
-				products.add("" + numthreeValue + " " + foodthreeName);
+			}
+		}
+
+		if (!foodtwoName.equals("")) {
+			if (foodthreeName.equals("")) {
+				speechText = speechText + " and " + numtwoValue + " " + foodtwoName;
+			} else {
+				speechText = speechText + ", " + numtwoValue + " " + foodtwoName;
+				speechText = speechText + " and " + numthreeValue + " " + foodthreeName;
 			}
 		}
 
 		if (intent.getConfirmationStatus().getValue().toString().equals("CONFIRMED")) {
-			
+
 			CloseableHttpClient httpClient = HttpClients.createDefault();
 			HttpPost httpPost = new HttpPost("http://albert.visgean.me/api/orders/");
 
@@ -121,7 +125,6 @@ public class OrderFoodHandler implements IntentRequestHandler {
 			nameValuePairs.add(new BasicNameValuePair("device_id", deviceID));
 			// TODO: Should be Modified to adapted new API.
 			nameValuePairs.add(new BasicNameValuePair("products_text", speechText));
-//			nameValuePairs.add(new BasicNameValuePair("products", products.toString()));
 
 			try {
 				httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
@@ -132,13 +135,12 @@ public class OrderFoodHandler implements IntentRequestHandler {
 			}
 
 			return handlerInput.getResponseBuilder().withSpeech(speechText)
-					.withReprompt("Would you like anything else?").withShouldEndSession(false).build();
+					.withReprompt("Would you like to order something else?").withShouldEndSession(false).build();
 		} else {
 			return handlerInput.getResponseBuilder()
-					.withSpeech("Okay, I've cancelled that request. Would you like something else?")
-					.withReprompt("Would you like anything else?").withShouldEndSession(false).build();
+					.withSpeech("Okay, I have not cancelled your order. Would you like to cancel something else?")
+					.withReprompt("Would you like to order anything else?").withShouldEndSession(false).build();
 		}
+
 	}
-
-
 }

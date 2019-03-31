@@ -21,20 +21,19 @@ import java.util.Optional;
 
 import static com.amazon.ask.request.Predicates.intentName;
 
-public class HelloWorldIntentHandler implements RequestHandler {
-
+public class CheckServedHereHandler implements RequestHandler {
     @Override
     public boolean canHandle(HandlerInput input) {
-        return input.matches(intentName("HelloWorldIntent"));
+        return input.matches(intentName("CheckServedHere"));
     }
 
     @Override
     public Optional<Response> handle(HandlerInput input) {
-        String speechText = "Hello world I am Albert";
-       return input.getResponseBuilder()
+        String speechText = "Are you ready to order?";
+        return input.getResponseBuilder()
                 .withSpeech(speechText)
+                .withReprompt("Would you like a few more minutes?")
                 .withSimpleCard("HelloWorld", speechText)
                 .build();
     }
-
 }
