@@ -1,0 +1,13 @@
+[Unit]
+Description=ev3's main process
+After=network.target
+
+[Service]
+Restart=always
+User=student
+WorkingDirectory=/home/student/sixers/
+EnvironmentFile=/home/student/envrc_systemd_ev3
+ExecStart=python vision/ev3/client.py
+
+[Install]
+WantedBy=multi-user.target

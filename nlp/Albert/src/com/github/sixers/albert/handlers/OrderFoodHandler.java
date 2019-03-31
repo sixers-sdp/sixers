@@ -44,6 +44,7 @@ public class OrderFoodHandler implements IntentRequestHandler {
 	@Override
 	public Optional<Response> handle(HandlerInput handlerInput, IntentRequest intentRequest) {
 //
+
 		Intent intent = intentRequest.getIntent();
 		// Food names
 		Slot foodone = intent.getSlots().get("Foodone");
@@ -138,5 +139,6 @@ public class OrderFoodHandler implements IntentRequestHandler {
 					.withReprompt("Would you like anything else?").withShouldEndSession(false).build();
 		}
 	}
+
 
 }

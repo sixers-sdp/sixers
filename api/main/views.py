@@ -15,9 +15,12 @@ class OrderView(TemplateView):
 
     def get_context_data(self, **kwargs):
         c = super().get_context_data(**kwargs)
+        delivery = models.Order.objects.filter(state=ORDER_STATE_DELIVERY)
+
         c['new_orders'] = models.Order.objects.filter(state=ORDER_STATE_NEW)
         c['ready_orders'] = models.Order.objects.filter(state=ORDER_STATE_READY)
-        c['delivery_orders'] = models.Order.objects.filter(state=ORDER_STATE_DELIVERY)
+        c['delivery_orders'] = delivery
+        c['albert_is_empty'] = not delivery.exists()
         return c
 
 
