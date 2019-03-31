@@ -43,7 +43,6 @@ public class CancelDrinkHandler implements IntentRequestHandler {
 
 	@Override
 	public Optional<Response> handle(HandlerInput handlerInput, IntentRequest intentRequest) {
-//
 
 		Intent intent = intentRequest.getIntent();
 		// Drink names
@@ -52,9 +51,9 @@ public class CancelDrinkHandler implements IntentRequestHandler {
 		Slot drinkthree = intent.getSlots().get("Drinkthree");
 
 		// Number
-		Slot numone = intent.getSlots().get("Numone");
-		Slot numtwo = intent.getSlots().get("Numtwo");
-		Slot numthree = intent.getSlots().get("Numthree");
+		Slot numone = intent.getSlots().get("Numberone");
+		Slot numtwo = intent.getSlots().get("Numbertwo");
+		Slot numthree = intent.getSlots().get("Numberthree");
 
 		// defining default value for strings
 		String drinktwoName = "";
