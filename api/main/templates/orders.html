@@ -1,6 +1,29 @@
 {% extends 'base.html' %}
 
 {% block body %}
+	{% if cancellations %}
+		<div class="my-3 p-3 bg-white rounded box-shadow">
+			<h2 class="border-bottom border-gray pb-2 mb-0">Cancellations</h2>
+
+			{% for cancellation in cancellations %}
+				<div class="media text-muted pt-3">
+					<p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+						<strong class="d-block text-gray-dark">Table {{ cancellation.table_number }}</strong>
+						{{ cancellation.text }}
+					</p>
+					{% if user.is_authenticated %}
+						<form action="{% url 'main:change_cancel_state' id=cancellation.id %}" method="post">
+							{% csrf_token %}
+							<input type="hidden" value="true" name="processed">
+							<button type="submit" class="btn btn-primary">Mark resolved</button>
+						</form>
+					{% endif %}
+				</div>
+			{% endfor %}
+		</div>
+	{% endif %}
+
+
 	{% include "includes/orders_sublist.html" with label="Order in delivery" orders=delivery_orders button_hide='hide' %}
 	{% if albert_is_empty %}
 		{% include "includes/orders_sublist.html" with label="Ready orders" orders=ready_orders button_text="Mark for delivery" button_state='delivery'%}

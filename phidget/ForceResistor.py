@@ -3,6 +3,8 @@ import traceback
 from Phidget22.Devices.VoltageRatioInput import *
 from Phidget22.Devices.DigitalOutput import *
 from Phidget22.Net import *
+import Phidget22
+import threading
 
 try:
     from PhidgetHelperFunctions import *
@@ -82,58 +84,64 @@ def onVoltageRatioChangeHandler(self, voltageRatio):
 def onSensorChangeHandler(self, sensorValue, sensorUnit):
     print("[Sensor Event] -> Sensor Value: " + str(sensorValue) + sensorUnit.symbol)
 
+class WeightSensor:
+    def __init__(self):
+        self.weight_value = -1
+        self.has_ended = False
+        self.try_weight_sensor()
 
-def main():
-    try:
-        # Allocate a new Phidget Channel object
-        ch = VoltageRatioInput()
-        do = DigitalOutput()
-
-        ch.setChannel(0)
-        do.setChannel(6)
-
-        ch.setOnAttachHandler(onAttachHandler)
-        ch.setOnDetachHandler(onDetachHandler)
-        ch.setOnErrorHandler(onErrorHandler)
-        ch.setOnVoltageRatioChangeHandler(onVoltageRatioChangeHandler)
-        ch.setOnSensorChangeHandler(onSensorChangeHandler)
-
-        # Open the channel with a timeout
+    def try_weight_sensor(self):
+        print("Try Weight Sensor")
         try:
-            ch.openWaitForAttachment(5000)
-            do.openWaitForAttachment(5000)
-        except PhidgetException as e:
-            PrintOpenErrorMessage(e, ch)
-            raise EndProgramSignal("Program Terminated: Open Failed")
+            # Allocate a new Phidget Channel object
+            self.ch = VoltageRatioInput()
+            self.do = DigitalOutput()
 
-        # True should be replaced by while "moving" => currently requires manual stop
-        while True:
-            currentVoltageRatio = ch.getVoltageRatio()
+            self.ch.setChannel(0)
+            self.do.setChannel(6)
 
-            # If noticable change in Voltage occurs set off alarm
-            if abs(currentVoltageRatio - lastVoltage) > 0.15:
-                do.setState(True)
-                time.sleep(0.5)
-                do.setState(False)
+            self.ch.setOnAttachHandler(onAttachHandler)
+            self.ch.setOnDetachHandler(onDetachHandler)
+            self.ch.setOnErrorHandler(onErrorHandler)
+            self.ch.setOnVoltageRatioChangeHandler(onVoltageRatioChangeHandler)
+            self.ch.setOnSensorChangeHandler(onSensorChangeHandler)
+            # Open the channel with a timeout
+            try:
+                self.ch.openWaitForAttachment(5000)
+                self.do.openWaitForAttachment(5000)
+            except PhidgetException as e:
+                # PrintOpenErrorMessage(e, self.ch)
+                raise EndProgramSignal("Program Terminated: Open Failed")
 
-        # Currently unreachable
-        ch.close()
-        return 0
+            print("THREAD STARTING")
 
-    except PhidgetException as e:
-        DisplayError(e)
-        traceback.print_exc()
-        ch.close()
-        return 1
-    except EndProgramSignal as e:
-        print(e)
-        ch.close()
-        return 1
-    except RuntimeError as e:
-        traceback.print_exc()
-        return 1
-    finally:
-        readin = sys.stdin.readline()
+            weight_thread = threading.Thread(target=self.start_getting_weight_value)
+            weight_thread.daemon = True
+            weight_thread.start()
 
+        except Exception as e:
+            self.ch.close()
+            self.try_conneting_again()
 
-main()
+    def start_getting_weight_value(self):
+        while not self.has_ended:
+            try:
+                self.weight_value = self.ch.getVoltageRatio()
+            except:
+                self.ch.close()
+                break
+            time.sleep(0.25)
+        self.try_conneting_again()
+
+    def try_conneting_again(self):
+        self.has_ended = True
+        print("Weight sensor failed! Trying to connect to the weight sensor again in 3 2 1...")
+        time.sleep(3)
+        self.ch = None
+        self.do = None
+        self.has_ended = False
+        self.weight_value = -1
+        self.try_weight_sensor()
+
+    def get_weight_value(self):
+        return self.weight_value
