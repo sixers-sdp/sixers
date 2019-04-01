@@ -97,7 +97,7 @@ public class OrderFoodHandler implements IntentRequestHandler {
 		// Construct respond text
 		String speechText = "You have ordered ";
 		//Construct chef's order string
-		String chefText = "";
+		String chefText = "NEW ORDER: ";
 		List<String> products = new ArrayList<>();
 		products.add("" + numoneValue + " " + foodoneName);
 		speechText = speechText + numoneValue + " " + foodoneName;

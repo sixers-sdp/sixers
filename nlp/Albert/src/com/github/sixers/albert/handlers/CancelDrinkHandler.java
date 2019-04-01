@@ -96,13 +96,96 @@ public class CancelDrinkHandler implements IntentRequestHandler {
 
 		// Construct respond text
 		String speechText = "You have cancelled ";
+		//Construct chef's order string
+		String chefText = "CANCELLATION: ";
 		speechText = speechText + numoneValue + " " + drinkoneName;
+		if (numoneValue.equals("one")){
+			chefText = chefText + "1x " +drinkoneName + "\n";
+		}
+		else if (numoneValue.equals("two")){
+			chefText = chefText + "2x " +drinkoneName + "\n";
+		}
+		else if (numoneValue.equals("three")){
+			chefText = chefText + "3x " +drinkoneName + "\n";
+		}
+		else if (numoneValue.equals("four")){
+			chefText = chefText + "4x " +drinkoneName + "\n";
+		}
+		else if (numoneValue.equals("five")){
+			chefText = chefText + "5x " +drinkoneName + "\n";
+		}
+		else if (numoneValue.equals("six")){
+			chefText = chefText + "6x " +drinkoneName + "\n";
+		}
+		else if (numoneValue.equals("seven")){
+			chefText = chefText + "7x " +drinkoneName + "\n";
+		}
+		else if (numoneValue.equals("eight")){
+			chefText = chefText + "8x " +drinkoneName + "\n";
+		}
+		else if (numoneValue.equals("nine")){
+			chefText = chefText + "9x " +drinkoneName + "\n";
+		}
 		if (!drinktwoName.equals("")) {
+			if (numtwoValue.equals("one")){
+				chefText = chefText + "1x " +drinktwoName + "\n";
+			}
+			else if (numtwoValue.equals("two")){
+				chefText = chefText + "2x " +drinktwoName + "\n";
+			}
+			else if (numtwoValue.equals("three")){
+				chefText = chefText + "3x " +drinktwoName + "\n";
+			}
+			else if (numtwoValue.equals("four")){
+				chefText = chefText + "4x " +drinktwoName + "\n";
+			}
+			else if (numtwoValue.equals("five")){
+				chefText = chefText + "5x " +drinktwoName + "\n";
+			}
+			else if (numtwoValue.equals("six")){
+				chefText = chefText + "6x " +drinktwoName + "\n";
+			}
+			else if (numoneValue.equals("seven")){
+				chefText = chefText + "7x " +drinktwoName + "\n";
+			}
+			else if (numoneValue.equals("eight")){
+				chefText = chefText + "8x " +drinktwoName + "\n";
+			}
+			else if (numoneValue.equals("nine")){
+				chefText = chefText + "9x " +drinktwoName + "\n";
+			}
 			if (drinkthreeName.equals("")) {
 				speechText = speechText + " and " + numtwoValue + " " + drinktwoName;
 			} else {
 				speechText = speechText + ", " + numtwoValue + " " + drinktwoName;
 				speechText = speechText + " and " + numthreeValue + " " + drinkthreeName;
+				if (numthreeValue.equals("one")){
+					chefText = chefText + "1x " +drinkthreeName + "\n";
+				}
+				else if (numthreeValue.equals("two")){
+					chefText = chefText + "2x " +drinkthreeName + "\n";
+				}
+				else if (numthreeValue.equals("three")){
+					chefText = chefText + "3x " +drinkthreeName + "\n";
+				}
+				else if (numthreeValue.equals("four")){
+					chefText = chefText + "4x " +drinkthreeName + "\n";
+				}
+				else if (numthreeValue.equals("five")){
+					chefText = chefText + "5x " +drinkthreeName + "\n";
+				}
+				else if (numthreeValue.equals("six")){
+					chefText = chefText + "6x " +drinkthreeName + "\n";
+				}
+				else if (numoneValue.equals("seven")){
+					chefText = chefText + "7x " +drinkthreeName + "\n";
+				}
+				else if (numoneValue.equals("eight")){
+					chefText = chefText + "8x " +drinkthreeName + "\n";
+				}
+				else if (numoneValue.equals("nine")){
+					chefText = chefText + "9x " +drinkthreeName + "\n";
+				}
 			}
 		}
 
@@ -115,7 +198,7 @@ public class CancelDrinkHandler implements IntentRequestHandler {
 			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 			nameValuePairs.add(new BasicNameValuePair("device_id", deviceID));
 			// TODO: Should be Modified to adapted new API.
-			nameValuePairs.add(new BasicNameValuePair("products_text", speechText));
+			nameValuePairs.add(new BasicNameValuePair("products_text", chefText));
 
 			try {
 				httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));

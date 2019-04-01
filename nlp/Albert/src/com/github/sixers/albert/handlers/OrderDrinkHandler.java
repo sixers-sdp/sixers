@@ -98,7 +98,7 @@ public class OrderDrinkHandler implements IntentRequestHandler {
 		// Construct respond text
 		String speechText = "You have ordered ";
 		//Construct chef's order string
-		String chefText = "";
+		String chefText = "NEW ORDER: ";
 		speechText = speechText + numoneValue + " " + drinkoneName;
 		if (numoneValue.equals("one")){
 			chefText = chefText + "1x " +drinkoneName + "\n";
