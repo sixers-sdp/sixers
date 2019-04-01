@@ -55,6 +55,19 @@ class DotAssociationSerializer(serializers.ModelSerializer):
 
 
 class CancellationSerializer(serializers.ModelSerializer):
+    device_id = serializers.CharField(write_only=True)
+
     class Meta:
         model = Cancellation
         exclude = []
+
+        extra_kwargs = {
+            'table_number': {'read_only': True},
+        }
+
+    def create(self, validated_data):
+        device_id = validated_data.pop('device_id')
+        table_num = DotAssociation.objects.get(dot_id=device_id).location
+        validated_data['table_number'] = table_num
+        order = super().create(validated_data)
+        return order
