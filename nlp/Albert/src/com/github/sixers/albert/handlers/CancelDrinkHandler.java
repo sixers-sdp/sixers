@@ -198,7 +198,7 @@ public class CancelDrinkHandler implements IntentRequestHandler {
 			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 			nameValuePairs.add(new BasicNameValuePair("device_id", deviceID));
 			// TODO: Should be Modified to adapted new API.
-			nameValuePairs.add(new BasicNameValuePair("products_text", chefText));
+			nameValuePairs.add(new BasicNameValuePair("text", chefText));
 
 			try {
 				httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
