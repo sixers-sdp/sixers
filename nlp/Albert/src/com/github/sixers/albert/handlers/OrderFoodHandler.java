@@ -99,6 +99,8 @@ public class OrderFoodHandler implements IntentRequestHandler {
                 speechText = speechText + " and " + numthreeValue + " " + foodthreeName;
             }
         }
+
+
        
 
         CloseableHttpClient httpClient = HttpClients.createDefault();
