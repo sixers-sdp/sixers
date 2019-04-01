@@ -1,1971 +1,1340 @@
 {
-    "interactionModel": {
-        "languageModel": {
-            "invocationName": "albert",
-            "intents": [
-                {
-                    "name": "AMAZON.FallbackIntent",
-                    "samples": []
-                },
-                {
-                    "name": "AMAZON.CancelIntent",
-                    "samples": [
-                        "Yes please",
-                        "Can we have a little longer please",
-                        "Can we have a few more minutes please",
-                        "I've changed my mind",
-                        "I have changed my mind."
-                    ]
-                },
-                {
-                    "name": "AMAZON.HelpIntent",
-                    "samples": []
-                },
-                {
-                    "name": "AMAZON.StopIntent",
-                    "samples": [
-                        "No Albert thank you",
-                        "No Albert thanks",
-                        "That's everything Albert",
-                        "That's everything thank you Albert",
-                        "That's everything thanks",
-                        "Thank you very much",
-                        "Thanks Albert",
-                        "That's all Albert",
-                        "No that's all Albert",
-                        "No that's everything Albert",
-                        "No that's everything",
-                        "No that's all",
-                        "That's everything",
-                        "No thanks",
-                        "No thank you",
-                        "Thank you very much Albert",
-                        "That's all please",
-                        "Thank you Albert",
-                        "Thanks very much",
-                        "Thanks",
-                        "Thank you",
-                        "That's all",
-                        "That's everything thank you"
-                    ]
-                },
-                {
-                    "name": "AMAZON.NavigateHomeIntent",
-                    "samples": [
-                        "Could we also order something else",
-                        "Could I also order something else"
-                    ]
-                },
-                {
-                    "name": "OrderFood",
-                    "slots": [
-                        {
-                            "name": "Foodone",
-                            "type": "Menu",
-                            "samples": [
-                                "{Foodone}"
-                            ]
-                        },
-                        {
-                            "name": "Foodtwo",
-                            "type": "Menu"
-                        },
-                        {
-                            "name": "Numberone",
-                            "type": "Num"
-                        },
-                        {
-                            "name": "Numbertwo",
-                            "type": "Num"
-                        },
-                        {
-                            "name": "Numberthree",
-                            "type": "Num"
-                        },
-                        {
-                            "name": "Foodthree",
-                            "type": "Menu"
-                        }
-                    ],
-                    "samples": [
-                        "I'd like {Numberone} {Foodone} please",
-                        "I'd like {Numberone} {Foodone}",
-                        "I'd like {Foodone} please",
-                        "I'd like {Foodone}",
-                        "{Foodone} {Numbertwo} {Foodtwo} and {Foodthree} please",
-                        "{Numberone} {Foodone} {Numbertwo} {Foodtwo} and {Foodthree} please",
-                        "{Foodone} {Numbertwo} {Foodtwo} and {Numberthree} {Foodthree} please",
-                        "{Numberone} {Foodone} {Foodtwo} and {Numberthree} {Foodthree} please",
-                        "{Numberone} {Foodone} {Foodtwo} and {Foodthree} please",
-                        "{Foodone} {Foodtwo} and {Numberthree} {Foodthree} please",
-                        "{Numberone} {Foodone} {Numbertwo} {Foodtwo} and {Numberthree} {Foodthree} please",
-                        "{Numberone} {Foodone} and {Numbertwo} {Foodtwo} please",
-                        "{Foodone} and {Numbertwo} {Foodtwo} please",
-                        "{Numberone} {Foodone} and {Foodtwo} please",
-                        "{Numberone} {Foodone} please",
-                        "{Foodone} {Foodtwo} and {Foodthree} please",
-                        "{Foodone} and {Foodtwo} please",
-                        "{Foodone} please",
-                        "I want {Foodone}  {Foodtwo} and {Foodthree}",
-                        "I want {Foodone} and {Foodtwo}",
-                        "I want {Foodone}",
-                        "I want {Foodone}  {Numbertwo}  {Foodtwo} and  {Foodthree}",
-                        "Can i have {Foodone}  {Numbertwo}  {Foodtwo} and  {Foodthree}",
-                        "Umm... {Foodone}  {Numbertwo}  {Foodtwo} and  {Foodthree}",
-                        "I want {Numberone}  {Foodone}  {Numbertwo}  {Foodtwo} and {Foodthree}",
-                        "Can i have {Numberone}  {Foodone}  {Numbertwo}  {Foodtwo} and {Foodthree}",
-                        "Umm... {Numberone}  {Foodone}  {Numbertwo}  {Foodtwo} and {Foodthree}",
-                        "I want {Foodone}  {Numbertwo}  {Foodtwo}  and {Numberthree}  {Foodthree}",
-                        "Can i have {Foodone}  {Numbertwo}  {Foodtwo} and {Numberthree}  {Foodthree}",
-                        "Umm... {Foodone}  {Numbertwo}  {Foodtwo} and {Numberthree}  {Foodthree}",
-                        "I want {Numberone}  {Foodone}  {Foodtwo} and {Numberthree}  {Foodthree}",
-                        "Can i have {Numberone}  {Foodone}  {Foodtwo} and {Numberthree}  {Foodthree}",
-                        "Umm... {Numberone}  {Foodone}  {Foodtwo} and {Numberthree}  {Foodthree}",
-                        "I want {Numberone}  {Foodone}  {Foodtwo} and {Foodthree}",
-                        "Can i have {Numberone}  {Foodone}  {Foodtwo} and {Foodthree}",
-                        "Umm... {Numberone}  {Foodone}  {Foodtwo} and {Foodthree}",
-                        "I want {Foodone}  {Foodtwo} and {Numberthree}  {Foodthree}",
-                        "Can i have {Foodone}  {Foodtwo} and {Numberthree}  {Foodthree}",
-                        "Umm... {Foodone}  {Foodtwo} and {Numberthree}  {Foodthree}",
-                        "I want {Numberone}  {Foodone}  {Numbertwo}  {Foodtwo} and {Numberthree}  {Foodthree}",
-                        "Can i have {Numberone}  {Foodone}  {Numbertwo}  {Foodtwo} and {Numberthree}  {Foodthree}",
-                        "Umm... {Numberone}  {Foodone}  {Numbertwo}  {Foodtwo} and {Numberthree}  {Foodthree}",
-                        "I want {Numberone}  {Foodone} and {Numbertwo}  {Foodtwo}",
-                        "Can i have {Numberone}  {Foodone} and {Numbertwo}  {Foodtwo}",
-                        "Umm... {Numberone}  {Foodone} and {Numbertwo}  {Foodtwo}",
-                        "I want {Foodone} and {Numbertwo}  {Foodtwo}",
-                        "Can i have {Foodone} and {Numbertwo}  {Foodtwo}",
-                        "Umm... {Foodone} and {Numbertwo}  {Foodtwo}",
-                        "I want {Numberone}  {Foodone} and {Foodtwo}",
-                        "Can i have {Numberone}  {Foodone} and {Foodtwo}",
-                        "Umm... {Numberone}  {Foodone} and {Foodtwo}",
-                        "I want {Numberone}  {Foodone}",
-                        "Can i have {Numberone}  {Foodone}",
-                        "Umm... {Numberone}  {Foodone}",
-                        "{Foodone}  {Numbertwo}  {Foodtwo} and  {Foodthree}",
-                        "{Numberone}  {Foodone}  {Numbertwo}  {Foodtwo} and {Foodthree}",
-                        "{Foodone}  {Numbertwo}  {Foodtwo} and {Numberthree}  {Foodthree}",
-                        "{Numberone}  {Foodone}  {Foodtwo} and {Numberthree}  {Foodthree}",
-                        "{Numberone}  {Foodone}  {Foodtwo} and {Foodthree}",
-                        "{Foodone}  {Foodtwo} and {Numberthree}  {Foodthree}",
-                        "{Numberone}  {Foodone}  {Numbertwo}  {Foodtwo} and {Numberthree}  {Foodthree}",
-                        "{Numberone}  {Foodone} and {Numbertwo}  {Foodtwo}",
-                        "{Foodone} and {Numbertwo}  {Foodtwo}",
-                        "{Numberone} {Foodone} and {Foodtwo}",
-                        "{Numberone} {Foodone}",
-                        "Can i have {Foodone}  {Foodtwo} and {Foodthree}",
-                        "Can i have {Foodone} and {Foodtwo}",
-                        "Umm... {Foodone}  {Foodtwo} and {Foodthree}",
-                        "Umm.. {Foodone} and {Foodtwo}",
-                        "{Foodone}  {Foodtwo} and {Foodthree}",
-                        "{Foodone} and {Foodtwo}",
-                        "Umm... {Foodone}",
-                        "{Foodone}",
-                        "I'm ready to order",
-                        "We're ready to order",
-                        "Can we order",
-                        "Can I order",
-                        "Can I order some food",
-                        "I am hungry",
-                        "Can i have  {Foodone}",
-                        "Order food",
-                        "Can I order food"
-                    ]
-                },
-                {
-                    "name": "OrderDrink",
-                    "slots": [
-                        {
-                            "name": "Drinkone",
-                            "type": "Drink",
-                            "samples": [
-                                "{Drinkone}"
-                            ]
-                        },
-                        {
-                            "name": "Drinktwo",
-                            "type": "Drink"
-                        },
-                        {
-                            "name": "Drinkthree",
-                            "type": "Drink"
-                        },
-                        {
-                            "name": "Numone",
-                            "type": "Num"
-                        },
-                        {
-                            "name": "Numtwo",
-                            "type": "Num"
-                        },
-                        {
-                            "name": "Numthree",
-                            "type": "Num"
-                        }
-                    ],
-                    "samples": [
-                        "{Drinkone} {Drinktwo} and {Numthree} {Drinkthree} please",
-                        "{Drinkone} {Numtwo} {Drinktwo} and {Numthree} {Drinkthree} please",
-                        "{Drinkone} {Numtwo} {Drinktwo} and {Drinkthree} please",
-                        "{Numone} {Drinkone} {Numtwo} {Drinktwo} and {Numthree} {Drinkthree} please",
-                        "{Numone} {Drinkone} {Drinktwo} and {Numthree} {Drinkthree} please",
-                        "{Numone} {Drinkone} {Numtwo} {Drinktwo} and {Drinkthree} please",
-                        "{Numone} {Drinkone} {Drinktwo} and {Drinkthree} please",
-                        "{Drinkone} {Drinktwo} and {Drinkthree} please",
-                        "{Drinkone} and {Numtwo} {Drinktwo} please",
-                        "{Numone} {Drinkone} and {Numtwo} {Drinktwo} please",
-                        "{Numone} {Drinkone} and {Drinktwo} please",
-                        "{Drinkone} and {Drinktwo} please",
-                        "{Numone} {Drinkone} please",
-                        "{Drinkone} please",
-                        "{Drinkone}",
-                        "Can i get {Drinkone}  {Drinktwo} and {Numthree}  {Drinkthree}",
-                        "I'd like {Drinkone}  {Drinktwo} and {Numthree}  {Drinkthree}",
-                        "Can i have {Drinkone}  {Drinktwo} and {Numthree}  {Drinkthree}",
-                        "Umm... {Drinkone}  {Drinktwo} and {Numthree}  {Drinkthree}",
-                        "Can i get {Drinkone}  {Numtwo}  {Drinktwo} and {Numthree}  {Drinkthree}",
-                        "I'd like {Drinkone}  {Numtwo}  {Drinktwo} and {Numthree}  {Drinkthree}",
-                        "Can i have {Drinkone}  {Numtwo}  {Drinktwo} and {Numthree}  {Drinkthree}",
-                        "Umm... {Drinkone}  {Numtwo}  {Drinktwo} and {Numthree}  {Drinkthree}",
-                        "Can i get {Drinkone}  {Numtwo}  {Drinktwo} and {Drinkthree}",
-                        "I'd like {Drinkone}  {Numtwo}  {Drinktwo} and {Drinkthree}",
-                        "Can i have {Drinkone}  {Numtwo}  {Drinktwo} and {Drinkthree}",
-                        "Umm... {Drinkone}  {Numtwo}  {Drinktwo} and {Drinkthree}",
-                        "Can i get {Numone}  {Drinkone}  {Numtwo}  {Drinktwo} and {Numthree}  {Drinkthree}",
-                        "I'd like {Numone}  {Drinkone}  {Numtwo}  {Drinktwo} and {Numthree}  {Drinkthree}",
-                        "Can i have {Numone}  {Drinkone}  {Numtwo}  {Drinktwo} and {Numthree}  {Drinkthree}",
-                        "Umm... {Numone}  {Drinkone}  {Numtwo}  {Drinktwo} and {Numthree}  {Drinkthree}",
-                        "Can i get {Numone}  {Drinkone}  {Drinktwo} and {Numthree}  {Drinkthree}",
-                        "I'd like {Numone}  {Drinkone}  {Drinktwo} and {Numthree}  {Drinkthree}",
-                        "Can i have {Numone}  {Drinkone}  {Drinktwo} and {Numthree}  {Drinkthree}",
-                        "Umm... {Numone}  {Drinkone}  {Drinktwo} and {Numthree}  {Drinkthree}",
-                        "Can i get {Numone}  {Drinkone}  {Numtwo}  {Drinktwo} and {Drinkthree}",
-                        "I'd like {Numone}  {Drinkone}  {Numtwo}  {Drinktwo} and {Drinkthree}",
-                        "Can i have {Numone}  {Drinkone}  {Numtwo}  {Drinktwo} and {Drinkthree}",
-                        "Umm... {Numone}  {Drinkone}  {Numtwo}  {Drinktwo} and {Drinkthree}",
-                        "Can i get {Numone}  {Drinkone}  {Drinktwo} and {Drinkthree}",
-                        "I'd like {Numone}  {Drinkone}  {Drinktwo} and {Drinkthree}",
-                        "Can i have {Numone}  {Drinkone}  {Drinktwo} and {Drinkthree}",
-                        "Umm... {Numone}  {Drinkone}  {Drinktwo} and {Drinkthree}",
-                        "Can i get {Drinkone}  {Drinktwo} and {Drinkthree}",
-                        "I'd like {Drinkone}  {Drinktwo} and {Drinkthree}",
-                        "Can i have {Drinkone}  {Drinktwo} and {Drinkthree}",
-                        "Umm... {Drinkone}  {Drinktwo} and {Drinkthree}",
-                        "{Drinkone}  {Drinktwo} and {Numthree}  {Drinkthree}",
-                        "{Drinkone}  {Numtwo}  {Drinktwo} and {Numthree}  {Drinkthree}",
-                        "{Drinkone}  {Numtwo}  {Drinktwo} and {Drinkthree}",
-                        "{Numone}  {Drinkone}  {Numtwo}  {Drinktwo} and {Numthree}  {Drinkthree}",
-                        "{Numone}  {Drinkone}  {Drinktwo} and {Numthree}  {Drinkthree}",
-                        "{Numone}  {Drinkone}  {Numtwo}  {Drinktwo} and {Drinkthree}",
-                        "{Numone}  {Drinkone}  {Drinktwo} and {Drinkthree}",
-                        "{Drinkone}  {Drinktwo} and {Drinkthree}",
-                        "Can i get {Numone}  {Drinkone} and {Numtwo}  {Drinktwo}",
-                        "I'd like {Numone}  {Drinkone} and {Numtwo}  {Drinktwo}",
-                        "Can i have {Numone}  {Drinkone} and {Numtwo}  {Drinktwo}",
-                        "Umm... {Numone}  {Drinkone} and {Numtwo}  {Drinktwo}",
-                        "Can i get {Drinkone} and {Numtwo}  {Drinktwo}",
-                        "I'd like {Drinkone} and {Numtwo}  {Drinktwo}",
-                        "Can i have {Drinkone} and {Numtwo}  {Drinktwo}",
-                        "Umm... {Drinkone} and {Numtwo}  {Drinktwo}",
-                        "Can i get {Numone}  {Drinkone} and {Drinktwo}",
-                        "I'd like {Numone}  {Drinkone} and {Drinktwo}",
-                        "Can i have {Numone}  {Drinkone} and {Drinktwo}",
-                        "Umm... {Numone}  {Drinkone} and {Drinktwo}",
-                        "Can i get {Drinkone} and {Drinktwo}",
-                        "I'd like {Drinkone} and {Drinktwo}",
-                        "Can i have {Drinkone} and {Drinktwo}",
-                        "Umm... {Drinkone} and {Drinktwo}",
-                        "Can i get {Numone}  {Drinkone}",
-                        "I'd like {Numone}  {Drinkone}",
-                        "Can i have {Numone}  {Drinkone}",
-                        "Umm... {Numone}  {Drinkone}",
-                        "{Numone}  {Drinkone} and {Numtwo}  {Drinktwo}",
-                        "{Drinkone} and {Numtwo}  {Drinktwo}",
-                        "{Numone}  {Drinkone} and {Drinktwo}",
-                        "{Drinkone} and {Drinktwo}",
-                        "{Numone}  {Drinkone}",
-                        "can i get a {Drinkone}",
-                        "Umm... {Drinkone}",
-                        "I want to get drunk",
-                        "can i order drink",
-                        "I'd like a {Drinkone}",
-                        "I'd like a drink",
-                        "Can i have {Drinkone}",
-                        "Can I get a drink",
-                        "Can I get some drinks"
-                    ]
-                },
-                {
-                    "name": "SetTableIntent",
-                    "slots": [
-                        {
-                            "name": "password",
-                            "type": "AMAZON.NUMBER",
-                            "samples": [
-                                "{password}"
-                            ]
-                        },
-                        {
-                            "name": "TableNUM",
-                            "type": "AMAZON.NUMBER",
-                            "samples": [
-                                "{TableNUM}"
-                            ]
-                        }
-                    ],
-                    "samples": [
-                        "set table",
-                        "set up this device"
-                    ]
-                },
-                {
-                    "name": "CancelFood",
-                    "slots": [
-                        {
-                            "name": "Foodone",
-                            "type": "Menu",
-                            "samples": [
-                                "I'd like to cancel {Foodone}"
-                            ]
-                        },
-                        {
-                            "name": "Foodtwo",
-                            "type": "Menu"
-                        },
-                        {
-                            "name": "Foodthree",
-                            "type": "Menu"
-                        },
-                        {
-                            "name": "Numberone",
-                            "type": "Num"
-                        },
-                        {
-                            "name": "Numbertwo",
-                            "type": "Num"
-                        },
-                        {
-                            "name": "Numberthree",
-                            "type": "Num"
-                        }
-                    ],
-                    "samples": [
-                        "{Numberone} {Foodone} {Foodtwo} and {Numberthree} {Foodthree}",
-                        "{Numberone} {Foodone} {Numbertwo} {Foodtwo} and {Foodthree}",
-                        "{Foodone} {Foodtwo} and {Numberthree} {Foodthree}",
-                        "{Foodone} {Numbertwo} {Foodtwo} and {Foodthree}",
-                        "{Numberone} {Foodone} {Foodtwo} and {Foodthree}",
-                        "{Foodone} {Foodtwo} and {Foodthree}",
-                        "{Foodone} and {Numbertwo} {Foodtwo}",
-                        "{Numberone} {Foodone} and {Numbertwo} {Foodtwo}",
-                        "{Numberone} {Foodone} and {Foodtwo}",
-                        "{Foodone} and {Foodtwo}",
-                        "{Numberone} {Foodone}",
-                        "{Foodone}",
-                        "I've changed my mind about my food order",
-                        "I'd like to cancel {Numberone} {Foodone} {Numbertwo} {Foodtwo} and {Numberthree} {Foodthree}",
-                        "I'd like to cancel {Foodone}  {Numbertwo} {Foodtwo} and {Numberthree} {Foodthree}",
-                        "I'd like to cancel {Numberone} {Foodone} {Foodtwo} and {Numberthree} {Foodthree}",
-                        "I'd like to cancel {Numberone} {Foodone} {Numbertwo} {Foodtwo} and {Foodthree}",
-                        "I'd like to cancel {Foodone} {Foodtwo} and {Numberthree} {Foodthree}",
-                        "I'd like to cancel {Foodone} {Numbertwo} {Foodtwo} and {Foodthree}",
-                        "I'd like to cancel {Numberone} {Foodone} {Foodtwo} and {Foodthree}",
-                        "I'd like to cancel {Foodone} {Foodtwo} and {Foodthree}",
-                        "I'd like to cancel {Foodone} and {Numbertwo} {Foodtwo}",
-                        "I'd like to cancel {Numberone} {Foodone} and {Numbertwo} {Foodtwo}",
-                        "I'd like to cancel {Numberone} {Foodone} and {Foodtwo}",
-                        "I'd like to cancel {Foodone} and {Foodtwo}",
-                        "I'd like to cancel {Numberone} {Foodone}",
-                        "I'd like to cancel {Foodone}",
-                        "I'd like to cancel my {Foodone}",
-                        "I'd like to cancel something"
-                    ]
-                },
-                {
-                    "name": "CancelDrink",
-                    "slots": [
-                        {
-                            "name": "Numberone",
-                            "type": "Num"
-                        },
-                        {
-                            "name": "Drinkone",
-                            "type": "Drink",
-                            "samples": [
-                                "{Drinkone}"
-                            ]
-                        },
-                        {
-                            "name": "Numbertwo",
-                            "type": "Num"
-                        },
-                        {
-                            "name": "Drinktwo",
-                            "type": "Drink"
-                        },
-                        {
-                            "name": "Numberthree",
-                            "type": "Num"
-                        },
-                        {
-                            "name": "Drinkthree",
-                            "type": "Drink"
-                        }
-                    ],
-                    "samples": [
-                        "{Numberone} {Drinkone} and {Numbertwo} {Drinktwo}",
-                        "{Numberone} {Drinkone} {Numbertwo} {Drinktwo} and {Numberthree} {Drinkthree}",
-                        "{Drinkone}  {Numbertwo} {Drinktwo} and {Numberthree} {Drinkthree}",
-                        "{Numberone} {Drinkone} {Drinktwo} and {Numberthree} {Drinkthree}",
-                        "{Numberone} {Drinkone} {Numbertwo} {Drinktwo} and {Drinkthree}",
-                        "{Drinkone} {Drinktwo} and {Numberthree} {Drinkthree}",
-                        "{Drinkone} {Numbertwo} {Drinktwo} and {Drinkthree}",
-                        "{Numberone} {Drinkone} {Drinktwo} and {Drinkthree}",
-                        "{Drinkone} {Drinktwo} and {Drinkthree}",
-                        "{Drinkone} and {Numbertwo} {Drinktwo}",
-                        "{Numberone} {Drinkone} and {Drinktwo}",
-                        "{Drinkone} and {Drinktwo}",
-                        "{Numberone} {Drinkone}",
-                        "{Drinkone}",
-                        "I'd like to cancel {Numberone} {Drinkone} {Numbertwo} {Drinktwo} and {Numberthree} {Drinkthree}",
-                        "I'd like to cancel {Drinkone}  {Numbertwo} {Drinktwo} and {Numberthree} {Drinkthree}",
-                        "I'd like to cancel {Numberone} {Drinkone} {Drinktwo} and {Numberthree} {Drinkthree}",
-                        "I'd like to cancel {Numberone} {Drinkone} {Numbertwo} {Drinktwo} and {Drinkthree}",
-                        "I'd like to cancel {Drinkone} {Drinktwo} and {Numberthree} {Drinkthree}",
-                        "I'd like to cancel {Drinkone} {Numbertwo} {Drinktwo} and {Drinkthree}",
-                        "I'd like to cancel {Numberone} {Drinkone} {Drinktwo} and {Drinkthree}",
-                        "I'd like to cancel {Drinkone} {Drinktwo} and {Drinkthree}",
-                        "I'd like to cancel {Drinkone} and {Numbertwo} {Drinktwo}",
-                        "I'd like to cancel {Numberone} {Drinkone} and {Numbertwo} {Drinktwo}",
-                        "I'd like to cancel {Numberone} {Drinkone} and {Drinktwo}",
-                        "I'd like to cancel {Drinkone} and {Drinktwo}",
-                        "I'd like to cancel {Numberone} {Drinkone}",
-                        "I'd like to cancel {Drinkone}",
-                        "I've changed my mind about my drink order",
-                        "I'd like to cancel my {Drinkone}"
-                    ]
-                },
-                {
-                    "name": "CheckServedHere",
-                    "slots": [
-                        {
-                            "name": "Food",
-                            "type": "Menu"
-                        },
-                        {
-                            "name": "Drink",
-                            "type": "Drink"
-                        }
-                    ],
-                    "samples": [
-                        "Do you have {Drink}",
-                        "Do you serve {Drink}",
-                        "Do you have {Food}",
-                        "Do you serve {Food}",
-                        "Do you have {Drink} here",
-                        "Do you serve {Drink} here",
-                        "Do you have {Food} here",
-                        "Do you serve {Food} here"
-                    ]
-                },
-                {
-                    "name": "Recommandation",
-                    "slots": [],
-                    "samples": [
-                        "Any recommendation",
-                        "Can I have some recommendation please"
-                    ]
-                },
-                {
-                    "name": "VeganRecom",
-                    "slots": [],
-                    "samples": [
-                        "Do you have anything vegan"
-                    ]
-                },
-                {
-                    "name": "VeggieRecom",
-                    "slots": [],
-                    "samples": [
-                        "Do you have anything vegetarian"
-                    ]
-                },
-                {
-                    "name": "GFRecom",
-                    "slots": [],
-                    "samples": [
-                        "Do you have anything gluten free"
-                    ]
-                }
-            ],
-            "types": [
-                {
-                    "name": "Drink",
-                    "values": [
-                        {
-                            "id": "555",
-                            "name": {
-                                "value": "soda",
-                                "synonyms": [
-                                    "sodas"
-                                ]
-                            }
-                        },
-                        {
-                            "id": "111",
-                            "name": {
-                                "value": "Old Blackened",
-                                "synonyms": [
-                                    "whiskys",
-                                    "whisky",
-                                    "old blackeneds"
-                                ]
-                            }
-                        },
-                        {
-                            "id": "12",
-                            "name": {
-                                "value": "Diet Coke",
-                                "synonyms": [
-                                    "diet cokes"
-                                ]
-                            }
-                        },
-                        {
-                            "id": "14",
-                            "name": {
-                                "value": "Coke",
-                                "synonyms": [
-                                    "regular cokes",
-                                    "normal cokes",
-                                    "fat cokes",
-                                    "coca colas",
-                                    "coca cola",
-                                    "regular coke",
-                                    "Normal coke",
-                                    "Fat coke"
-                                ]
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "Botanist Bramble",
-                                "synonyms": [
-                                    "botanist brambles",
-                                    "brambles",
-                                    "Bramble"
-                                ]
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "Gin and Tonic",
-                                "synonyms": [
-                                    "gin and tonics"
-                                ]
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "Gray Goose",
-                                "synonyms": [
-                                    "vodkas",
-                                    "vodka",
-                                    "grey gooses"
-                                ]
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "Pineapple Juice",
-                                "synonyms": [
-                                    "pineapple juices"
-                                ]
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "Orange Juice",
-                                "synonyms": [
-                                    "orange juices"
-                                ]
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "Apple Juice",
-                                "synonyms": [
-                                    "apple juices"
-                                ]
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "White wine",
-                                "synonyms": [
-                                    "glasses of white wine",
-                                    "glasses of house white",
-                                    "glass of house white",
-                                    "glass of white wine",
-                                    "house whites",
-                                    "white wines",
-                                    "House White"
-                                ]
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "Red wine",
-                                "synonyms": [
-                                    "glasses of house red",
-                                    "glass of house red",
-                                    "glasses of red wine",
-                                    "glass of red wine",
-                                    "house reds",
-                                    "red wines",
-                                    "House Red"
-                                ]
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "Arran Blonde",
-                                "synonyms": [
-                                    "arran blondes"
-                                ]
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "Peroni",
-                                "synonyms": [
-                                    "peronis"
-                                ]
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "Stella Artois",
-                                "synonyms": [
-                                    "stella artoises",
-                                    "stellas",
-                                    "Stella"
-                                ]
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "Rosé",
-                                "synonyms": [
-                                    "glasses of rosé",
-                                    "glass of rosé",
-                                    "Rosés"
-                                ]
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "Water",
-                                "synonyms": [
-                                    "glasses of water",
-                                    "glass of water",
-                                    "waters"
-                                ]
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "Coffee",
-                                "synonyms": [
-                                    "coffees",
-                                    "cups of coffee",
-                                    "Cup of Coffee"
-                                ]
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "Tea",
-                                "synonyms": [
-                                    "pots of tea",
-                                    "pot of tea",
-                                    "teas",
-                                    "cups of tea",
-                                    "Cup of Tea"
-                                ]
-                            }
-                        }
-                    ]
-                },
-                {
-                    "name": "Menu",
-                    "values": [
-                        {
-                            "name": {
-                                "value": "Caramelised Duck Breast",
-                                "synonyms": [
-                                    "duck breasts",
-                                    "ducks",
-                                    "Duck Breast",
-                                    "Duck"
-                                ]
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "Vegan Brownie",
-                                "synonyms": [
-                                    "brownies",
-                                    "vegan brownies",
-                                    "Brownie"
-                                ]
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "Vegetable Thai Curry",
-                                "synonyms": [
-                                    "vegetable curries",
-                                    "thai curries",
-                                    "vegetable thai curries",
-                                    "Thai Curry",
-                                    "Vegetable Curry"
-                                ]
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "Risotto",
-                                "synonyms": [
-                                    "risottos"
-                                ]
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "Cheese plate",
-                                "synonyms": [
-                                    "cheese plates",
-                                    "Cheese"
-                                ]
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "Dark Chocolate Mousse",
-                                "synonyms": [
-                                    "mousses",
-                                    "Mousse"
-                                ]
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "Panna Cotta",
-                                "synonyms": [
-                                    "panna cottas"
-                                ]
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "Cheesecake",
-                                "synonyms": [
-                                    "cheesecakes"
-                                ]
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "Ice-cream",
-                                "synonyms": [
-                                    "ice creams"
-                                ]
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "Souffle",
-                                "synonyms": [
-                                    "souffles"
-                                ]
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "Affogato",
-                                "synonyms": [
-                                    "affogatos"
-                                ]
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "Lamb shoulder",
-                                "synonyms": [
-                                    "lambs",
-                                    "lamb shoulders",
-                                    "Lamb"
-                                ]
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "Chicken Curry",
-                                "synonyms": [
-                                    "chickens",
-                                    "chicken curries",
-                                    "Chicken"
-                                ]
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "Crab and Avocado Stack",
-                                "synonyms": [
-                                    "stacks",
-                                    "crabs",
-                                    "crab and avocado stacks",
-                                    "Stack",
-                                    "Crab"
-                                ]
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "Scallops"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "Spaghetti Carbonara",
-                                "synonyms": [
-                                    "spaghettis",
-                                    "pastas",
-                                    "pasta",
-                                    "carbonaras",
-                                    "spaghetti carbonaras",
-                                    "Carbonara",
-                                    "Spaghetti"
-                                ]
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "Sirloin Steak",
-                                "synonyms": [
-                                    "sirloin steaks",
-                                    "steaks",
-                                    "Steak"
-                                ]
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "Beef Stew",
-                                "synonyms": [
-                                    "beef stews",
-                                    "stews",
-                                    "Stew",
-                                    "Beef"
-                                ]
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "Pan Fried Salmon",
-                                "synonyms": [
-                                    "pan fried salmons",
-                                    "salmons",
-                                    "Salmon"
-                                ]
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "Salad",
-                                "synonyms": [
-                                    "salads"
-                                ]
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "Soup",
-                                "synonyms": [
-                                    "soups"
-                                ]
-                            }
-                        }
-                    ]
-                },
-                {
-                    "name": "Num",
-                    "values": [
-                        {
-                            "name": {
-                                "value": "nine",
-                                "synonyms": [
-                                    "9"
-                                ]
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "eight",
-                                "synonyms": [
-                                    "8"
-                                ]
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "seven",
-                                "synonyms": [
-                                    "7"
-                                ]
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "six",
-                                "synonyms": [
-                                    "6"
-                                ]
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "five",
-                                "synonyms": [
-                                    "5"
-                                ]
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "four",
-                                "synonyms": [
-                                    "4"
-                                ]
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "three",
-                                "synonyms": [
-                                    "3"
-                                ]
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "two",
-                                "synonyms": [
-                                    "2"
-                                ]
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "one",
-                                "synonyms": [
-                                    "1"
-                                ]
-                            }
-                        }
-                    ]
-                }
-            ]
-        },
-        "dialog": {
-            "intents": [
-                {
-                    "name": "OrderFood",
-                    "delegationStrategy": "ALWAYS",
-                    "confirmationRequired": true,
-                    "prompts": {
-                        "confirmation": "Confirm.Intent.157009409023"
-                    },
-                    "slots": [
-                        {
-                            "name": "Foodone",
-                            "type": "Menu",
-                            "confirmationRequired": false,
-                            "elicitationRequired": true,
-                            "prompts": {
-                                "elicitation": "Elicit.Slot.7455255645.1544864137635"
-                            },
-                            "validations": [
-                                {
-                                    "type": "hasEntityResolutionMatch",
-                                    "prompt": "Slot.Validation.748441471454.1077906336575.191497796784"
-                                }
-                            ]
-                        },
-                        {
-                            "name": "Foodtwo",
-                            "type": "Menu",
-                            "confirmationRequired": false,
-                            "elicitationRequired": false,
-                            "prompts": {},
-                            "validations": [
-                                {
-                                    "type": "hasEntityResolutionMatch",
-                                    "prompt": "Slot.Validation.748441471454.1086462328418.1522820088871"
-                                }
-                            ]
-                        },
-                        {
-                            "name": "Numberone",
-                            "type": "Num",
-                            "confirmationRequired": false,
-                            "elicitationRequired": false,
-                            "prompts": {}
-                        },
-                        {
-                            "name": "Numbertwo",
-                            "type": "Num",
-                            "confirmationRequired": false,
-                            "elicitationRequired": false,
-                            "prompts": {}
-                        },
-                        {
-                            "name": "Numberthree",
-                            "type": "Num",
-                            "confirmationRequired": false,
-                            "elicitationRequired": false,
-                            "prompts": {}
-                        },
-                        {
-                            "name": "Foodthree",
-                            "type": "Menu",
-                            "confirmationRequired": false,
-                            "elicitationRequired": false,
-                            "prompts": {},
-                            "validations": [
-                                {
-                                    "type": "hasEntityResolutionMatch",
-                                    "prompt": "Slot.Validation.748441471454.1507177220969.1323153461999"
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "name": "OrderDrink",
-                    "delegationStrategy": "ALWAYS",
-                    "confirmationRequired": true,
-                    "prompts": {
-                        "confirmation": "Confirm.Intent.467271346222"
-                    },
-                    "slots": [
-                        {
-                            "name": "Drinkone",
-                            "type": "Drink",
-                            "confirmationRequired": false,
-                            "elicitationRequired": true,
-                            "prompts": {
-                                "elicitation": "Elicit.Slot.1383254062344.1448327448837"
-                            },
-                            "validations": [
-                                {
-                                    "type": "hasEntityResolutionMatch",
-                                    "prompt": "Slot.Validation.302563875745.937140940577.822553581946"
-                                }
-                            ]
-                        },
-                        {
-                            "name": "Drinktwo",
-                            "type": "Drink",
-                            "confirmationRequired": false,
-                            "elicitationRequired": false,
-                            "prompts": {},
-                            "validations": [
-                                {
-                                    "type": "hasEntityResolutionMatch",
-                                    "prompt": "Slot.Validation.302563875745.977001120716.177399454249"
-                                }
-                            ]
-                        },
-                        {
-                            "name": "Drinkthree",
-                            "type": "Drink",
-                            "confirmationRequired": false,
-                            "elicitationRequired": false,
-                            "prompts": {},
-                            "validations": [
-                                {
-                                    "type": "hasEntityResolutionMatch",
-                                    "prompt": "Slot.Validation.302563875745.13834210988.870906150294"
-                                }
-                            ]
-                        },
-                        {
-                            "name": "Numone",
-                            "type": "Num",
-                            "confirmationRequired": false,
-                            "elicitationRequired": false,
-                            "prompts": {}
-                        },
-                        {
-                            "name": "Numtwo",
-                            "type": "Num",
-                            "confirmationRequired": false,
-                            "elicitationRequired": false,
-                            "prompts": {}
-                        },
-                        {
-                            "name": "Numthree",
-                            "type": "Num",
-                            "confirmationRequired": false,
-                            "elicitationRequired": false,
-                            "prompts": {}
-                        }
-                    ]
-                },
-                {
-                    "name": "SetTableIntent",
-                    "confirmationRequired": true,
-                    "prompts": {
-                        "confirmation": "Confirm.Intent.1156287095221"
-                    },
-                    "slots": [
-                        {
-                            "name": "password",
-                            "type": "AMAZON.NUMBER",
-                            "confirmationRequired": false,
-                            "elicitationRequired": true,
-                            "prompts": {
-                                "elicitation": "Elicit.Slot.1156287095221.718121326358"
-                            }
-                        },
-                        {
-                            "name": "TableNUM",
-                            "type": "AMAZON.NUMBER",
-                            "confirmationRequired": false,
-                            "elicitationRequired": true,
-                            "prompts": {
-                                "elicitation": "Elicit.Slot.1156287095221.757955984678"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "name": "CancelFood",
-                    "delegationStrategy": "ALWAYS",
-                    "confirmationRequired": true,
-                    "prompts": {
-                        "confirmation": "Confirm.Intent.194621534391"
-                    },
-                    "slots": [
-                        {
-                            "name": "Foodone",
-                            "type": "Menu",
-                            "confirmationRequired": false,
-                            "elicitationRequired": true,
-                            "prompts": {
-                                "elicitation": "Elicit.Slot.194621534391.1207993763933"
-                            }
-                        },
-                        {
-                            "name": "Foodtwo",
-                            "type": "Menu",
-                            "confirmationRequired": false,
-                            "elicitationRequired": false,
-                            "prompts": {}
-                        },
-                        {
-                            "name": "Foodthree",
-                            "type": "Menu",
-                            "confirmationRequired": false,
-                            "elicitationRequired": false,
-                            "prompts": {}
-                        },
-                        {
-                            "name": "Numberone",
-                            "type": "Num",
-                            "confirmationRequired": false,
-                            "elicitationRequired": false,
-                            "prompts": {}
-                        },
-                        {
-                            "name": "Numbertwo",
-                            "type": "Num",
-                            "confirmationRequired": false,
-                            "elicitationRequired": false,
-                            "prompts": {}
-                        },
-                        {
-                            "name": "Numberthree",
-                            "type": "Num",
-                            "confirmationRequired": false,
-                            "elicitationRequired": false,
-                            "prompts": {}
-                        }
-                    ]
-                },
-                {
-                    "name": "CancelDrink",
-                    "delegationStrategy": "ALWAYS",
-                    "confirmationRequired": true,
-                    "prompts": {
-                        "confirmation": "Confirm.Intent.1276423781716"
-                    },
-                    "slots": [
-                        {
-                            "name": "Numberone",
-                            "type": "Num",
-                            "confirmationRequired": false,
-                            "elicitationRequired": false,
-                            "prompts": {}
-                        },
-                        {
-                            "name": "Drinkone",
-                            "type": "Drink",
-                            "confirmationRequired": false,
-                            "elicitationRequired": true,
-                            "prompts": {
-                                "elicitation": "Elicit.Slot.317761462469.1396855887013"
-                            }
-                        },
-                        {
-                            "name": "Numbertwo",
-                            "type": "Num",
-                            "confirmationRequired": false,
-                            "elicitationRequired": false,
-                            "prompts": {}
-                        },
-                        {
-                            "name": "Drinktwo",
-                            "type": "Drink",
-                            "confirmationRequired": false,
-                            "elicitationRequired": false,
-                            "prompts": {}
-                        },
-                        {
-                            "name": "Numberthree",
-                            "type": "Num",
-                            "confirmationRequired": false,
-                            "elicitationRequired": false,
-                            "prompts": {}
-                        },
-                        {
-                            "name": "Drinkthree",
-                            "type": "Drink",
-                            "confirmationRequired": false,
-                            "elicitationRequired": false,
-                            "prompts": {}
-                        }
-                    ]
-                },
-                {
-                    "name": "CheckServedHere",
-                    "delegationStrategy": "ALWAYS",
-                    "confirmationRequired": true,
-                    "prompts": {
-                        "confirmation": "Confirm.Intent.804388214795"
-                    },
-                    "slots": [
-                        {
-                            "name": "Food",
-                            "type": "Menu",
-                            "confirmationRequired": false,
-                            "elicitationRequired": false,
-                            "prompts": {},
-                            "validations": [
-                                {
-                                    "type": "hasEntityResolutionMatch",
-                                    "prompt": "Slot.Validation.804388214795.1151841036841.220434646206"
-                                }
-                            ]
-                        },
-                        {
-                            "name": "Drink",
-                            "type": "Drink",
-                            "confirmationRequired": false,
-                            "elicitationRequired": false,
-                            "prompts": {},
-                            "validations": [
-                                {
-                                    "type": "hasEntityResolutionMatch",
-                                    "prompt": "Slot.Validation.804388214795.137220924517.578251579905"
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "name": "Recommandation",
-                    "confirmationRequired": true,
-                    "prompts": {
-                        "confirmation": "Confirm.Intent.137303967308"
-                    },
-                    "slots": []
-                },
-                {
-                    "name": "VeganRecom",
-                    "confirmationRequired": true,
-                    "prompts": {
-                        "confirmation": "Confirm.Intent.1366830793622"
-                    },
-                    "slots": []
-                },
-                {
-                    "name": "VeggieRecom",
-                    "confirmationRequired": true,
-                    "prompts": {
-                        "confirmation": "Confirm.Intent.1099162438767"
-                    },
-                    "slots": []
-                },
-                {
-                    "name": "GFRecom",
-                    "confirmationRequired": true,
-                    "prompts": {
-                        "confirmation": "Confirm.Intent.1281366522141"
-                    },
-                    "slots": []
-                }
-            ],
-            "delegationStrategy": "ALWAYS"
-        },
-        "prompts": [
-            {
-                "id": "Confirm.Slot.157009409023.197643317966",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "Do you want to eat {Food}"
-                    }
-                ]
-            },
-            {
-                "id": "Elicit.Slot.157009409023.798416970109",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "What do you want to drink?"
-                    }
-                ]
-            },
-            {
-                "id": "Confirm.Slot.157009409023.798416970109",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "You want to {Drink} right"
-                    }
-                ]
-            },
-            {
-                "id": "Confirm.Intent.157009409023",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "You want {Numberone}  {Foodone} right ?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "You want {Foodone}  {Numbertwo}  {Foodtwo} and  {Foodthree} right?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "You want {Numberone}  {Foodone}  {Numbertwo}  {Foodtwo} and {Foodthree} right ?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "You want {Foodone}  {Numbertwo}  {Foodtwo} and {Numberthree}  {Foodthree} right ?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "You want {Numberone}  {Foodone}  {Foodtwo} and {Numberthree}  {Foodthree} right ?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "You want {Numberone}  {Foodone}  {Foodtwo} and {Foodthree} right ?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "You want {Foodone}  {Foodtwo} and {Numberthree}  {Foodthree} right?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "You want {Numberone}  {Foodone}  {Numbertwo}  {Foodtwo} and {Numberthree}  {Foodthree} right?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "You want {Numberone}  {Foodone} and {Numbertwo}  {Foodtwo} right ?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "You want {Foodone} and {Numbertwo}  {Foodtwo} right?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "You want {Numberone}  {Foodone} and {Foodtwo} right ?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "You want {Foodone}  {Foodtwo} and {Foodthree} right?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "You want {Foodone} and {Foodtwo} right?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "You want {Foodone}  right?"
-                    }
-                ]
-            },
-            {
-                "id": "Slot.Validation.1227965563134.543084498527.792231194859",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "Not in the menu"
-                    }
-                ]
-            },
-            {
-                "id": "Slot.Validation.667380290072.328310411862.919319591134",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "no this drink"
-                    }
-                ]
-            },
-            {
-                "id": "Elicit.Slot.261411842385.660053538901",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "How many would you like?"
-                    }
-                ]
-            },
-            {
-                "id": "Elicit.Slot.743710267025.645001018804",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "How many would you like"
-                    }
-                ]
-            },
-            {
-                "id": "Elicit.Slot.707184984392.105761315724",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "Which item would you like?"
-                    }
-                ]
-            },
-            {
-                "id": "Confirm.Slot.707184984392.105761315724",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "You would like {NumItem} ,right?"
-                    }
-                ]
-            },
-            {
-                "id": "Elicit.Slot.327216994405.1479081017819",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "What would you like to drink?"
-                    }
-                ]
-            },
-            {
-                "id": "Elicit.Slot.327216994405.341071147691",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "What would you like to eat?"
-                    }
-                ]
-            },
-            {
-                "id": "Elicit.Slot.66518319875.451418482698",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "What would you like to eat?"
-                    }
-                ]
-            },
-            {
-                "id": "Confirm.Intent.467271346222",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "You ordered {Drinkone}  {Drinktwo} and {Numthree}  {Drinkthree} right ?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "You ordered {Drinkone}  {Numtwo}  {Drinktwo} and {Numthree}  {Drinkthree} right?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "You ordered {Drinkone}  {Numtwo}  {Drinktwo} and {Drinkthree} right ?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "You ordered {Numone}  {Drinkone}  {Numtwo}  {Drinktwo} and {Numthree}  {Drinkthree} right ?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "You ordered {Numone}  {Drinkone}  {Drinktwo} and {Numthree}  {Drinkthree} right ?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "You ordered {Numone}  {Drinkone}  {Numtwo}  {Drinktwo} and {Drinkthree} right?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "You ordered {Numone}  {Drinkone}  {Drinktwo} and {Drinkthree} right ?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "You ordered {Drinkone}  {Drinktwo} and {Drinkthree} right ?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "You ordered {Numone}  {Drinkone} and {Numtwo}  {Drinktwo} right?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "You ordered {Drinkone} and {Numtwo}  {Drinktwo} right?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "You ordered {Numone}  {Drinkone} and {Drinktwo} right?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "You ordered {Drinkone} and {Drinktwo} right?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "You ordered {Drinkone} right?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "you ordered {Numone}  {Drinkone} right?"
-                    }
-                ]
-            },
-            {
-                "id": "Elicit.Slot.7455255645.1544864137635",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "What would you like to eat?"
-                    }
-                ]
-            },
-            {
-                "id": "Elicit.Slot.7455255645.420139418985",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "What would you like to eat?"
-                    }
-                ]
-            },
-            {
-                "id": "Elicit.Slot.7455255645.515037745094",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "What would you like to eat?"
-                    }
-                ]
-            },
-            {
-                "id": "Elicit.Slot.7455255645.484639877656",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "What would you like to eat?"
-                    }
-                ]
-            },
-            {
-                "id": "Elicit.Slot.7455255645.341617487032",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "What would you like to eat?"
-                    }
-                ]
-            },
-            {
-                "id": "Elicit.Slot.7455255645.719868248212",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "What would you like to eat?"
-                    }
-                ]
-            },
-            {
-                "id": "Elicit.Slot.1383254062344.1448327448837",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "What would you like to drink?"
-                    }
-                ]
-            },
-            {
-                "id": "Elicit.Slot.1383254062344.908204042563",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "What would you like to drink?"
-                    }
-                ]
-            },
-            {
-                "id": "Elicit.Slot.1383254062344.1220019011538",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "What would you like to drink?"
-                    }
-                ]
-            },
-            {
-                "id": "Elicit.Slot.1383254062344.1255441724779",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "What would you like to drink?"
-                    }
-                ]
-            },
-            {
-                "id": "Elicit.Slot.1383254062344.628750148690",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "What would you like to drink?"
-                    }
-                ]
-            },
-            {
-                "id": "Elicit.Slot.1383254062344.14412667459",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "What would you like to drink?"
-                    }
-                ]
-            },
-            {
-                "id": "Slot.Validation.748441471454.1077906336575.191497796784",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "I'm afraid we don't serve {Foodone} here. Would you like something else?"
-                    }
-                ]
-            },
-            {
-                "id": "Slot.Validation.748441471454.1507177220969.1323153461999",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "I'm afraid we don't serve {Foodthree} here. Would you like something else?"
-                    }
-                ]
-            },
-            {
-                "id": "Slot.Validation.748441471454.1086462328418.1522820088871",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "I'm afraid we don't serve {Foodtwo} here. Would you like something else?"
-                    }
-                ]
-            },
-            {
-                "id": "Slot.Validation.302563875745.937140940577.822553581946",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "I'm afraid we don't serve {Drinkone} here. Would you like something else?"
-                    }
-                ]
-            },
-            {
-                "id": "Slot.Validation.302563875745.977001120716.177399454249",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "I'm afraid we don't serve {Drinktwo} here. Would you like something else?"
-                    }
-                ]
-            },
-            {
-                "id": "Slot.Validation.302563875745.13834210988.870906150294",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "I'm afraid we don't serve {Drinkthree} here. Would you like something else?"
-                    }
-                ]
-            },
-            {
-                "id": "Elicit.Slot.1156287095221.718121326358",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "What is the password"
-                    }
-                ]
-            },
-            {
-                "id": "Elicit.Slot.1156287095221.757955984678",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "What is the table number"
-                    }
-                ]
-            },
-            {
-                "id": "Confirm.Intent.1156287095221",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "Set this device to table {TableNUM} , right?"
-                    }
-                ]
-            },
-            {
-                "id": "Confirm.Intent.194621534391",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "You'd like me to cancel {Numberone} {Foodone} , {Numbertwo} {Foodtwo} , and {Numberthree} {Foodthree} , right?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "You'd like me to cancel {Foodone} , {Numbertwo} {Foodtwo} , and {Numberthree} {Foodthree} , right?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "You'd like me to cancel {Numberone} {Foodone} , {Foodtwo} , and {Numberthree} {Foodthree} , right?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "You'd like me to cancel {Numberone} {Foodone} , {Numbertwo} {Foodtwo} , and {Foodthree} , right?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "You'd like me to cancel {Foodone} , {Foodtwo} , and {Numberthree} {Foodthree} , right?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "You'd like me to cancel {Foodone} , {Numbertwo} {Foodtwo} , and {Foodthree} , right?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "You'd like me to cancel {Numberone} {Foodone} , {Foodtwo} , and {Foodthree} , right?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "You'd like me to cancel {Foodone} , {Foodtwo} , and {Foodthree} , right?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "You'd like me to cancel {Numberone} {Foodone} and {Numbertwo} {Foodtwo} , right?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "You'd like me to cancel {Foodone} and {Numbertwo} {Foodtwo} , right?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "You'd like me to cancel {Numberone} {Foodone} and {Foodtwo} , right?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "You'd like me to cancel {Foodone} and {Foodtwo} , right?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "You'd like me to cancel {Numberone} {Foodone} , right?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "You'd like me to cancel {Foodone} , right?"
-                    }
-                ]
-            },
-            {
-                "id": "Elicit.Slot.194621534391.1207993763933",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "What item would you like to cancel?"
-                    }
-                ]
-            },
-            {
-                "id": "Confirm.Intent.1276423781716",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "You'd like me to cancel {Drinkone} , right?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "You'd like me to cancel {Numberone} {Drinkone} , right?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "You'd like me to cancel  {Drinkone}  and  {Drinktwo} , right?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "You'd like me to cancel  {Drinkone}  and {Numbertwo} {Drinktwo} , right?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "You'd like me to cancel {Numberone} {Drinkone}  and  {Drinktwo} , right?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "You'd like me to cancel {Numberone} {Drinkone}  and {Numbertwo} {Drinktwo} , right?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "You'd like me to cancel  {Drinkone} ,  {Drinktwo} , and  {Drinkthree} , right?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "You'd like me to cancel  {Drinkone} ,  {Drinktwo} , and {Numberthree} {Drinkthree} , right?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "You'd like me to cancel  {Drinkone} , {Numbertwo} {Drinktwo} , and  {Drinkthree} , right?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "You'd like me to cancel {Numberone} {Drinkone} ,  {Drinktwo} , and  {Drinkthree} , right?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "You'd like me to cancel  {Drinkone} , {Numbertwo} {Drinktwo} , and {Numberthree} {Drinkthree} , right?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "You'd like me to cancel {Numberone} {Drinkone} ,  {Drinktwo} , and {Numberthree} {Drinkthree} , right?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "You'd like me to cancel {Numberone} {Drinkone} , {Numbertwo} {Drinktwo} , and  {Drinkthree} , right?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "You'd like me to cancel {Numberone} {Drinkone} , {Numbertwo} {Drinktwo} , and {Numberthree} {Drinkthree} , right?"
-                    }
-                ]
-            },
-            {
-                "id": "Slot.Validation.804388214795.1151841036841.220434646206",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "I'm afraid we don't serve {Food} here. Please refer to our menu. "
-                    }
-                ]
-            },
-            {
-                "id": "Slot.Validation.804388214795.137220924517.578251579905",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "I'm afraid we don't serve {Drink} here. Please refer to our menu."
-                    }
-                ]
-            },
-            {
-                "id": "Confirm.Intent.804388214795",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "Yes, we have {Drink} here. If you'd like to order {Drink} , just ask."
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "Yes, we have {Food} here. If you'd like to order {Food} , just ask"
-                    }
-                ]
-            },
-            {
-                "id": "Elicit.Slot.459703024885.1246402920150",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "What item would you like to cancel?"
-                    }
-                ]
-            },
-            {
-                "id": "Elicit.Slot.317761462469.1396855887013",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "What would you like to cancel?"
-                    }
-                ]
-            },
-            {
-                "id": "Confirm.Intent.137303967308",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "I recommend crab and avocado stack, caramelized duck breast and dark chocolate mousse."
-                    }
-                ]
-            },
-            {
-                "id": "Confirm.Intent.1366830793622",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "Yes we have the chef's salad, the vegetable thai curry and the vegan brownie."
-                    }
-                ]
-            },
-            {
-                "id": "Confirm.Intent.1099162438767",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "Yes we have the chef's salad, the risotto, the vegetable thai curry and all of our desserts apart from the panna cotta are vegetarian."
-                    }
-                ]
-            },
-            {
-                "id": "Confirm.Intent.1281366522141",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "Yes, everything here is gluten free apart from our spaghetti carbonara, cheesecake and brownie."
-                    }
-                ]
-            }
-        ]
-    }
+  "interactionModel": {
+      "languageModel": {
+          "invocationName": "albert",
+          "intents": [
+              {
+                  "name": "AMAZON.FallbackIntent",
+                  "samples": []
+              },
+              {
+                  "name": "AMAZON.CancelIntent",
+                  "samples": [
+                      "Yes",
+                      "Yes please",
+                      "Can we have a little longer please",
+                      "Can we have a few more minutes please",
+                      "I've changed my mind"
+                  ]
+              },
+              {
+                  "name": "AMAZON.HelpIntent",
+                  "samples": []
+              },
+              {
+                  "name": "AMAZON.StopIntent",
+                  "samples": [
+                      "No that's all Albert",
+                      "No that's everything Albert",
+                      "No that's everything",
+                      "No that's all",
+                      "That's everything",
+                      "No thanks",
+                      "No thank you",
+                      "Thank you very much Albert",
+                      "That's all please",
+                      "Thank you Albert",
+                      "Thanks very much",
+                      "Thanks",
+                      "Thank you",
+                      "That's all",
+                      "That's everything thank you"
+                  ]
+              },
+              {
+                  "name": "AMAZON.NavigateHomeIntent",
+                  "samples": [
+                      "Could we also order something else",
+                      "Could I also order something else"
+                  ]
+              },
+              {
+                  "name": "HelloWorldIntent",
+                  "slots": [],
+                  "samples": [
+                      "hello",
+                      "say hello"
+                  ]
+              },
+              {
+                  "name": "OrderFood",
+                  "slots": [
+                      {
+                          "name": "Foodone",
+                          "type": "Menu",
+                          "samples": [
+                              "{Foodone}"
+                          ]
+                      },
+                      {
+                          "name": "Foodtwo",
+                          "type": "Menu"
+                      },
+                      {
+                          "name": "Numberone",
+                          "type": "Num"
+                      },
+                      {
+                          "name": "Numbertwo",
+                          "type": "Num"
+                      },
+                      {
+                          "name": "Numberthree",
+                          "type": "Num"
+                      },
+                      {
+                          "name": "Foodthree",
+                          "type": "Menu"
+                      }
+                  ],
+                  "samples": [
+                      "{Foodone} {Numbertwo} {Foodtwo} and {Foodthree} please",
+                      "{Numberone} {Foodone} {Numbertwo} {Foodtwo} and {Foodthree} please",
+                      "{Foodone} {Numbertwo} {Foodtwo} and {Numberthree} {Foodthree} please",
+                      "{Numberone} {Foodone} {Foodtwo} and {Numberthree} {Foodthree} please",
+                      "{Numberone} {Foodone} {Foodtwo} and {Foodthree} please",
+                      "{Foodone} {Foodtwo} and {Numberthree} {Foodthree} please",
+                      "{Numberone} {Foodone} {Numbertwo} {Foodtwo} and {Numberthree} {Foodthree} please",
+                      "{Numberone} {Foodone} and {Numbertwo} {Foodtwo} please",
+                      "{Foodone} and {Numbertwo} {Foodtwo} please",
+                      "{Numberone} {Foodone} and {Foodtwo} please",
+                      "{Numberone} {Foodone} please",
+                      "{Foodone} {Foodtwo} and {Foodthree} please",
+                      "{Foodone} and {Foodtwo} please",
+                      "{Foodone} please",
+                      "I want {Foodone}  {Foodtwo} and {Foodthree}",
+                      "I want {Foodone} and {Foodtwo}",
+                      "I want {Foodone}",
+                      "I want {Foodone}  {Numbertwo}  {Foodtwo} and  {Foodthree}",
+                      "Can i have {Foodone}  {Numbertwo}  {Foodtwo} and  {Foodthree}",
+                      "Umm... {Foodone}  {Numbertwo}  {Foodtwo} and  {Foodthree}",
+                      "I want {Numberone}  {Foodone}  {Numbertwo}  {Foodtwo} and {Foodthree}",
+                      "Can i have {Numberone}  {Foodone}  {Numbertwo}  {Foodtwo} and {Foodthree}",
+                      "Umm... {Numberone}  {Foodone}  {Numbertwo}  {Foodtwo} and {Foodthree}",
+                      "I want {Foodone}  {Numbertwo}  {Foodtwo}  and {Numberthree}  {Foodthree}",
+                      "Can i have {Foodone}  {Numbertwo}  {Foodtwo} and {Numberthree}  {Foodthree}",
+                      "Umm... {Foodone}  {Numbertwo}  {Foodtwo} and {Numberthree}  {Foodthree}",
+                      "I want {Numberone}  {Foodone}  {Foodtwo} and {Numberthree}  {Foodthree}",
+                      "Can i have {Numberone}  {Foodone}  {Foodtwo} and {Numberthree}  {Foodthree}",
+                      "Umm... {Numberone}  {Foodone}  {Foodtwo} and {Numberthree}  {Foodthree}",
+                      "I want {Numberone}  {Foodone}  {Foodtwo} and {Foodthree}",
+                      "Can i have {Numberone}  {Foodone}  {Foodtwo} and {Foodthree}",
+                      "Umm... {Numberone}  {Foodone}  {Foodtwo} and {Foodthree}",
+                      "I want {Foodone}  {Foodtwo} and {Numberthree}  {Foodthree}",
+                      "Can i have {Foodone}  {Foodtwo} and {Numberthree}  {Foodthree}",
+                      "Umm... {Foodone}  {Foodtwo} and {Numberthree}  {Foodthree}",
+                      "I want {Numberone}  {Foodone}  {Numbertwo}  {Foodtwo} and {Numberthree}  {Foodthree}",
+                      "Can i have {Numberone}  {Foodone}  {Numbertwo}  {Foodtwo} and {Numberthree}  {Foodthree}",
+                      "Umm... {Numberone}  {Foodone}  {Numbertwo}  {Foodtwo} and {Numberthree}  {Foodthree}",
+                      "I want {Numberone}  {Foodone} and {Numbertwo}  {Foodtwo}",
+                      "Can i have {Numberone}  {Foodone} and {Numbertwo}  {Foodtwo}",
+                      "Umm... {Numberone}  {Foodone} and {Numbertwo}  {Foodtwo}",
+                      "I want {Foodone} and {Numbertwo}  {Foodtwo}",
+                      "Can i have {Foodone} and {Numbertwo}  {Foodtwo}",
+                      "Umm... {Foodone} and {Numbertwo}  {Foodtwo}",
+                      "I want {Numberone}  {Foodone} and {Foodtwo}",
+                      "Can i have {Numberone}  {Foodone} and {Foodtwo}",
+                      "Umm... {Numberone}  {Foodone} and {Foodtwo}",
+                      "I want {Numberone}  {Foodone}",
+                      "Can i have {Numberone}  {Foodone}",
+                      "Umm... {Numberone}  {Foodone}",
+                      "{Foodone}  {Numbertwo}  {Foodtwo} and  {Foodthree}",
+                      "{Numberone}  {Foodone}  {Numbertwo}  {Foodtwo} and {Foodthree}",
+                      "{Foodone}  {Numbertwo}  {Foodtwo} and {Numberthree}  {Foodthree}",
+                      "{Numberone}  {Foodone}  {Foodtwo} and {Numberthree}  {Foodthree}",
+                      "{Numberone}  {Foodone}  {Foodtwo} and {Foodthree}",
+                      "{Foodone}  {Foodtwo} and {Numberthree}  {Foodthree}",
+                      "{Numberone}  {Foodone}  {Numbertwo}  {Foodtwo} and {Numberthree}  {Foodthree}",
+                      "{Numberone}  {Foodone} and {Numbertwo}  {Foodtwo}",
+                      "{Foodone} and {Numbertwo}  {Foodtwo}",
+                      "{Numberone} {Foodone} and {Foodtwo}",
+                      "{Numberone} {Foodone}",
+                      "Can i have {Foodone}  {Foodtwo} and {Foodthree}",
+                      "Can i have {Foodone} and {Foodtwo}",
+                      "Umm... {Foodone}  {Foodtwo} and {Foodthree}",
+                      "Umm.. {Foodone} and {Foodtwo}",
+                      "{Foodone}  {Foodtwo} and {Foodthree}",
+                      "{Foodone} and {Foodtwo}",
+                      "Umm... {Foodone}",
+                      "{Foodone}",
+                      "I'm ready to order",
+                      "We're ready to order",
+                      "Can we order",
+                      "Can I order",
+                      "Can I order some food",
+                      "I am hungry",
+                      "Can i have  {Foodone}",
+                      "Order food",
+                      "Can I order food"
+                  ]
+              },
+              {
+                  "name": "OrderDrink",
+                  "slots": [
+                      {
+                          "name": "Drinkone",
+                          "type": "Drink",
+                          "samples": [
+                              "{Drinkone}"
+                          ]
+                      },
+                      {
+                          "name": "Drinktwo",
+                          "type": "Drink"
+                      },
+                      {
+                          "name": "Drinkthree",
+                          "type": "Drink"
+                      },
+                      {
+                          "name": "Numone",
+                          "type": "Num"
+                      },
+                      {
+                          "name": "Numtwo",
+                          "type": "Num"
+                      },
+                      {
+                          "name": "Numthree",
+                          "type": "Num"
+                      }
+                  ],
+                  "samples": [
+                      "{Drinkone} {Drinktwo} and {Numthree} {Drinkthree} please",
+                      "{Drinkone} {Numtwo} {Drinktwo} and {Numthree} {Drinkthree} please",
+                      "{Drinkone} {Numtwo} {Drinktwo} and {Drinkthree} please",
+                      "{Numone} {Drinkone} {Numtwo} {Drinktwo} and {Numthree} {Drinkthree} please",
+                      "{Numone} {Drinkone} {Drinktwo} and {Numthree} {Drinkthree} please",
+                      "{Numone} {Drinkone} {Numtwo} {Drinktwo} and {Drinkthree} please",
+                      "{Numone} {Drinkone} {Drinktwo} and {Drinkthree} please",
+                      "{Drinkone} {Drinktwo} and {Drinkthree} please",
+                      "{Drinkone} and {Numtwo} {Drinktwo} please",
+                      "{Numone} {Drinkone} and {Numtwo} {Drinktwo} please",
+                      "{Numone} {Drinkone} and {Drinktwo} please",
+                      "{Drinkone} and {Drinktwo} please",
+                      "{Numone} {Drinkone} please",
+                      "{Drinkone} please",
+                      "{Drinkone}",
+                      "Can i get {Drinkone}  {Drinktwo} and {Numthree}  {Drinkthree}",
+                      "I'd like {Drinkone}  {Drinktwo} and {Numthree}  {Drinkthree}",
+                      "Can i have {Drinkone}  {Drinktwo} and {Numthree}  {Drinkthree}",
+                      "Umm... {Drinkone}  {Drinktwo} and {Numthree}  {Drinkthree}",
+                      "Can i get {Drinkone}  {Numtwo}  {Drinktwo} and {Numthree}  {Drinkthree}",
+                      "I'd like {Drinkone}  {Numtwo}  {Drinktwo} and {Numthree}  {Drinkthree}",
+                      "Can i have {Drinkone}  {Numtwo}  {Drinktwo} and {Numthree}  {Drinkthree}",
+                      "Umm... {Drinkone}  {Numtwo}  {Drinktwo} and {Numthree}  {Drinkthree}",
+                      "Can i get {Drinkone}  {Numtwo}  {Drinktwo} and {Drinkthree}",
+                      "I'd like {Drinkone}  {Numtwo}  {Drinktwo} and {Drinkthree}",
+                      "Can i have {Drinkone}  {Numtwo}  {Drinktwo} and {Drinkthree}",
+                      "Umm... {Drinkone}  {Numtwo}  {Drinktwo} and {Drinkthree}",
+                      "Can i get {Numone}  {Drinkone}  {Numtwo}  {Drinktwo} and {Numthree}  {Drinkthree}",
+                      "I'd like {Numone}  {Drinkone}  {Numtwo}  {Drinktwo} and {Numthree}  {Drinkthree}",
+                      "Can i have {Numone}  {Drinkone}  {Numtwo}  {Drinktwo} and {Numthree}  {Drinkthree}",
+                      "Umm... {Numone}  {Drinkone}  {Numtwo}  {Drinktwo} and {Numthree}  {Drinkthree}",
+                      "Can i get {Numone}  {Drinkone}  {Drinktwo} and {Numthree}  {Drinkthree}",
+                      "I'd like {Numone}  {Drinkone}  {Drinktwo} and {Numthree}  {Drinkthree}",
+                      "Can i have {Numone}  {Drinkone}  {Drinktwo} and {Numthree}  {Drinkthree}",
+                      "Umm... {Numone}  {Drinkone}  {Drinktwo} and {Numthree}  {Drinkthree}",
+                      "Can i get {Numone}  {Drinkone}  {Numtwo}  {Drinktwo} and {Drinkthree}",
+                      "I'd like {Numone}  {Drinkone}  {Numtwo}  {Drinktwo} and {Drinkthree}",
+                      "Can i have {Numone}  {Drinkone}  {Numtwo}  {Drinktwo} and {Drinkthree}",
+                      "Umm... {Numone}  {Drinkone}  {Numtwo}  {Drinktwo} and {Drinkthree}",
+                      "Can i get {Numone}  {Drinkone}  {Drinktwo} and {Drinkthree}",
+                      "I'd like {Numone}  {Drinkone}  {Drinktwo} and {Drinkthree}",
+                      "Can i have {Numone}  {Drinkone}  {Drinktwo} and {Drinkthree}",
+                      "Umm... {Numone}  {Drinkone}  {Drinktwo} and {Drinkthree}",
+                      "Can i get {Drinkone}  {Drinktwo} and {Drinkthree}",
+                      "I'd like {Drinkone}  {Drinktwo} and {Drinkthree}",
+                      "Can i have {Drinkone}  {Drinktwo} and {Drinkthree}",
+                      "Umm... {Drinkone}  {Drinktwo} and {Drinkthree}",
+                      "{Drinkone}  {Drinktwo} and {Numthree}  {Drinkthree}",
+                      "{Drinkone}  {Numtwo}  {Drinktwo} and {Numthree}  {Drinkthree}",
+                      "{Drinkone}  {Numtwo}  {Drinktwo} and {Drinkthree}",
+                      "{Numone}  {Drinkone}  {Numtwo}  {Drinktwo} and {Numthree}  {Drinkthree}",
+                      "{Numone}  {Drinkone}  {Drinktwo} and {Numthree}  {Drinkthree}",
+                      "{Numone}  {Drinkone}  {Numtwo}  {Drinktwo} and {Drinkthree}",
+                      "{Numone}  {Drinkone}  {Drinktwo} and {Drinkthree}",
+                      "{Drinkone}  {Drinktwo} and {Drinkthree}",
+                      "Can i get {Numone}  {Drinkone} and {Numtwo}  {Drinktwo}",
+                      "I'd like {Numone}  {Drinkone} and {Numtwo}  {Drinktwo}",
+                      "Can i have {Numone}  {Drinkone} and {Numtwo}  {Drinktwo}",
+                      "Umm... {Numone}  {Drinkone} and {Numtwo}  {Drinktwo}",
+                      "Can i get {Drinkone} and {Numtwo}  {Drinktwo}",
+                      "I'd like {Drinkone} and {Numtwo}  {Drinktwo}",
+                      "Can i have {Drinkone} and {Numtwo}  {Drinktwo}",
+                      "Umm... {Drinkone} and {Numtwo}  {Drinktwo}",
+                      "Can i get {Numone}  {Drinkone} and {Drinktwo}",
+                      "I'd like {Numone}  {Drinkone} and {Drinktwo}",
+                      "Can i have {Numone}  {Drinkone} and {Drinktwo}",
+                      "Umm... {Numone}  {Drinkone} and {Drinktwo}",
+                      "Can i get {Drinkone} and {Drinktwo}",
+                      "I'd like {Drinkone} and {Drinktwo}",
+                      "Can i have {Drinkone} and {Drinktwo}",
+                      "Umm... {Drinkone} and {Drinktwo}",
+                      "Can i get {Numone}  {Drinkone}",
+                      "I'd like {Numone}  {Drinkone}",
+                      "Can i have {Numone}  {Drinkone}",
+                      "Umm... {Numone}  {Drinkone}",
+                      "{Numone}  {Drinkone} and {Numtwo}  {Drinktwo}",
+                      "{Drinkone} and {Numtwo}  {Drinktwo}",
+                      "{Numone}  {Drinkone} and {Drinktwo}",
+                      "{Drinkone} and {Drinktwo}",
+                      "{Numone}  {Drinkone}",
+                      "can i get a {Drinkone}",
+                      "Umm... {Drinkone}",
+                      "I want to get drunk",
+                      "can i order drink",
+                      "I'd like a {Drinkone}",
+                      "I'd like a drink",
+                      "Can i have {Drinkone}",
+                      "Can I get a drink",
+                      "Can I get some drinks"
+                  ]
+              },
+              {
+                  "name": "SetTableIntent",
+                  "slots": [
+                      {
+                          "name": "password",
+                          "type": "AMAZON.NUMBER",
+                          "samples": [
+                              "{password}"
+                          ]
+                      },
+                      {
+                          "name": "TableNUM",
+                          "type": "AMAZON.NUMBER",
+                          "samples": [
+                              "{TableNUM}"
+                          ]
+                      }
+                  ],
+                  "samples": [
+                      "set table",
+                      "set up this device"
+                  ]
+              }
+          ],
+          "types": [
+              {
+                  "name": "Drink",
+                  "values": [
+                      {
+                          "name": {
+                              "value": "soda",
+                              "synonyms": [
+                                  "sodas"
+                              ]
+                          }
+                      },
+                      {
+                          "name": {
+                              "value": "Old Blackened",
+                              "synonyms": [
+                                  "whiskys",
+                                  "whisky",
+                                  "old blackeneds"
+                              ]
+                          }
+                      },
+                      {
+                          "name": {
+                              "value": "Diet Coke",
+                              "synonyms": [
+                                  "diet cokes"
+                              ]
+                          }
+                      },
+                      {
+                          "name": {
+                              "value": "Coke",
+                              "synonyms": [
+                                  "regular cokes",
+                                  "normal cokes",
+                                  "fat cokes",
+                                  "coca colas",
+                                  "coca cola",
+                                  "regular coke",
+                                  "Normal coke",
+                                  "Fat coke"
+                              ]
+                          }
+                      },
+                      {
+                          "name": {
+                              "value": "Botanist Bramble",
+                              "synonyms": [
+                                  "botanist brambles",
+                                  "brambles",
+                                  "Bramble"
+                              ]
+                          }
+                      },
+                      {
+                          "name": {
+                              "value": "Gin and Tonic",
+                              "synonyms": [
+                                  "gin and tonics"
+                              ]
+                          }
+                      },
+                      {
+                          "name": {
+                              "value": "Gray Goose",
+                              "synonyms": [
+                                  "vodkas",
+                                  "vodka",
+                                  "grey gooses"
+                              ]
+                          }
+                      },
+                      {
+                          "name": {
+                              "value": "Pineapple Juice",
+                              "synonyms": [
+                                  "pineapple juices"
+                              ]
+                          }
+                      },
+                      {
+                          "name": {
+                              "value": "Orange Juice",
+                              "synonyms": [
+                                  "orange juices"
+                              ]
+                          }
+                      },
+                      {
+                          "name": {
+                              "value": "Apple Juice",
+                              "synonyms": [
+                                  "apple juices"
+                              ]
+                          }
+                      },
+                      {
+                          "name": {
+                              "value": "White wine",
+                              "synonyms": [
+                                  "house whites",
+                                  "white wines",
+                                  "House White"
+                              ]
+                          }
+                      },
+                      {
+                          "name": {
+                              "value": "Red wine",
+                              "synonyms": [
+                                  "house reds",
+                                  "red wines",
+                                  "House Red"
+                              ]
+                          }
+                      },
+                      {
+                          "name": {
+                              "value": "Arran Blonde",
+                              "synonyms": [
+                                  "arran blondes"
+                              ]
+                          }
+                      },
+                      {
+                          "name": {
+                              "value": "Peroni",
+                              "synonyms": [
+                                  "peronis"
+                              ]
+                          }
+                      },
+                      {
+                          "name": {
+                              "value": "Stella Artois",
+                              "synonyms": [
+                                  "stella artoises",
+                                  "stellas",
+                                  "Stella"
+                              ]
+                          }
+                      },
+                      {
+                          "name": {
+                              "value": "Rosé",
+                              "synonyms": [
+                                  "Rosés"
+                              ]
+                          }
+                      },
+                      {
+                          "name": {
+                              "value": "Water",
+                              "synonyms": [
+                                  "glasses of water",
+                                  "glass of water",
+                                  "waters"
+                              ]
+                          }
+                      },
+                      {
+                          "name": {
+                              "value": "Coffee",
+                              "synonyms": [
+                                  "coffees",
+                                  "cups of coffee",
+                                  "Cup of Coffee"
+                              ]
+                          }
+                      },
+                      {
+                          "name": {
+                              "value": "Tea",
+                              "synonyms": [
+                                  "pots of tea",
+                                  "pot of tea",
+                                  "teas",
+                                  "cups of tea",
+                                  "Cup of Tea"
+                              ]
+                          }
+                      }
+                  ]
+              },
+              {
+                  "name": "Menu",
+                  "values": [
+                      {
+                          "name": {
+                              "value": "Caramelised Duck Breast",
+                              "synonyms": [
+                                  "duck breasts",
+                                  "ducks",
+                                  "Duck Breast",
+                                  "Duck"
+                              ]
+                          }
+                      },
+                      {
+                          "name": {
+                              "value": "Vegan Brownie",
+                              "synonyms": [
+                                  "brownies",
+                                  "vegan brownies",
+                                  "Brownie"
+                              ]
+                          }
+                      },
+                      {
+                          "name": {
+                              "value": "Vegetable Thai Curry",
+                              "synonyms": [
+                                  "vegetable curries",
+                                  "thai curries",
+                                  "vegetable thai curries",
+                                  "Thai Curry",
+                                  "Vegetable Curry"
+                              ]
+                          }
+                      },
+                      {
+                          "name": {
+                              "value": "Risotto",
+                              "synonyms": [
+                                  "risottos"
+                              ]
+                          }
+                      },
+                      {
+                          "name": {
+                              "value": "Cheese plate",
+                              "synonyms": [
+                                  "cheese plates",
+                                  "Cheese"
+                              ]
+                          }
+                      },
+                      {
+                          "name": {
+                              "value": "Dark Chocolate Mousse",
+                              "synonyms": [
+                                  "mousses",
+                                  "Mousse"
+                              ]
+                          }
+                      },
+                      {
+                          "name": {
+                              "value": "Panna Cotta",
+                              "synonyms": [
+                                  "panna cottas"
+                              ]
+                          }
+                      },
+                      {
+                          "name": {
+                              "value": "Cheesecake",
+                              "synonyms": [
+                                  "cheesecakes"
+                              ]
+                          }
+                      },
+                      {
+                          "name": {
+                              "value": "Ice-cream",
+                              "synonyms": [
+                                  "ice creams"
+                              ]
+                          }
+                      },
+                      {
+                          "name": {
+                              "value": "Souffle",
+                              "synonyms": [
+                                  "souffles"
+                              ]
+                          }
+                      },
+                      {
+                          "name": {
+                              "value": "Affogato",
+                              "synonyms": [
+                                  "affogatos"
+                              ]
+                          }
+                      },
+                      {
+                          "name": {
+                              "value": "Lamb shoulder",
+                              "synonyms": [
+                                  "lambs",
+                                  "lamb shoulders",
+                                  "Lamb"
+                              ]
+                          }
+                      },
+                      {
+                          "name": {
+                              "value": "Chicken Curry",
+                              "synonyms": [
+                                  "chickens",
+                                  "chicken curries",
+                                  "Chicken"
+                              ]
+                          }
+                      },
+                      {
+                          "name": {
+                              "value": "Crab and Avocado Stack",
+                              "synonyms": [
+                                  "stacks",
+                                  "crabs",
+                                  "crab and avocado stacks",
+                                  "Stack",
+                                  "Crab"
+                              ]
+                          }
+                      },
+                      {
+                          "name": {
+                              "value": "Scallops"
+                          }
+                      },
+                      {
+                          "name": {
+                              "value": "Spaghetti Carbonara",
+                              "synonyms": [
+                                  "spaghettis",
+                                  "pastas",
+                                  "pasta",
+                                  "carbonaras",
+                                  "spaghetti carbonaras",
+                                  "Carbonara",
+                                  "Spaghetti"
+                              ]
+                          }
+                      },
+                      {
+                          "name": {
+                              "value": "Sirloin Steak",
+                              "synonyms": [
+                                  "sirloin steaks",
+                                  "steaks",
+                                  "Steak"
+                              ]
+                          }
+                      },
+                      {
+                          "name": {
+                              "value": "Beef Stew",
+                              "synonyms": [
+                                  "beef stews",
+                                  "stews",
+                                  "Stew",
+                                  "Beef"
+                              ]
+                          }
+                      },
+                      {
+                          "name": {
+                              "value": "Pan Fried Salmon",
+                              "synonyms": [
+                                  "pan fried salmons",
+                                  "salmons",
+                                  "Salmon"
+                              ]
+                          }
+                      },
+                      {
+                          "name": {
+                              "value": "Salad",
+                              "synonyms": [
+                                  "salads"
+                              ]
+                          }
+                      },
+                      {
+                          "name": {
+                              "value": "Soup",
+                              "synonyms": [
+                                  "soups"
+                              ]
+                          }
+                      }
+                  ]
+              },
+              {
+                  "name": "Num",
+                  "values": [
+                      {
+                          "name": {
+                              "value": "six"
+                          }
+                      },
+                      {
+                          "name": {
+                              "value": "five"
+                          }
+                      },
+                      {
+                          "name": {
+                              "value": "four"
+                          }
+                      },
+                      {
+                          "name": {
+                              "value": "three"
+                          }
+                      },
+                      {
+                          "name": {
+                              "value": "two"
+                          }
+                      },
+                      {
+                          "name": {
+                              "value": "one"
+                          }
+                      }
+                  ]
+              }
+          ]
+      },
+      "dialog": {
+          "intents": [
+              {
+                  "name": "OrderFood",
+                  "delegationStrategy": "ALWAYS",
+                  "confirmationRequired": true,
+                  "prompts": {
+                      "confirmation": "Confirm.Intent.157009409023"
+                  },
+                  "slots": [
+                      {
+                          "name": "Foodone",
+                          "type": "Menu",
+                          "confirmationRequired": false,
+                          "elicitationRequired": true,
+                          "prompts": {
+                              "elicitation": "Elicit.Slot.7455255645.1544864137635"
+                          },
+                          "validations": [
+                              {
+                                  "type": "hasEntityResolutionMatch",
+                                  "prompt": "Slot.Validation.748441471454.1077906336575.191497796784"
+                              }
+                          ]
+                      },
+                      {
+                          "name": "Foodtwo",
+                          "type": "Menu",
+                          "confirmationRequired": false,
+                          "elicitationRequired": false,
+                          "prompts": {},
+                          "validations": [
+                              {
+                                  "type": "hasEntityResolutionMatch",
+                                  "prompt": "Slot.Validation.748441471454.1086462328418.1522820088871"
+                              }
+                          ]
+                      },
+                      {
+                          "name": "Numberone",
+                          "type": "Num",
+                          "confirmationRequired": false,
+                          "elicitationRequired": false,
+                          "prompts": {}
+                      },
+                      {
+                          "name": "Numbertwo",
+                          "type": "Num",
+                          "confirmationRequired": false,
+                          "elicitationRequired": false,
+                          "prompts": {}
+                      },
+                      {
+                          "name": "Numberthree",
+                          "type": "Num",
+                          "confirmationRequired": false,
+                          "elicitationRequired": false,
+                          "prompts": {}
+                      },
+                      {
+                          "name": "Foodthree",
+                          "type": "Menu",
+                          "confirmationRequired": false,
+                          "elicitationRequired": false,
+                          "prompts": {},
+                          "validations": [
+                              {
+                                  "type": "hasEntityResolutionMatch",
+                                  "prompt": "Slot.Validation.748441471454.1507177220969.1323153461999"
+                              }
+                          ]
+                      }
+                  ]
+              },
+              {
+                  "name": "OrderDrink",
+                  "delegationStrategy": "ALWAYS",
+                  "confirmationRequired": true,
+                  "prompts": {
+                      "confirmation": "Confirm.Intent.467271346222"
+                  },
+                  "slots": [
+                      {
+                          "name": "Drinkone",
+                          "type": "Drink",
+                          "confirmationRequired": false,
+                          "elicitationRequired": true,
+                          "prompts": {
+                              "elicitation": "Elicit.Slot.1383254062344.1448327448837"
+                          },
+                          "validations": [
+                              {
+                                  "type": "hasEntityResolutionMatch",
+                                  "prompt": "Slot.Validation.302563875745.937140940577.822553581946"
+                              }
+                          ]
+                      },
+                      {
+                          "name": "Drinktwo",
+                          "type": "Drink",
+                          "confirmationRequired": false,
+                          "elicitationRequired": false,
+                          "prompts": {},
+                          "validations": [
+                              {
+                                  "type": "hasEntityResolutionMatch",
+                                  "prompt": "Slot.Validation.302563875745.977001120716.177399454249"
+                              }
+                          ]
+                      },
+                      {
+                          "name": "Drinkthree",
+                          "type": "Drink",
+                          "confirmationRequired": false,
+                          "elicitationRequired": false,
+                          "prompts": {},
+                          "validations": [
+                              {
+                                  "type": "hasEntityResolutionMatch",
+                                  "prompt": "Slot.Validation.302563875745.13834210988.870906150294"
+                              }
+                          ]
+                      },
+                      {
+                          "name": "Numone",
+                          "type": "Num",
+                          "confirmationRequired": false,
+                          "elicitationRequired": false,
+                          "prompts": {}
+                      },
+                      {
+                          "name": "Numtwo",
+                          "type": "Num",
+                          "confirmationRequired": false,
+                          "elicitationRequired": false,
+                          "prompts": {}
+                      },
+                      {
+                          "name": "Numthree",
+                          "type": "Num",
+                          "confirmationRequired": false,
+                          "elicitationRequired": false,
+                          "prompts": {}
+                      }
+                  ]
+              },
+              {
+                  "name": "SetTableIntent",
+                  "confirmationRequired": true,
+                  "prompts": {
+                      "confirmation": "Confirm.Intent.1156287095221"
+                  },
+                  "slots": [
+                      {
+                          "name": "password",
+                          "type": "AMAZON.NUMBER",
+                          "confirmationRequired": false,
+                          "elicitationRequired": true,
+                          "prompts": {
+                              "elicitation": "Elicit.Slot.1156287095221.718121326358"
+                          }
+                      },
+                      {
+                          "name": "TableNUM",
+                          "type": "AMAZON.NUMBER",
+                          "confirmationRequired": false,
+                          "elicitationRequired": true,
+                          "prompts": {
+                              "elicitation": "Elicit.Slot.1156287095221.757955984678"
+                          }
+                      }
+                  ]
+              }
+          ],
+          "delegationStrategy": "ALWAYS"
+      },
+      "prompts": [
+          {
+              "id": "Confirm.Slot.157009409023.197643317966",
+              "variations": [
+                  {
+                      "type": "PlainText",
+                      "value": "Do you want to eat {Food}"
+                  }
+              ]
+          },
+          {
+              "id": "Elicit.Slot.157009409023.798416970109",
+              "variations": [
+                  {
+                      "type": "PlainText",
+                      "value": "What do you want to drink?"
+                  }
+              ]
+          },
+          {
+              "id": "Confirm.Slot.157009409023.798416970109",
+              "variations": [
+                  {
+                      "type": "PlainText",
+                      "value": "You want to {Drink} right"
+                  }
+              ]
+          },
+          {
+              "id": "Confirm.Intent.157009409023",
+              "variations": [
+                  {
+                      "type": "PlainText",
+                      "value": "You want {Numberone}  {Foodone} right ?"
+                  },
+                  {
+                      "type": "PlainText",
+                      "value": "You want {Foodone}  {Numbertwo}  {Foodtwo} and  {Foodthree} right?"
+                  },
+                  {
+                      "type": "PlainText",
+                      "value": "You want {Numberone}  {Foodone}  {Numbertwo}  {Foodtwo} and {Foodthree} right ?"
+                  },
+                  {
+                      "type": "PlainText",
+                      "value": "You want {Foodone}  {Numbertwo}  {Foodtwo} and {Numberthree}  {Foodthree} right ?"
+                  },
+                  {
+                      "type": "PlainText",
+                      "value": "You want {Numberone}  {Foodone}  {Foodtwo} and {Numberthree}  {Foodthree} right ?"
+                  },
+                  {
+                      "type": "PlainText",
+                      "value": "You want {Numberone}  {Foodone}  {Foodtwo} and {Foodthree} right ?"
+                  },
+                  {
+                      "type": "PlainText",
+                      "value": "You want {Foodone}  {Foodtwo} and {Numberthree}  {Foodthree} right?"
+                  },
+                  {
+                      "type": "PlainText",
+                      "value": "You want {Numberone}  {Foodone}  {Numbertwo}  {Foodtwo} and {Numberthree}  {Foodthree} right?"
+                  },
+                  {
+                      "type": "PlainText",
+                      "value": "You want {Numberone}  {Foodone} and {Numbertwo}  {Foodtwo} right ?"
+                  },
+                  {
+                      "type": "PlainText",
+                      "value": "You want {Foodone} and {Numbertwo}  {Foodtwo} right?"
+                  },
+                  {
+                      "type": "PlainText",
+                      "value": "You want {Numberone}  {Foodone} and {Foodtwo} right ?"
+                  },
+                  {
+                      "type": "PlainText",
+                      "value": "You want {Foodone}  {Foodtwo} and {Foodthree} right?"
+                  },
+                  {
+                      "type": "PlainText",
+                      "value": "You want {Foodone} and {Foodtwo} right?"
+                  },
+                  {
+                      "type": "PlainText",
+                      "value": "You want {Foodone}  right?"
+                  }
+              ]
+          },
+          {
+              "id": "Slot.Validation.1227965563134.543084498527.792231194859",
+              "variations": [
+                  {
+                      "type": "PlainText",
+                      "value": "Not in the menu"
+                  }
+              ]
+          },
+          {
+              "id": "Slot.Validation.667380290072.328310411862.919319591134",
+              "variations": [
+                  {
+                      "type": "PlainText",
+                      "value": "no this drink"
+                  }
+              ]
+          },
+          {
+              "id": "Elicit.Slot.261411842385.660053538901",
+              "variations": [
+                  {
+                      "type": "PlainText",
+                      "value": "How many would you like?"
+                  }
+              ]
+          },
+          {
+              "id": "Elicit.Slot.743710267025.645001018804",
+              "variations": [
+                  {
+                      "type": "PlainText",
+                      "value": "How many would you like"
+                  }
+              ]
+          },
+          {
+              "id": "Elicit.Slot.707184984392.105761315724",
+              "variations": [
+                  {
+                      "type": "PlainText",
+                      "value": "Which item would you like?"
+                  }
+              ]
+          },
+          {
+              "id": "Confirm.Slot.707184984392.105761315724",
+              "variations": [
+                  {
+                      "type": "PlainText",
+                      "value": "You would like {NumItem} ,right?"
+                  }
+              ]
+          },
+          {
+              "id": "Elicit.Slot.327216994405.1479081017819",
+              "variations": [
+                  {
+                      "type": "PlainText",
+                      "value": "What would you like to drink?"
+                  }
+              ]
+          },
+          {
+              "id": "Elicit.Slot.327216994405.341071147691",
+              "variations": [
+                  {
+                      "type": "PlainText",
+                      "value": "What would you like to eat?"
+                  }
+              ]
+          },
+          {
+              "id": "Elicit.Slot.66518319875.451418482698",
+              "variations": [
+                  {
+                      "type": "PlainText",
+                      "value": "What would you like to eat?"
+                  }
+              ]
+          },
+          {
+              "id": "Confirm.Intent.467271346222",
+              "variations": [
+                  {
+                      "type": "PlainText",
+                      "value": "You ordered {Drinkone}  {Drinktwo} and {Numthree}  {Drinkthree} right ?"
+                  },
+                  {
+                      "type": "PlainText",
+                      "value": "You ordered {Drinkone}  {Numtwo}  {Drinktwo} and {Numthree}  {Drinkthree} right?"
+                  },
+                  {
+                      "type": "PlainText",
+                      "value": "You ordered {Drinkone}  {Numtwo}  {Drinktwo} and {Drinkthree} right ?"
+                  },
+                  {
+                      "type": "PlainText",
+                      "value": "You ordered {Numone}  {Drinkone}  {Numtwo}  {Drinktwo} and {Numthree}  {Drinkthree} right ?"
+                  },
+                  {
+                      "type": "PlainText",
+                      "value": "You ordered {Numone}  {Drinkone}  {Drinktwo} and {Numthree}  {Drinkthree} right ?"
+                  },
+                  {
+                      "type": "PlainText",
+                      "value": "You ordered {Numone}  {Drinkone}  {Numtwo}  {Drinktwo} and {Drinkthree} right?"
+                  },
+                  {
+                      "type": "PlainText",
+                      "value": "You ordered {Numone}  {Drinkone}  {Drinktwo} and {Drinkthree} right ?"
+                  },
+                  {
+                      "type": "PlainText",
+                      "value": "You ordered {Drinkone}  {Drinktwo} and {Drinkthree} right ?"
+                  },
+                  {
+                      "type": "PlainText",
+                      "value": "You ordered {Numone}  {Drinkone} and {Numtwo}  {Drinktwo} right?"
+                  },
+                  {
+                      "type": "PlainText",
+                      "value": "You ordered {Drinkone} and {Numtwo}  {Drinktwo} right?"
+                  },
+                  {
+                      "type": "PlainText",
+                      "value": "You ordered {Numone}  {Drinkone} and {Drinktwo} right?"
+                  },
+                  {
+                      "type": "PlainText",
+                      "value": "You ordered {Drinkone} and {Drinktwo} right?"
+                  },
+                  {
+                      "type": "PlainText",
+                      "value": "You ordered {Drinkone} right?"
+                  },
+                  {
+                      "type": "PlainText",
+                      "value": "you ordered {Numone}  {Drinkone} right?"
+                  }
+              ]
+          },
+          {
+              "id": "Elicit.Slot.7455255645.1544864137635",
+              "variations": [
+                  {
+                      "type": "PlainText",
+                      "value": "What would you like to eat?"
+                  }
+              ]
+          },
+          {
+              "id": "Elicit.Slot.7455255645.420139418985",
+              "variations": [
+                  {
+                      "type": "PlainText",
+                      "value": "What would you like to eat?"
+                  }
+              ]
+          },
+          {
+              "id": "Elicit.Slot.7455255645.515037745094",
+              "variations": [
+                  {
+                      "type": "PlainText",
+                      "value": "What would you like to eat?"
+                  }
+              ]
+          },
+          {
+              "id": "Elicit.Slot.7455255645.484639877656",
+              "variations": [
+                  {
+                      "type": "PlainText",
+                      "value": "What would you like to eat?"
+                  }
+              ]
+          },
+          {
+              "id": "Elicit.Slot.7455255645.341617487032",
+              "variations": [
+                  {
+                      "type": "PlainText",
+                      "value": "What would you like to eat?"
+                  }
+              ]
+          },
+          {
+              "id": "Elicit.Slot.7455255645.719868248212",
+              "variations": [
+                  {
+                      "type": "PlainText",
+                      "value": "What would you like to eat?"
+                  }
+              ]
+          },
+          {
+              "id": "Elicit.Slot.1383254062344.1448327448837",
+              "variations": [
+                  {
+                      "type": "PlainText",
+                      "value": "What would you like to drink?"
+                  }
+              ]
+          },
+          {
+              "id": "Elicit.Slot.1383254062344.908204042563",
+              "variations": [
+                  {
+                      "type": "PlainText",
+                      "value": "What would you like to drink?"
+                  }
+              ]
+          },
+          {
+              "id": "Elicit.Slot.1383254062344.1220019011538",
+              "variations": [
+                  {
+                      "type": "PlainText",
+                      "value": "What would you like to drink?"
+                  }
+              ]
+          },
+          {
+              "id": "Elicit.Slot.1383254062344.1255441724779",
+              "variations": [
+                  {
+                      "type": "PlainText",
+                      "value": "What would you like to drink?"
+                  }
+              ]
+          },
+          {
+              "id": "Elicit.Slot.1383254062344.628750148690",
+              "variations": [
+                  {
+                      "type": "PlainText",
+                      "value": "What would you like to drink?"
+                  }
+              ]
+          },
+          {
+              "id": "Elicit.Slot.1383254062344.14412667459",
+              "variations": [
+                  {
+                      "type": "PlainText",
+                      "value": "What would you like to drink?"
+                  }
+              ]
+          },
+          {
+              "id": "Slot.Validation.748441471454.1077906336575.191497796784",
+              "variations": [
+                  {
+                      "type": "PlainText",
+                      "value": "I'm afraid we don't serve {Foodone} here. Would you like something else?"
+                  }
+              ]
+          },
+          {
+              "id": "Slot.Validation.748441471454.1507177220969.1323153461999",
+              "variations": [
+                  {
+                      "type": "PlainText",
+                      "value": "I'm afraid we don't serve {Foodthree} here. Would you like something else?"
+                  }
+              ]
+          },
+          {
+              "id": "Slot.Validation.748441471454.1086462328418.1522820088871",
+              "variations": [
+                  {
+                      "type": "PlainText",
+                      "value": "I'm afraid we don't serve {Foodtwo} here. Would you like something else?"
+                  }
+              ]
+          },
+          {
+              "id": "Slot.Validation.302563875745.937140940577.822553581946",
+              "variations": [
+                  {
+                      "type": "PlainText",
+                      "value": "I'm afraid we don't serve {Drinkone} here. Would you like something else?"
+                  }
+              ]
+          },
+          {
+              "id": "Slot.Validation.302563875745.977001120716.177399454249",
+              "variations": [
+                  {
+                      "type": "PlainText",
+                      "value": "I'm afraid we don't serve {Drinktwo} here. Would you like something else?"
+                  }
+              ]
+          },
+          {
+              "id": "Slot.Validation.302563875745.13834210988.870906150294",
+              "variations": [
+                  {
+                      "type": "PlainText",
+                      "value": "I'm afraid we don't serve {Drinkthree} here. Would you like something else?"
+                  }
+              ]
+          },
+          {
+              "id": "Elicit.Slot.1156287095221.718121326358",
+              "variations": [
+                  {
+                      "type": "PlainText",
+                      "value": "What is the password"
+                  }
+              ]
+          },
+          {
+              "id": "Elicit.Slot.1156287095221.757955984678",
+              "variations": [
+                  {
+                      "type": "PlainText",
+                      "value": "What is the table number"
+                  }
+              ]
+          },
+          {
+              "id": "Confirm.Intent.1156287095221",
+              "variations": [
+                  {
+                      "type": "PlainText",
+                      "value": "Set this device to table {TableNUM} , right?"
+                  }
+              ]
+          }
+      ]
+  }
 }
