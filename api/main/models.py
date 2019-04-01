@@ -94,6 +94,21 @@ class Order(models.Model):
         return f"order{self.pk}"
 
 
+class Cancellation(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    table_number = models.CharField(max_length=30)
+    text = models.TextField()
+    processed = models.BooleanField(default=False)
+
+    class Meta:
+        get_latest_by = ['updated_at']
+
+    def __str__(self):
+        return f"cancellation{self.pk}"
+
+
 class PDDLError(Exception):
     pass
 
