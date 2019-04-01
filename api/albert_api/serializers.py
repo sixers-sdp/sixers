@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from main.models import Order, Product, ExecutionPlan, LocationUpdate, DotAssociation
+from main.models import Order, Product, ExecutionPlan, LocationUpdate, DotAssociation, Cancellation
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -51,4 +51,10 @@ class LocationUpdateSerializer(serializers.ModelSerializer):
 class DotAssociationSerializer(serializers.ModelSerializer):
     class Meta:
         model = DotAssociation
+        exclude = []
+
+
+class CancellationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Cancellation
         exclude = []
