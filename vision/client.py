@@ -19,6 +19,7 @@ PORT = 50000
 data = {"server-end": False, "obstacle-found": False, "said": False, "last-command": None, "time-said": time.time()}
 BRAKING_TYPE='brake'
 MOVING_CORNER = False
+SPEED_RATIO=1
 
 def move_left(m, m1, value=250):
     m.run_forever(speed_sp=value)
@@ -31,8 +32,8 @@ def move_right(m2, m3, value=250):
 
 def go_forward(m, m1, m2, m3, value):
     global motors
-    move_left(m ,m1, value)
-    move_right(m2, m3, value)
+    move_left(m ,m1, value*SPEED_RATIO)
+    move_right(m2, m3, value*SPEED_RATIO)
     #while(motors["running"]):
     #    if(not m.is_running and not m1.is_running and not m2.is_running and not m3.is_running):
     #        motors["running"]=False
@@ -46,8 +47,8 @@ def stop(m, m1, m2, m3):
 
 def align(m, m1, m2, m3, left_value, right_value):
     global motors
-    move_left(m, m1, left_value)
-    move_right(m2, m3, right_value)
+    move_left(m, m1, left_value*SPEED_RATIO)
+    move_right(m2, m3, right_value*SPEED_RATIO)
 
 
 class Type(Enum):
@@ -95,11 +96,11 @@ def move_albert(move, m, m1, m2, m3):
 
 def corner_type(m, m1, m2, m3, c_type):
     if c_type == Type.CORNER_RIGHT.value:
-        move_left(m, m1, 100)
-        move_right(m2, m3, -100)
+        move_left(m, m1, 150)
+        move_right(m2, m3, -150)
     elif c_type == Type.CORNER_LEFT.value:
-        move_left(m, m1, -100)
-        move_right(m2, m3, 100)
+        move_left(m, m1, -150)
+        move_right(m2, m3, 150)
 
 def check_for_obstacle(m, m1, m2, m3):
     global data
@@ -178,16 +179,16 @@ def start_socket(m, m1, m2, m3):
              #if move == old_move:
              #    continue
              print(move)
-             if(move==9):
-                 stop(m, m1, m2, m3)
-                 print('End of order! Trying new order in 3 2 1...')
-                 time.sleep(3)
-                 printed = False
-                 sock.close()
-                 old_move = None
-                 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                 socket_is_connected = False
-                 continue
+             #if(move==9):
+             #    stop(m, m1, m2, m3)
+             #    print('End of order! Trying new order in 3 2 1...')
+             #    time.sleep(3)
+             #    printed = False
+             #    sock.close()
+             #    old_move = None
+             #    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+             #    socket_is_connected = False
+             #    continue
              data["last-command"]=move
              #old_move = move
              if (data["obstacle-found"]): continue
