@@ -119,6 +119,15 @@ public class OrderFoodHandler implements IntentRequestHandler {
 		else if (numoneValue.equals("six")){
 			chefText = chefText + "6x " +foodoneName + "\n";
 		}
+		else if (numoneValue.equals("seven")){
+			chefText = chefText + "7x " +foodoneName + "\n";
+		}
+		else if (numoneValue.equals("eight")){
+			chefText = chefText + "8x " +foodoneName + "\n";
+		}
+		else if (numoneValue.equals("nine")){
+			chefText = chefText + "9x " +foodoneName + "\n";
+		}
 		if (!foodtwoName.equals("")) {
 			if (numtwoValue.equals("one")){
 				chefText = chefText + "1x " +foodtwoName + "\n";
@@ -137,6 +146,15 @@ public class OrderFoodHandler implements IntentRequestHandler {
 			}
 			else if (numtwoValue.equals("six")){
 				chefText = chefText + "6x " +foodtwoName + "\n";
+			}
+			else if (numoneValue.equals("seven")){
+				chefText = chefText + "7x " +foodtwoName + "\n";
+			}
+			else if (numoneValue.equals("eight")){
+				chefText = chefText + "8x " +foodtwoName + "\n";
+			}
+			else if (numoneValue.equals("nine")){
+				chefText = chefText + "9x " +foodtwoName + "\n";
 			}
 			if (foodthreeName.equals("")) {
 				speechText = speechText + " and " + numtwoValue + " " + foodtwoName;
@@ -163,6 +181,15 @@ public class OrderFoodHandler implements IntentRequestHandler {
 				}
 				else if (numthreeValue.equals("six")){
 					chefText = chefText + "6x " +foodthreeName + "\n";
+				}
+				else if (numoneValue.equals("seven")){
+					chefText = chefText + "7x " +foodthreeName + "\n";
+				}
+				else if (numoneValue.equals("eight")){
+					chefText = chefText + "8x " +foodthreeName + "\n";
+				}
+				else if (numoneValue.equals("nine")){
+					chefText = chefText + "9x " +foodthreeName + "\n";
 				}
 			}
 		}
