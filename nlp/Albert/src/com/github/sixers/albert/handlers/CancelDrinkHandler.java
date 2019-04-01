@@ -33,17 +33,16 @@ import java.util.Optional;
 
 import static com.amazon.ask.request.Predicates.intentName;
 
-public class OrderDrinkHandler implements IntentRequestHandler {
+public class CancelDrinkHandler implements IntentRequestHandler {
 
 	@Override
 	public boolean canHandle(HandlerInput handlerInput, IntentRequest intentRequest) {
-		return (handlerInput.matches(intentName("OrderDrink")));
+		return (handlerInput.matches(intentName("CancelDrink")));
 
 	}
 
 	@Override
 	public Optional<Response> handle(HandlerInput handlerInput, IntentRequest intentRequest) {
-//
 
 		Intent intent = intentRequest.getIntent();
 		// Drink names
@@ -52,9 +51,9 @@ public class OrderDrinkHandler implements IntentRequestHandler {
 		Slot drinkthree = intent.getSlots().get("Drinkthree");
 
 		// Number
-		Slot numone = intent.getSlots().get("Numone");
-		Slot numtwo = intent.getSlots().get("Numtwo");
-		Slot numthree = intent.getSlots().get("Numthree");
+		Slot numone = intent.getSlots().get("Numberone");
+		Slot numtwo = intent.getSlots().get("Numbertwo");
+		Slot numthree = intent.getSlots().get("Numberthree");
 
 		// defining default value for strings
 		String drinktwoName = "";
@@ -79,7 +78,7 @@ public class OrderDrinkHandler implements IntentRequestHandler {
 			drinkthreeName = drinkthree.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0)
 					.getValue().getName();
 		}
-		// ordered number value of food
+
 		if (numone.getValue() != null) {
 			numoneValue = numone.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue()
 					.getName();
@@ -96,7 +95,7 @@ public class OrderDrinkHandler implements IntentRequestHandler {
 		String deviceID = handlerInput.getRequestEnvelope().getContext().getSystem().getDevice().getDeviceId();
 
 		// Construct respond text
-		String speechText = "You have ordered ";
+		String speechText = "You have cancelled ";
 		speechText = speechText + numoneValue + " " + drinkoneName;
 		if (!drinktwoName.equals("")) {
 			if (drinkthreeName.equals("")) {
@@ -127,13 +126,12 @@ public class OrderDrinkHandler implements IntentRequestHandler {
 			}
 
 			return handlerInput.getResponseBuilder().withSpeech(speechText)
-					.withReprompt("Would you like anything else?").withShouldEndSession(false).build();
+					.withReprompt("Would you like to order something else?").withShouldEndSession(false).build();
 		} else {
 			return handlerInput.getResponseBuilder()
-					.withSpeech("Okay, I've cancelled that request. Would you like something else?")
-					.withReprompt("Would you like anything else?").withShouldEndSession(false).build();
+					.withSpeech("Okay, I have not cancelled your order. Would you like to cancel something else?")
+					.withReprompt("Would you like to order anything else?").withShouldEndSession(false).build();
 		}
 
 	}
-
 }

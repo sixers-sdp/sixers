@@ -22,6 +22,15 @@ public class NumMapping {
         if (st.equals("six")){
             return 6;
         }
+        if (st.equals("seven")){
+            return 7;
+        }
+        if (st.equals("eight")){
+            return 8;
+        }
+        if (st.equals("nine")){
+            return 9;
+        }
 
         return 1;
 

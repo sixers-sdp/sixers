@@ -24,14 +24,15 @@ public class AlbertStreamHandler extends SkillStreamHandler {
         return Skills.standard()
                 .addRequestHandlers(
                         new CancelandStopIntentHandler(),
-                        new HelloWorldIntentHandler(),
                         new HelpIntentHandler(),
                         new LaunchRequestHandler(),
                         new SessionEndedRequestHandler(),
                         new FallbackIntentHandler(),
                         new OrderFoodHandler(),
                         new OrderDrinkHandler(),
-                        new OrderByNumberHandler(),
+                        new CancelFoodHandler(),
+                        new CancelDrinkHandler(),
+                        new CheckServedHereHandler(),
                         new SetTableIntent())
                 // Add your skill id below
                 //.withSkillId("")

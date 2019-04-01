@@ -35,106 +35,110 @@ import static com.amazon.ask.request.Predicates.intentName;
 
 public class OrderFoodHandler implements IntentRequestHandler {
 
-    @Override
-    public boolean canHandle(HandlerInput handlerInput, IntentRequest intentRequest) {
-        return (handlerInput.matches(intentName("OrderFood")));
+	@Override
+	public boolean canHandle(HandlerInput handlerInput, IntentRequest intentRequest) {
+		return (handlerInput.matches(intentName("OrderFood")));
 
-    }
+	}
 
-    @Override
-    public Optional<Response> handle(HandlerInput handlerInput, IntentRequest intentRequest)  {
+	@Override
+	public Optional<Response> handle(HandlerInput handlerInput, IntentRequest intentRequest) {
 //
-        Intent intent = intentRequest.getIntent();
-        //Food names
-        Slot foodone = intent.getSlots().get("Foodone");
-        Slot foodtwo = intent.getSlots().get("Foodtwo");
-        Slot foodthree = intent.getSlots().get("Foodthree");
 
-        //Number
-        Slot numone = intent.getSlots().get("Numberone");
-        Slot numtwo = intent.getSlots().get("Numbertwo");
-        Slot numthree = intent.getSlots().get("Numberthree");
+		Intent intent = intentRequest.getIntent();
+		// Food names
+		Slot foodone = intent.getSlots().get("Foodone");
+		Slot foodtwo = intent.getSlots().get("Foodtwo");
+		Slot foodthree = intent.getSlots().get("Foodthree");
 
-        //defining default value for strings
-        String foodtwoName = "";
-        String foodthreeName = "";
+		// Number
+		Slot numone = intent.getSlots().get("Numberone");
+		Slot numtwo = intent.getSlots().get("Numbertwo");
+		Slot numthree = intent.getSlots().get("Numberthree");
 
-        String numoneValue = "one";
-        String numtwoValue = "one";
-        String numthreeValue = "one";
+		// defining default value for strings
+		String foodtwoName = "";
+		String foodthreeName = "";
 
-        //Checking slot values and assign the corresponding string value
+		String numoneValue = "one";
+		String numtwoValue = "one";
+		String numthreeValue = "one";
 
-        //ordered food name
-        String foodoneName = foodone.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
-        if (foodtwo.getValue() != null){
-            foodtwoName = foodtwo.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
-        }
-        if (foodthree.getValue() != null){
-            foodthreeName = foodthree.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
-        }
+		// Checking slot values and assign the corresponding string value
 
-        //ordered number value of food
-        if (numone.getValue() != null){
-            numoneValue = numone.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
-        }
-        if (numtwo.getValue() != null){
-            numtwoValue = numtwo.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
-        }
-        if (numthree.getValue() != null){
-            numthreeValue = numthree.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue().getName();
-        }
+		// ordered food name
+		String foodoneName = foodone.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue()
+				.getName();
+		if (foodtwo.getValue() != null) {
+			foodtwoName = foodtwo.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue()
+					.getName();
+		}
+		if (foodthree.getValue() != null) {
+			foodthreeName = foodthree.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue()
+					.getName();
+		}
 
-        String deviceID = handlerInput.getRequestEnvelope().getContext().getSystem().getDevice().getDeviceId();
+		// ordered number value of food
+		if (numone.getValue() != null) {
+			numoneValue = numone.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue()
+					.getName();
+		}
+		if (numtwo.getValue() != null) {
+			numtwoValue = numtwo.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue()
+					.getName();
+		}
+		if (numthree.getValue() != null) {
+			numthreeValue = numthree.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue()
+					.getName();
+		}
 
-        //Construct respond text
-        String speechText = "You have ordered ";
-        speechText = speechText + numoneValue +" " + foodoneName;
-        if (!foodtwoName.equals("")){
-            if (foodthreeName.equals("")) {
-                speechText = speechText + " and " + numtwoValue + " " + foodtwoName;
-            }
-            else {
-                speechText = speechText + ", " + numtwoValue + " " + foodtwoName;
-                speechText = speechText + " and " + numthreeValue + " " + foodthreeName;
-            }
-        }
+		String deviceID = handlerInput.getRequestEnvelope().getContext().getSystem().getDevice().getDeviceId();
 
+		// Construct respond text
+		String speechText = "You have ordered ";
+		List<String> products = new ArrayList<>();
+		products.add("" + numoneValue + " " + foodoneName);
+		speechText = speechText + numoneValue + " " + foodoneName;
+		if (!foodtwoName.equals("")) {
+			if (foodthreeName.equals("")) {
+				speechText = speechText + " and " + numtwoValue + " " + foodtwoName;
+				products.add("" + numtwoValue + " " + foodtwoName);
+			} else {
+				speechText = speechText + ", " + numtwoValue + " " + foodtwoName;
+				speechText = speechText + " and " + numthreeValue + " " + foodthreeName;
+				products.add("" + numtwoValue + " " + foodtwoName);
+				products.add("" + numthreeValue + " " + foodthreeName);
+			}
+		}
 
-       
+		if (intent.getConfirmationStatus().getValue().toString().equals("CONFIRMED")) {
+			
+			CloseableHttpClient httpClient = HttpClients.createDefault();
+			HttpPost httpPost = new HttpPost("http://albert.visgean.me/api/orders/");
 
-        CloseableHttpClient httpClient = HttpClients.createDefault();
-        HttpPost httpPost = new HttpPost("http://albert.visgean.me/api/orders/");
+			httpPost.addHeader("Authorization", System.getenv("API_TOKEN"));
+			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+			nameValuePairs.add(new BasicNameValuePair("device_id", deviceID));
+			// TODO: Should be Modified to adapted new API.
+			nameValuePairs.add(new BasicNameValuePair("products_text", speechText));
+//			nameValuePairs.add(new BasicNameValuePair("products", products.toString()));
 
+			try {
+				httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+				CloseableHttpResponse response = httpClient.execute(httpPost);
+				httpClient.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 
-        httpPost.addHeader("Authorization", System.getenv("API_TOKEN"));
-        List<NameValuePair> nameValuePairs = new ArrayList<>();
-        nameValuePairs.add(new BasicNameValuePair("device_id", deviceID));
-        // TODO: Should be Modified to adapted new API.
-        nameValuePairs.add(new BasicNameValuePair("products_text", speechText));
+			return handlerInput.getResponseBuilder().withSpeech(speechText)
+					.withReprompt("Would you like anything else?").withShouldEndSession(false).build();
+		} else {
+			return handlerInput.getResponseBuilder()
+					.withSpeech("Okay, I've cancelled that request. Would you like something else?")
+					.withReprompt("Would you like anything else?").withShouldEndSession(false).build();
+		}
+	}
 
-
-        try {
-            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
-            CloseableHttpResponse response = httpClient.execute(httpPost);
-            httpClient.close();
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-
-        if (intent.getConfirmationStatus().getValue().toString().equals("CONFIRMED")) {
-        	return handlerInput.getResponseBuilder()
-            		.withSpeech(speechText)
-            		.withReprompt("Would you like anything else?")
-                    .withShouldEndSession(false)
-                    .build();
-        } else {
-        	return handlerInput.getResponseBuilder()
-            		.withSpeech("Okay, I've cancelled that request. Would you like something else?")
-            		.withReprompt("Would you like anything else?")
-                    .withShouldEndSession(false)
-                    .build();
-        }
-    }
 
 }

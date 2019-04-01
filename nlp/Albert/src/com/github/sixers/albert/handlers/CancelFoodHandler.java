@@ -33,11 +33,11 @@ import java.util.Optional;
 
 import static com.amazon.ask.request.Predicates.intentName;
 
-public class OrderDrinkHandler implements IntentRequestHandler {
+public class CancelFoodHandler implements IntentRequestHandler {
 
 	@Override
 	public boolean canHandle(HandlerInput handlerInput, IntentRequest intentRequest) {
-		return (handlerInput.matches(intentName("OrderDrink")));
+		return (handlerInput.matches(intentName("CancelFood")));
 
 	}
 
@@ -46,19 +46,19 @@ public class OrderDrinkHandler implements IntentRequestHandler {
 //
 
 		Intent intent = intentRequest.getIntent();
-		// Drink names
-		Slot drinkone = intent.getSlots().get("Drinkone");
-		Slot drinktwo = intent.getSlots().get("Drinktwo");
-		Slot drinkthree = intent.getSlots().get("Drinkthree");
+		// Food names
+		Slot foodone = intent.getSlots().get("Foodone");
+		Slot foodtwo = intent.getSlots().get("Foodtwo");
+		Slot foodthree = intent.getSlots().get("Foodthree");
 
 		// Number
-		Slot numone = intent.getSlots().get("Numone");
-		Slot numtwo = intent.getSlots().get("Numtwo");
-		Slot numthree = intent.getSlots().get("Numthree");
+		Slot numone = intent.getSlots().get("Numberone");
+		Slot numtwo = intent.getSlots().get("Numbertwo");
+		Slot numthree = intent.getSlots().get("Numberthree");
 
 		// defining default value for strings
-		String drinktwoName = "";
-		String drinkthreeName = "";
+		String foodtwoName = "";
+		String foodthreeName = "";
 
 		String numoneValue = "one";
 		String numtwoValue = "one";
@@ -66,19 +66,18 @@ public class OrderDrinkHandler implements IntentRequestHandler {
 
 		// Checking slot values and assign the corresponding string value
 
-		// ordered drink name
-
-		String drinkoneName = drinkone.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0)
-				.getValue().getName();
-
-		if (drinktwo.getValue() != null) {
-			drinktwoName = drinktwo.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue()
+		// ordered food name
+		String foodoneName = foodone.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue()
+				.getName();
+		if (foodtwo.getValue() != null) {
+			foodtwoName = foodtwo.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue()
 					.getName();
 		}
-		if (drinkthree.getValue() != null) {
-			drinkthreeName = drinkthree.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0)
-					.getValue().getName();
+		if (foodthree.getValue() != null) {
+			foodthreeName = foodthree.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue()
+					.getName();
 		}
+
 		// ordered number value of food
 		if (numone.getValue() != null) {
 			numoneValue = numone.getResolutions().getResolutionsPerAuthority().get(0).getValues().get(0).getValue()
@@ -96,14 +95,23 @@ public class OrderDrinkHandler implements IntentRequestHandler {
 		String deviceID = handlerInput.getRequestEnvelope().getContext().getSystem().getDevice().getDeviceId();
 
 		// Construct respond text
-		String speechText = "You have ordered ";
-		speechText = speechText + numoneValue + " " + drinkoneName;
-		if (!drinktwoName.equals("")) {
-			if (drinkthreeName.equals("")) {
-				speechText = speechText + " and " + numtwoValue + " " + drinktwoName;
+		String speechText = "You have cancelled ";
+		speechText = speechText + numoneValue + " " + foodoneName;
+		if (!foodtwoName.equals("")) {
+			if (foodthreeName.equals("")) {
+				speechText = speechText + " and " + numtwoValue + " " + foodtwoName;
 			} else {
-				speechText = speechText + ", " + numtwoValue + " " + drinktwoName;
-				speechText = speechText + " and " + numthreeValue + " " + drinkthreeName;
+				speechText = speechText + ", " + numtwoValue + " " + foodtwoName;
+				speechText = speechText + " and " + numthreeValue + " " + foodthreeName;
+			}
+		}
+
+		if (!foodtwoName.equals("")) {
+			if (foodthreeName.equals("")) {
+				speechText = speechText + " and " + numtwoValue + " " + foodtwoName;
+			} else {
+				speechText = speechText + ", " + numtwoValue + " " + foodtwoName;
+				speechText = speechText + " and " + numthreeValue + " " + foodthreeName;
 			}
 		}
 
@@ -127,13 +135,12 @@ public class OrderDrinkHandler implements IntentRequestHandler {
 			}
 
 			return handlerInput.getResponseBuilder().withSpeech(speechText)
-					.withReprompt("Would you like anything else?").withShouldEndSession(false).build();
+					.withReprompt("Would you like to order something else?").withShouldEndSession(false).build();
 		} else {
 			return handlerInput.getResponseBuilder()
-					.withSpeech("Okay, I've cancelled that request. Would you like something else?")
-					.withReprompt("Would you like anything else?").withShouldEndSession(false).build();
+					.withSpeech("Okay, I have not cancelled your order. Would you like to cancel something else?")
+					.withReprompt("Would you like to order anything else?").withShouldEndSession(false).build();
 		}
 
 	}
-
 }

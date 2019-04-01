@@ -4,10 +4,9 @@ After=network.target
 
 [Service]
 Restart=always
-User=student
-WorkingDirectory=/home/student/sixers/
-EnvironmentFile=/home/student/envrc_systemd_ev3
-ExecStart=python vision/ev3/client.py
+User=robot
+WorkingDirectory=/home/robot/sixers/vision
+ExecStart=/usr/bin/python3.4 ev3_client.py
 
 [Install]
 WantedBy=multi-user.target
