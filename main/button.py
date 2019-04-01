@@ -4,11 +4,7 @@ import os
 try:
     import paramiko
 except:
-    try:
-        import paramiko
-    except:
-        print("There was an error with the paramiko module")
-
+    print("There was an error with the paramiko module")
 
 PIN=18
 
@@ -39,9 +35,3 @@ while True:
         print(stdout.readlines())
 
         time.sleep(1)
-
-
-
-
-
-
