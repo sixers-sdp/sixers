@@ -61,16 +61,18 @@ class MainControl:
         r.raise_for_status()
 
     def loop(self):
-        while True:
-            if not self.current_plan:
-                logging.info('Retrieving plan')
-                self.get_plan()
+        # while True:
 
-            if not self.current_plan:
-                logging.info('Waiting for a plan')
-                time.sleep(1)
-            else:
-                self.execute_plan()
+        # not looping anymore - exit after executing and rely on the systemd to restart this
+        if not self.current_plan:
+            logging.info('Retrieving plan')
+            self.get_plan()
+
+        if not self.current_plan:
+            logging.info('Waiting for a plan')
+            time.sleep(1)
+        else:
+            self.execute_plan()
 
 
     def execute_group(self, action, group_data):
