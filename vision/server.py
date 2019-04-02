@@ -148,6 +148,7 @@ class Server:
             if top_left_index != 0 and bottom_left_index != 0 and np.abs(self.w // 2 - vert_idx) < 70:
                 self.server_end = True
                 self.socket.close()
+                self.corner_detected = False
                 return constants.MoveCommand.END
             return constants.MoveCommand.CORNER_LEFT
 
@@ -161,7 +162,8 @@ class Server:
             self.corner_detected = False
 
         if self.corner_detected and self.corner_detected_once:
-            time.sleep(1.25)
+            #time.sleep(1.25)
+            time.sleep(1)
             #print("Choosing to turn in the corner...")
             self.corner_detected_once = False
             if self.directions[0] == "LEFT":
