@@ -184,16 +184,17 @@ class Server:
                 self.decoded_frame = decoded_frame[0]
 
                 node_found = self.decoded_frame.data.lower()
-                try:
-                    position = self.qr_codes_expected.index(node_found)
-                    self.qr_codes_expected = self.qr_codes_expected[position+1:]
-                    self.qr_codes_expected.pop(0)
-                    self.corner_detected = True
-                    self.corner_detected_once = True
-                    return constants.MoveCommand.FORWARD
-                except ValueError:
+                if node_found not in self.qr_codes_expected:
                     self.exception_raised = True
                     return constants.MoveCommand.END
+                position = self.qr_codes_expected.index(node_found)
+                self.qr_codes_expected = self.qr_codes_expected[position+1:]
+                self.qr_codes_expected.pop(0)
+                self.corner_detected = True
+                self.corner_detected_once = True
+                return constants.MoveCommand.FORWARD
+
+            
             elif top_left_index == 0 and bottom_left_index == 0:
                 return constants.MoveCommand.STOP
             if np.abs(self.w // 2 - vert_idx) > 15:
