@@ -70,7 +70,7 @@ class MoveTask(Task):
         r.raise_for_status()
 
     def post_all_tasks(self):
-        self.post_new_location(self.arguments_grouped[-1]['args']['destination'])
+        pass
 
     def execute_all(self):
         directions = [f['relative_direction'] for f in self.arguments_grouped]
@@ -92,6 +92,7 @@ class MoveTask(Task):
         assert isinstance(self.server, Server), "Did you forgot to set up Server instance?"
         try:
             self.server.setup_order(directions, is_green, nodes_expected)
+            self.post_new_location(self.arguments_grouped[-1]['args']['destination'])
         except IncorrectNode as e:
             self.post_new_location(e.node_seen.lower())
             self.success = False
