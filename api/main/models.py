@@ -145,7 +145,10 @@ class ExecutionPlan(models.Model):
         graph = latest_map.get_networkx_graph()
 
         # 1. generate problem file
-        delivery_order = Order.objects.filter(state=ORDER_STATE_DELIVERY).latest()
+        try:
+            delivery_order = Order.objects.filter(state=ORDER_STATE_DELIVERY).latest()
+        except Order.DoesNotExist:
+            delivery_order = None
 
         context = {
             'current_location': LocationUpdate.objects.latest(),
@@ -156,8 +159,8 @@ class ExecutionPlan(models.Model):
         }
 
         # if there is nothing to be done do not generate new plan!
-        if not delivery_order:
-            return None
+        # if not delivery_order:
+        #     return None
 
         plan = cls()
         plan.save()
