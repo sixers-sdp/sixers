@@ -182,7 +182,7 @@ class Server:
             #print(1 / (time.time() - prev_time))
             if len(decoded_frame) > 0:
                 self.decoded_frame = decoded_frame[0]
-                if self.decoded_frame.data == self.qr_codes_expected[0]:
+                if self.decoded_frame.data.lower() == self.qr_codes_expected[0].lower():
                     self.qr_codes_expected.pop(0)
                     self.corner_detected = True
                     self.corner_detected_once = True

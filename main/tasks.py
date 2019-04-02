@@ -77,8 +77,8 @@ class MoveTask(Task):
 
         nodes_expected = [f['args']['destination'] for f in self.arguments_grouped]
         # skip the first code
-        nodes_expected.pop(0)
         print('QR codes expected:', nodes_expected)
+        print('Directions')
 
 
         # is green:
