@@ -44,12 +44,14 @@ class Task:
     def run(self):
         if self.execute_all_at_once:
             self.execute_all()
-            self.post_all_tasks()
+            if self.success:
+                self.post_all_tasks()
             return
 
         for task in self.arguments_grouped:
             self.execute_one(task['args'])
-            self.post_task(task['args'])
+            if self.success:
+                self.post_task(task['args'])
 
 
 class MoveTask(Task):
@@ -68,7 +70,6 @@ class MoveTask(Task):
 
     def post_all_tasks(self):
         self.post_new_location(self.arguments_grouped[-1]['args']['destination'])
-        self.success = True
 
     def execute_all(self):
         directions = [f['relative_direction'] for f in self.arguments_grouped]
