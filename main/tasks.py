@@ -76,6 +76,10 @@ class MoveTask(Task):
         directions.pop(0)
 
         nodes_expected = [f['args']['destination'] for f in self.arguments_grouped]
+        # skip the first code
+        nodes_expected.pop(0)
+        print('QR codes expected:', nodes_expected)
+
 
         # is green:
         # if currently at table: its blue
