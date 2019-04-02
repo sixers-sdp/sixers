@@ -136,8 +136,9 @@ class Server:
         # print(top_left_index, bottom_left_index)
 
         if self.exception_raised:
-            print("Wrong QR Code found...")
-            raise IncorrectNode(self.decoded_frame.data)
+            qr = self.decoded_frame.data.lower()
+            print("Wrong QR Code found...", qr)
+            raise IncorrectNode(qr)
 
         if self.sleep:
             time.sleep(1)
