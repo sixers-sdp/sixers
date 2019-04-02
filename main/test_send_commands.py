@@ -3,7 +3,7 @@ import sys
 import time
 
 sys.path.append(os.path.abspath('..'))
-from vision.server3 import Server
+from vision.server import Server
 
 START = 0
 

@@ -11,7 +11,7 @@ from utils import group_plan
 
 sys.path.append(os.path.abspath('..'))
 
-from vision.server2 import Server
+from vision.server import Server
 
 
 TASKS = {
