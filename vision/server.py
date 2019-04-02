@@ -136,8 +136,9 @@ class Server:
         # print(top_left_index, bottom_left_index)
 
         if self.exception_raised:
-            print("Wrong QR Code found...")
-            raise IncorrectNode(self.decoded_frame.data)
+            qr = self.decoded_frame.data.lower()
+            print("Wrong QR Code found...", qr)
+            raise IncorrectNode(qr)
 
         if self.sleep:
             time.sleep(1)
@@ -160,7 +161,7 @@ class Server:
             self.corner_detected = False
 
         if self.corner_detected and self.corner_detected_once:
-            time.sleep(1)
+            time.sleep(1.25)
             #print("Choosing to turn in the corner...")
             self.corner_detected_once = False
             if self.directions[0] == "LEFT":
@@ -182,14 +183,17 @@ class Server:
             #print(1 / (time.time() - prev_time))
             if len(decoded_frame) > 0:
                 self.decoded_frame = decoded_frame[0]
-                if self.decoded_frame.data.lower() == self.qr_codes_expected[0].lower():
-                    self.qr_codes_expected.pop(0)
-                    self.corner_detected = True
-                    self.corner_detected_once = True
-                    return constants.MoveCommand.FORWARD
-                else:
+
+                node_found = self.decoded_frame.data.lower()
+
+                if node_found not in self.qr_codes_expected:
                     self.exception_raised = True
                     return constants.MoveCommand.END
+
+                self.corner_detected = True
+                self.corner_detected_once = True
+                return constants.MoveCommand.FORWARD
+
             elif top_left_index == 0 and bottom_left_index == 0:
                 return constants.MoveCommand.STOP
             if np.abs(self.w // 2 - vert_idx) > 15:

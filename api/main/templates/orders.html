@@ -1,5 +1,11 @@
 {% extends 'base.html' %}
 
+{% block bootstrap4_extra_head %}
+	{{ block.super }}
+	<meta http-equiv="refresh" content="1" >
+{% endblock %}
+
+
 {% block body %}
 	{% if cancellations %}
 		<div class="my-3 p-3 bg-white rounded box-shadow">

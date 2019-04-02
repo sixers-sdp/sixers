@@ -70,17 +70,19 @@ class MoveTask(Task):
         r.raise_for_status()
 
     def post_all_tasks(self):
-        self.post_new_location(self.arguments_grouped[-1]['args']['destination'])
+        pass
 
     def execute_all(self):
         directions = [f['relative_direction'] for f in self.arguments_grouped]
         directions.append('END')
         directions.pop(0)
 
-        nodes_expected = [f['args']['destination'] for f in self.arguments_grouped]
+        nodes_expected = [f['args']['destination'].lower() for f in self.arguments_grouped]
+        nodes_expected.insert(0, self.arguments_grouped[0]['args']['origin'].lower())
         # skip the first code
         print('QR codes expected:', nodes_expected)
-        print('Directions')
+        print('Directions', directions)
+
 
 
         # is green:
@@ -92,9 +94,11 @@ class MoveTask(Task):
         assert isinstance(self.server, Server), "Did you forgot to set up Server instance?"
         try:
             self.server.setup_order(directions, is_green, nodes_expected)
+            self.post_new_location(self.arguments_grouped[-1]['args']['destination'])
         except IncorrectNode as e:
             self.post_new_location(e.node_seen.lower())
             self.success = False
+            return
         self.success = True
 
 
