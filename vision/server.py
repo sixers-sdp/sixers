@@ -160,7 +160,7 @@ class Server:
             self.corner_detected = False
 
         if self.corner_detected and self.corner_detected_once:
-            time.sleep(1)
+            time.sleep(1.25)
             #print("Choosing to turn in the corner...")
             self.corner_detected_once = False
             if self.directions[0] == "LEFT":
