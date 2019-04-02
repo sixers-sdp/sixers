@@ -184,6 +184,7 @@ class Server:
                 self.decoded_frame = decoded_frame[0]
 
                 node_found = self.decoded_frame.data.lower()
+
                 if node_found not in self.qr_codes_expected:
                     self.exception_raised = True
                     return constants.MoveCommand.END
@@ -191,7 +192,6 @@ class Server:
                 self.corner_detected = True
                 self.corner_detected_once = True
                 return constants.MoveCommand.FORWARD
-
 
             elif top_left_index == 0 and bottom_left_index == 0:
                 return constants.MoveCommand.STOP
