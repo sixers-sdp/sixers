@@ -29,7 +29,10 @@ class Server:
         self.sleep = False
         self.exception_raised = False
         self.decoded_frame = -1
+        self.last_correcting_time = 0
+        self.out_of_track = False
         self.start_threads()
+
 
     def setup_order(self, directions, is_current_color_green, qr_codes_expected=None):
         self.directions = directions
@@ -141,7 +144,7 @@ class Server:
             self.sleep = False
 
         if self.end:
-            if top_left_index != 0 and bottom_left_index != 0 and np.abs(self.w // 2 - vert_idx) < 35:
+            if top_left_index != 0 and bottom_left_index != 0 and np.abs(self.w // 2 - vert_idx) < 70:
                 self.server_end = True
                 self.socket.close()
                 return constants.MoveCommand.END
@@ -189,7 +192,7 @@ class Server:
                     return constants.MoveCommand.END
             elif top_left_index == 0 and bottom_left_index == 0:
                 return constants.MoveCommand.STOP
-            if np.abs(self.w // 2 - vert_idx) > 20:
+            if np.abs(self.w // 2 - vert_idx) > 15:
                 if self.w // 2 - vert_idx > 0:
                     return constants.MoveCommand.ALIGN_LEFT
                 else:
@@ -209,6 +212,7 @@ class Server:
                       and self.old_type != constants.MoveCommand.FRAME_EMPTY \
                          and new_type == constants.MoveCommand.STOP \
                             and self.old_type != None and not correcting:
+		self.last_correcting_time = time.time()
                 if self.old_type == constants.MoveCommand.ALIGN_RIGHT:
                     print("GO BACKWARD_ALIGN_LEFT")
                     new_type = constants.MoveCommand.BACKWARD_ALIGN_LEFT
@@ -224,8 +228,13 @@ class Server:
                 correcting_command_sent = False
                 correcting = False
             if correcting and correcting_command_sent:
-                new_type = self.old_type
-                continue
+		if (time.time()-self.last_correcting_time > 5) and self.last_correcting_time != -1:
+                    self.old_type = constants.MoveCommand.STOP
+                    new_type = self.old_type
+                    self.last_correcting_time = -1
+                else:
+                    new_type = self.old_type
+                    continue
             if self.old_type == new_type and not correcting:
                 continue
             print('New command is', new_type)
