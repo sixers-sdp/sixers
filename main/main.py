@@ -23,8 +23,6 @@ TASKS = {
 GROUP_TASKS = ['MOVE']
 
 
-
-
 class MainControl:
     """
     This is the main controller for all the other modules.
@@ -38,9 +36,6 @@ class MainControl:
     """
 
     current_plan = None
-    plan_grouped = []
-
-    tasks_handlers = tasks
 
     def __init__(self):
         self.server = Server()
@@ -79,7 +74,7 @@ class MainControl:
 
 
     def execute_group(self, action, group_data):
-        task_class = self.tasks_handlers[action]
+        task_class = TASKS[action]
         task = task_class(group_data)
         task.server = self.server
 
