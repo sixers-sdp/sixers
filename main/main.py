@@ -82,6 +82,7 @@ class MainControl:
         return task
 
     def execute_plan(self):
+        succeeded = True
         for group in self.plan_grouped:
             action = group[0]['action']
             task = self.execute_group(action, group)
@@ -91,9 +92,11 @@ class MainControl:
                 self.report_success(last_id)
             else:
                 self.report_failure(last_id)
+                succeeded = False
                 break
 
-        self.update_plan({'state': 'finished'})
+        new_state = 'finished' if succeeded else 'aborted'
+        self.update_plan({'state': new_state})
         self.current_plan = None
 
 
