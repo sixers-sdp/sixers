@@ -20,7 +20,7 @@ import com.amazon.ask.model.Response;
 
 import java.util.Optional;
 
-public class UnkonwExecptionHandler implements ExceptionHandler {
+public class UnknownExecptionHandler implements ExceptionHandler {
     @Override
     public boolean canHandle(HandlerInput input, Throwable throwable) {
         return throwable instanceof AskSdkException;
