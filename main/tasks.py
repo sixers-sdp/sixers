@@ -86,7 +86,7 @@ class MoveTask(Task):
         # if currently at table: its blue
         # if at chefs: we look for green
 
-        is_green = self.arguments_grouped[0]['args']['origin'].lower() == 'chef'
+        is_green = self.arguments_grouped[0]['args']['origin'].lower() in ('chef', 'k1')
 
         assert isinstance(self.server, Server), "Did you forgot to set up Server instance?"
         try:
