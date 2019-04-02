@@ -1,3 +1,4 @@
+import subprocess
 import time
 
 import settings
@@ -130,5 +131,6 @@ class HandoverTask(Task):
         self.success = True
 
     def execute_one(self, task):
-        time.sleep(10)
+        subprocess.run(["aplay", "/home/student/sixers/sounds/takeit.wav"])
+        time.sleep(5)
         self.success = True
