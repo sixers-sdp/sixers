@@ -61,7 +61,7 @@ class MoveTask(Task):
     def post_new_location(self, location):
         r = requests.post(
             settings.API_LOCATION,
-            data={'location': location},
+            data={'location': location.lower()},
             headers=settings.AUTH_HEADERS
         )
         r.raise_for_status()
