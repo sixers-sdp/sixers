@@ -48,6 +48,7 @@ public class SetTableIntent implements IntentRequestHandler {
         Slot tableNo = intent.getSlots().get("TableNUM");
         String tableNUM = tableNo.getValue();
 
+
         Slot password = intent.getSlots().get("password");
         String passwordValue = password.getValue();
 
@@ -64,7 +65,7 @@ public class SetTableIntent implements IntentRequestHandler {
         HttpPost httpPost = new HttpPost("http://albert.visgean.me/api/dots/");
 
         httpPost.addHeader("Authorization", System.getenv("API_TOKEN"));
-        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+        List<NameValuePair> nameValuePairs = new ArrayList<>();
         nameValuePairs.add(new BasicNameValuePair("dot_id", deviceID));
         nameValuePairs.add(new BasicNameValuePair("location", tableNUM));
 

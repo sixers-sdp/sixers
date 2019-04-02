@@ -1,5 +1,5 @@
 {
-    "interactionModel": {
+  "interactionModel": {
         "languageModel": {
             "invocationName": "albert",
             "intents": [

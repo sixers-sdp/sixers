@@ -45,6 +45,7 @@ public class OrderFoodHandler implements IntentRequestHandler {
 	public Optional<Response> handle(HandlerInput handlerInput, IntentRequest intentRequest) {
 //
 
+
 		Intent intent = intentRequest.getIntent();
 		// Food names
 		Slot foodone = intent.getSlots().get("Foodone");
@@ -200,7 +201,7 @@ public class OrderFoodHandler implements IntentRequestHandler {
 			HttpPost httpPost = new HttpPost("http://albert.visgean.me/api/orders/");
 
 			httpPost.addHeader("Authorization", System.getenv("API_TOKEN"));
-			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+			List<NameValuePair> nameValuePairs = new ArrayList<>();
 			nameValuePairs.add(new BasicNameValuePair("device_id", deviceID));
 			// TODO: Should be Modified to adapted new API.
 			nameValuePairs.add(new BasicNameValuePair("products_text", chefText));
