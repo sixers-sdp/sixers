@@ -11,7 +11,7 @@ from utils import group_plan
 
 sys.path.append(os.path.abspath('..'))
 
-from vision.server2 import Server
+from vision.server import Server
 
 
 TASKS = {
@@ -21,8 +21,6 @@ TASKS = {
 }
 
 GROUP_TASKS = ['MOVE']
-
-
 
 
 class MainControl:
@@ -38,9 +36,6 @@ class MainControl:
     """
 
     current_plan = None
-    plan_grouped = []
-
-    tasks_handlers = tasks
 
     def __init__(self):
         self.server = Server()
@@ -79,7 +74,7 @@ class MainControl:
 
 
     def execute_group(self, action, group_data):
-        task_class = self.tasks_handlers[action]
+        task_class = TASKS[action]
         task = task_class(group_data)
         task.server = self.server
 

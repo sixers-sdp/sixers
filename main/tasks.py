@@ -4,7 +4,7 @@ import settings
 import requests
 
 from vision.exceptions import IncorrectNode
-from vision.server2 import Server
+from vision.server import Server
 
 
 class Task:

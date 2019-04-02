@@ -1,4 +1,2 @@
 opencv-python
 numpy
-pyzbar
-python-ev3dev
