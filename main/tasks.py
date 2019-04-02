@@ -78,6 +78,7 @@ class MoveTask(Task):
         directions.pop(0)
 
         nodes_expected = [f['args']['destination'] for f in self.arguments_grouped]
+        nodes_expected.insert(0, self.arguments_grouped[0]['args']['origin'])
         # skip the first code
         print('QR codes expected:', nodes_expected)
         print('Directions')
