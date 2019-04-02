@@ -1,13 +1,12 @@
 {% extends 'base.html' %}
+{% load bootstrap4 %}
 
 {% block title %}Plan{% endblock %}
 
 {% block body %}
 	<h1>Plan:</h1>
 
-
-	Current execution plan:
-
+	<a href="{% url 'main:new_plan' %}">Create new plan</a> <br><br>
 	{% if not current_plan.plan_parsed %}
 		Plan is empty. Nothing to do.
 	{% endif %}
@@ -17,5 +16,11 @@
 	</pre>
 
 
-	<a href="{% url 'main:new_plan' %}">Create new plan</a>
+	<h1>Current location: {{ current_table.location }}</h1>
+
+	<form action="" method="post">
+	{% csrf_token %}
+		{% bootstrap_form form=form %}
+		<button type="submit" class="btn btn-primary btn-block">Update location</button>
+	</form>
 {% endblock %}

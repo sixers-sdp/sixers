@@ -2,10 +2,10 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.utils.decorators import method_decorator
 from django.views import View
-from django.views.generic import ListView, TemplateView, DetailView, RedirectView, UpdateView
+from django.views.generic import ListView, TemplateView, DetailView, RedirectView, UpdateView, CreateView
 
 # from map.utils import map_text
-from main.forms import OrderForm
+from main.forms import OrderForm, LocationForm
 from main.models import ORDER_STATE_NEW, ORDER_STATE_DELIVERY, ORDER_STATE_READY, ORDER_STATES
 from . import models
 
@@ -59,17 +59,23 @@ class OrderEditView(UpdateView):
         return '/'
 
 
-class PlanView(DetailView):
+class PlanView(CreateView):
     """
     Shows current execution plan for the robot.
     """
 
     template_name = 'plan.html'
-    queryset = models.ExecutionPlan.objects.all()
+    form_class = LocationForm
+
     context_object_name = 'current_plan'
 
-    def get_object(self, queryset=None):
-        return self.get_queryset().last()
+    success_url = '/plan'
+
+    def get_context_data(self, **kwargs):
+        c = super().get_context_data(**kwargs)
+        c['current_table'] = models.LocationUpdate.objects.latest()
+        c['current_plan'] = models.ExecutionPlan.create_new()
+        return c
 
 
 @method_decorator(login_required, name='dispatch')
@@ -84,3 +90,8 @@ class NewPlanView(RedirectView):
         models.ExecutionPlan.create_new()
 
         return super().get(request, *args, **kwargs)
+
+
+
+class VideoView(TemplateView):
+    template_name = 'video.html'

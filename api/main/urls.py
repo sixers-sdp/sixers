@@ -11,4 +11,5 @@ urlpatterns = [
     path('order/edit/<int:pk>', views.OrderEditView.as_view(), name='order_edit'),
     path('plan', views.PlanView.as_view(), name='plan'),
     path('new_plan', views.NewPlanView.as_view(), name='new_plan'),
+    path('video', views.VideoView.as_view(), name='video'),
 ]
