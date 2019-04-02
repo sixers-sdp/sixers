@@ -150,7 +150,7 @@ class ExecutionPlan(models.Model):
         except Order.DoesNotExist:
             delivery_order = None
 
-        current_location = LocationUpdate.objects.latest()
+        current_location = LocationUpdate.objects.latest().location.lower()
 
         context = {
             'current_location': current_location,
@@ -161,7 +161,7 @@ class ExecutionPlan(models.Model):
         }
 
         # if there is nothing to be done do not generate new plan!
-        if not delivery_order and latest_map.chef_node == current_location:
+        if not delivery_order and latest_map.chef_node.lower() == current_location:
             return None
 
         plan = cls()
