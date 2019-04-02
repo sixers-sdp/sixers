@@ -1,6 +1,14 @@
 from rest_framework import serializers
 
-from main.models import Order, Product, ExecutionPlan, LocationUpdate, DotAssociation, Cancellation
+from main.models import Order, Product, ExecutionPlan, LocationUpdate, DotAssociation, Cancellation, HumanRequest
+
+
+
+def table_number_from_dot_id(dot_id):
+    ass = DotAssociation.objects.filter(dot_id=dot_id).first()
+    if ass:
+        return ass.location
+    return 't1'
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -23,9 +31,7 @@ class OrderSerializer(serializers.ModelSerializer):
         }
 
     def create(self, validated_data):
-        device_id = validated_data.pop('device_id')
-        table_num = DotAssociation.objects.get(dot_id=device_id).location
-        validated_data['table_number'] = table_num
+        validated_data['table_number'] = table_number_from_dot_id(validated_data.pop('device_id'))
         order = super().create(validated_data)
         return order
 
@@ -66,8 +72,23 @@ class CancellationSerializer(serializers.ModelSerializer):
         }
 
     def create(self, validated_data):
-        device_id = validated_data.pop('device_id')
-        table_num = DotAssociation.objects.get(dot_id=device_id).location
-        validated_data['table_number'] = table_num
+        validated_data['table_number'] = table_number_from_dot_id(validated_data.pop('device_id'))
+        order = super().create(validated_data)
+        return order
+
+
+class HumanRequestSerializer(serializers.ModelSerializer):
+    device_id = serializers.CharField(write_only=True)
+
+    class Meta:
+        model = HumanRequest
+        exclude = []
+
+        extra_kwargs = {
+            'table_number': {'read_only': True},
+        }
+
+    def create(self, validated_data):
+        validated_data['table_number'] = table_number_from_dot_id(validated_data.pop('device_id'))
         order = super().create(validated_data)
         return order

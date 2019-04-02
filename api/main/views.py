@@ -17,6 +17,7 @@ class OrderView(TemplateView):
         c = super().get_context_data(**kwargs)
         delivery = models.Order.objects.filter(state=ORDER_STATE_DELIVERY)
 
+        c['human_requests'] = models.HumanRequest.objects.filter(processed=False)
         c['new_orders'] = models.Order.objects.filter(state=ORDER_STATE_NEW)
         c['ready_orders'] = models.Order.objects.filter(state=ORDER_STATE_READY)
         c['delivery_orders'] = delivery
@@ -47,6 +48,17 @@ class CancellationChangeStateView(View):
         return HttpResponseRedirect('/')
 
 
+@method_decorator(login_required, name='dispatch')
+class HelpChangeStateView(View):
+    http_method_names = ['post']
+
+    def post(self, request, id, **kwargs):
+        state = request.POST.get('processed', '')
+        if state == 'true':
+           models.HumanRequest.objects.filter(pk=id).update(processed=True)
+        return HttpResponseRedirect('/')
+
+
 
 @method_decorator(login_required, name='dispatch')
 class OrderEditView(UpdateView):
@@ -59,6 +71,7 @@ class OrderEditView(UpdateView):
         return '/'
 
 
+@method_decorator(login_required, name='dispatch')
 class PlanView(CreateView):
     """
     Shows current execution plan for the robot.

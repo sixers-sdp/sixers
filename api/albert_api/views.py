@@ -4,8 +4,10 @@ from rest_framework.response import Response
 from rest_framework.status import HTTP_204_NO_CONTENT
 from rest_framework.viewsets import GenericViewSet
 
-from albert_api.serializers import LocationUpdateSerializer, DotAssociationSerializer, CancellationSerializer
-from main.models import Product, Order, ExecutionPlan, PLAN_STATE_NEW, LocationUpdate, DotAssociation, Cancellation
+from albert_api.serializers import LocationUpdateSerializer, DotAssociationSerializer, CancellationSerializer, \
+    HumanRequestSerializer
+from main.models import Product, Order, ExecutionPlan, PLAN_STATE_NEW, LocationUpdate, DotAssociation, Cancellation, \
+    HumanRequest
 from .serializers import ProductSerializer, OrderSerializer, PlanSerializer
 
 
@@ -54,3 +56,8 @@ class DotAssociationViewSet(mixins.CreateModelMixin, GenericViewSet):
 class CancellationViewSet(viewsets.ModelViewSet):
     queryset = Cancellation.objects.all()
     serializer_class = CancellationSerializer
+
+
+class HumanRequestViewSet(viewsets.ModelViewSet):
+    queryset = HumanRequest.objects.all()
+    serializer_class = HumanRequestSerializer

@@ -109,6 +109,21 @@ class Cancellation(models.Model):
         return f"cancellation{self.pk}"
 
 
+class HumanRequest(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    table_number = models.CharField(max_length=30)
+    text = models.TextField()
+    processed = models.BooleanField(default=False)
+
+    class Meta:
+        get_latest_by = ['updated_at']
+
+    def __str__(self):
+        return f"humanrequest at {self.created_at}"
+
+
 class PDDLError(Exception):
     pass
 

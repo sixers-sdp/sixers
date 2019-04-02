@@ -7,6 +7,29 @@
 
 
 {% block body %}
+		{% if human_requests %}
+		<div class="my-3 p-3 bg-white rounded box-shadow">
+			<h2 class="border-bottom border-gray pb-2 mb-0">Help requests</h2>
+
+			{% for human_request in human_requests %}
+				<div class="media text-muted pt-3">
+					<p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+						<strong class="d-block text-gray-dark">Table {{ human_request.table_number }}</strong>
+						{{ human_request.text }}
+					</p>
+					{% if user.is_authenticated %}
+						<form action="{% url 'main:help_state' id=human_request.id %}" method="post">
+							{% csrf_token %}
+							<input type="hidden" value="true" name="processed">
+							<button type="submit" class="btn btn-primary alert-danger">Mark resolved</button>
+						</form>
+					{% endif %}
+				</div>
+			{% endfor %}
+		</div>
+	{% endif %}
+
+
 	{% if cancellations %}
 		<div class="my-3 p-3 bg-white rounded box-shadow">
 			<h2 class="border-bottom border-gray pb-2 mb-0">Cancellations</h2>
