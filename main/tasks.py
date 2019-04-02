@@ -81,7 +81,8 @@ class MoveTask(Task):
         nodes_expected.insert(0, self.arguments_grouped[0]['args']['origin'].lower())
         # skip the first code
         print('QR codes expected:', nodes_expected)
-        print('Directions')
+        print('Directions', directions)
+
 
 
         # is green:
