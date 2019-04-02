@@ -94,10 +94,10 @@ class MainControl:
                 self.report_failure(last_id)
                 succeeded = False
                 break
-
-        new_state = 'finished' if succeeded else 'aborted'
-        self.update_plan({'state': new_state})
-        self.current_plan = None
+        if self.current_plan:
+            new_state = 'finished' if succeeded else 'aborted'
+            self.update_plan({'state': new_state})
+            self.current_plan = None
 
 
     def report_success(self, sub_id):
