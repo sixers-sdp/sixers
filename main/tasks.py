@@ -131,6 +131,6 @@ class HandoverTask(Task):
         self.success = True
 
     def execute_one(self, task):
-        subprocess.cal(["aplay", "/home/student/sixers/sounds/takeit.wav"])
+        subprocess.call(["aplay", "/home/student/sixers/sounds/takeit.wav"])
         time.sleep(5)
         self.success = True
