@@ -61,7 +61,7 @@ class MainControl:
         r.raise_for_status()
 
     def loop(self):
-        while self.current_plan is None:
+        while True:
             if not self.current_plan:
                 logging.info('Retrieving plan')
                 self.get_plan()
