@@ -29,6 +29,12 @@
 		</div>
 	{% endif %}
 
+	{% if not delivery_orders or ready_orders or new_orders %}
+			<div class="my-3 p-3 bg-white rounded box-shadow">
+				<h2 class="border-bottom border-gray pb-2 mb-0">Awaiting orders</h2>
+			</div>
+	{% endif %}
+
 
 	{% include "includes/orders_sublist.html" with label="Order in delivery" orders=delivery_orders button_hide='hide' %}
 	{% if albert_is_empty %}
