@@ -15,6 +15,7 @@ package com.github.sixers.albert.handlers;
 
 import com.amazon.ask.dispatcher.exception.ExceptionHandler;
 import com.amazon.ask.dispatcher.request.handler.HandlerInput;
+import com.amazon.ask.exception.AskSdkException;
 import com.amazon.ask.model.Response;
 import com.github.sixers.albert.exception.HumanNeededException;
 import org.apache.http.NameValuePair;
@@ -32,7 +33,10 @@ import java.util.Optional;
 public class UnkonwExecptionHandler implements ExceptionHandler {
     @Override
     public boolean canHandle(HandlerInput input, Throwable throwable) {
-        return throwable instanceof HumanNeededException;
+        if(throwable instanceof HumanNeededException){
+            return false;
+        }
+        return throwable instanceof AskSdkException;
     }
 
     @Override
