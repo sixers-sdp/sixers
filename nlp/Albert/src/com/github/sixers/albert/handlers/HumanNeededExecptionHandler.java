@@ -26,19 +26,17 @@ public class HumanNeededExecptionHandler implements ExceptionHandler {
     public Optional<Response> handle(HandlerInput input, Throwable throwable) {
 
 
-        String resp = "Human assistant is coming, please be patient";
+        String resp = "Thanks for your query, human assistant is coming, please be patient";
         String message = throwable.getMessage();
+        message = "Customer Query: " + message;
 
         CloseableHttpClient httpClient = HttpClients.createDefault();
         String deviceID = input.getRequestEnvelope().getContext().getSystem().getDevice().getDeviceId();
 
-
-        // TODO: DO A POST REQUEST TO THE API.
         HttpPost httpPost = new HttpPost("http://albert.visgean.me/api/human_requests/");
         httpPost.addHeader("Authorization", System.getenv("API_TOKEN"));
         List<NameValuePair> nameValuePairs = new ArrayList<>();
         nameValuePairs.add(new BasicNameValuePair("device_id", deviceID));
-        // TODO: Should be Modified to adapted new API.
         nameValuePairs.add(new BasicNameValuePair("text", message));
 
         try {
