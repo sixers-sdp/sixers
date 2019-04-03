@@ -97,10 +97,66 @@ public class OrderFoodHandler implements IntentRequestHandler {
 
 		// Construct respond text
 		String speechText = "You have ordered ";
+		//Construct chef's order string
+		String chefText = "NEW ORDER: ";
 		List<String> products = new ArrayList<>();
 		products.add("" + numoneValue + " " + foodoneName);
 		speechText = speechText + numoneValue + " " + foodoneName;
+		if (numoneValue.equals("one")){
+			chefText = chefText + "1x " +foodoneName + "\n";
+		}
+		else if (numoneValue.equals("two")){
+			chefText = chefText + "2x " +foodoneName + "\n";
+		}
+		else if (numoneValue.equals("three")){
+			chefText = chefText + "3x " +foodoneName + "\n";
+		}
+		else if (numoneValue.equals("four")){
+			chefText = chefText + "4x " +foodoneName + "\n";
+		}
+		else if (numoneValue.equals("five")){
+			chefText = chefText + "5x " +foodoneName + "\n";
+		}
+		else if (numoneValue.equals("six")){
+			chefText = chefText + "6x " +foodoneName + "\n";
+		}
+		else if (numoneValue.equals("seven")){
+			chefText = chefText + "7x " +foodoneName + "\n";
+		}
+		else if (numoneValue.equals("eight")){
+			chefText = chefText + "8x " +foodoneName + "\n";
+		}
+		else if (numoneValue.equals("nine")){
+			chefText = chefText + "9x " +foodoneName + "\n";
+		}
 		if (!foodtwoName.equals("")) {
+			if (numtwoValue.equals("one")){
+				chefText = chefText + "1x " +foodtwoName + "\n";
+			}
+			else if (numtwoValue.equals("two")){
+				chefText = chefText + "2x " +foodtwoName + "\n";
+			}
+			else if (numtwoValue.equals("three")){
+				chefText = chefText + "3x " +foodtwoName + "\n";
+			}
+			else if (numtwoValue.equals("four")){
+				chefText = chefText + "4x " +foodtwoName + "\n";
+			}
+			else if (numtwoValue.equals("five")){
+				chefText = chefText + "5x " +foodtwoName + "\n";
+			}
+			else if (numtwoValue.equals("six")){
+				chefText = chefText + "6x " +foodtwoName + "\n";
+			}
+			else if (numoneValue.equals("seven")){
+				chefText = chefText + "7x " +foodtwoName + "\n";
+			}
+			else if (numoneValue.equals("eight")){
+				chefText = chefText + "8x " +foodtwoName + "\n";
+			}
+			else if (numoneValue.equals("nine")){
+				chefText = chefText + "9x " +foodtwoName + "\n";
+			}
 			if (foodthreeName.equals("")) {
 				speechText = speechText + " and " + numtwoValue + " " + foodtwoName;
 				products.add("" + numtwoValue + " " + foodtwoName);
@@ -109,6 +165,33 @@ public class OrderFoodHandler implements IntentRequestHandler {
 				speechText = speechText + " and " + numthreeValue + " " + foodthreeName;
 				products.add("" + numtwoValue + " " + foodtwoName);
 				products.add("" + numthreeValue + " " + foodthreeName);
+				if (numthreeValue.equals("one")){
+					chefText = chefText + "1x " +foodthreeName + "\n";
+				}
+				else if (numthreeValue.equals("two")){
+					chefText = chefText + "2x " +foodthreeName + "\n";
+				}
+				else if (numthreeValue.equals("three")){
+					chefText = chefText + "3x " +foodthreeName + "\n";
+				}
+				else if (numthreeValue.equals("four")){
+					chefText = chefText + "4x " +foodthreeName + "\n";
+				}
+				else if (numthreeValue.equals("five")){
+					chefText = chefText + "5x " +foodthreeName + "\n";
+				}
+				else if (numthreeValue.equals("six")){
+					chefText = chefText + "6x " +foodthreeName + "\n";
+				}
+				else if (numoneValue.equals("seven")){
+					chefText = chefText + "7x " +foodthreeName + "\n";
+				}
+				else if (numoneValue.equals("eight")){
+					chefText = chefText + "8x " +foodthreeName + "\n";
+				}
+				else if (numoneValue.equals("nine")){
+					chefText = chefText + "9x " +foodthreeName + "\n";
+				}
 			}
 		}
 
@@ -121,7 +204,7 @@ public class OrderFoodHandler implements IntentRequestHandler {
 			List<NameValuePair> nameValuePairs = new ArrayList<>();
 			nameValuePairs.add(new BasicNameValuePair("device_id", deviceID));
 			// TODO: Should be Modified to adapted new API.
-			nameValuePairs.add(new BasicNameValuePair("products_text", speechText));
+			nameValuePairs.add(new BasicNameValuePair("products_text", chefText));
 //			nameValuePairs.add(new BasicNameValuePair("products", products.toString()));
 
 			try {

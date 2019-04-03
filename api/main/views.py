@@ -21,18 +21,29 @@ class OrderView(TemplateView):
         c['ready_orders'] = models.Order.objects.filter(state=ORDER_STATE_READY)
         c['delivery_orders'] = delivery
         c['albert_is_empty'] = not delivery.exists()
+        c['cancellations'] = models.Cancellation.objects.filter(processed=False)
         return c
 
 
 @method_decorator(login_required, name='dispatch')
 class OrderChangeStateView(View):
-    template_name = 'orders.html'
     http_method_names = ['post']
 
     def post(self, request, id, **kwargs):
         state = request.POST.get('state', '')
         if state in ORDER_STATES:
            models.Order.objects.filter(pk=id).update(state=state)
+        return HttpResponseRedirect('/')
+
+
+@method_decorator(login_required, name='dispatch')
+class CancellationChangeStateView(View):
+    http_method_names = ['post']
+
+    def post(self, request, id, **kwargs):
+        state = request.POST.get('processed', '')
+        if state == 'true':
+           models.Cancellation.objects.filter(pk=id).update(processed=True)
         return HttpResponseRedirect('/')
 
 

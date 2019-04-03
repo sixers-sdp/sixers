@@ -322,6 +322,10 @@
                     "name": "CancelFood",
                     "slots": [
                         {
+                            "name": "Numberone",
+                            "type": "Num"
+                        },
+                        {
                             "name": "Foodone",
                             "type": "Menu",
                             "samples": [
@@ -337,10 +341,6 @@
                             "type": "Menu"
                         },
                         {
-                            "name": "Numberone",
-                            "type": "Num"
-                        },
-                        {
                             "name": "Numbertwo",
                             "type": "Num"
                         },
@@ -350,16 +350,16 @@
                         }
                     ],
                     "samples": [
-                        "{Numberone} {Foodone} {Foodtwo} and {Numberthree} {Foodthree}",
-                        "{Numberone} {Foodone} {Numbertwo} {Foodtwo} and {Foodthree}",
-                        "{Foodone} {Foodtwo} and {Numberthree} {Foodthree}",
-                        "{Foodone} {Numbertwo} {Foodtwo} and {Foodthree}",
-                        "{Numberone} {Foodone} {Foodtwo} and {Foodthree}",
-                        "{Foodone} {Foodtwo} and {Foodthree}",
-                        "{Foodone} and {Numbertwo} {Foodtwo}",
-                        "{Numberone} {Foodone} and {Numbertwo} {Foodtwo}",
-                        "{Numberone} {Foodone} and {Foodtwo}",
-                        "{Foodone} and {Foodtwo}",
+                        "{Numberone} {Foodone} {Foodtwo} {Numberthree} {Foodthree}",
+                        "{Numberone} {Foodone} {Numbertwo} {Foodtwo} {Foodthree}",
+                        "{Foodone} {Foodtwo} {Numberthree} {Foodthree}",
+                        "{Foodone} {Numbertwo} {Foodtwo} {Foodthree}",
+                        "{Numberone} {Foodone} {Foodtwo} {Foodthree}",
+                        "{Foodone} {Foodtwo} {Foodthree}",
+                        "{Foodone} {Numbertwo} {Foodtwo}",
+                        "{Numberone} {Foodone} {Numbertwo} {Foodtwo}",
+                        "{Numberone} {Foodone} {Foodtwo}",
+                        "{Foodone} {Foodtwo}",
                         "{Numberone} {Foodone}",
                         "{Foodone}",
                         "I've changed my mind about my food order",
@@ -413,18 +413,18 @@
                         }
                     ],
                     "samples": [
-                        "{Numberone} {Drinkone} and {Numbertwo} {Drinktwo}",
-                        "{Numberone} {Drinkone} {Numbertwo} {Drinktwo} and {Numberthree} {Drinkthree}",
-                        "{Drinkone}  {Numbertwo} {Drinktwo} and {Numberthree} {Drinkthree}",
-                        "{Numberone} {Drinkone} {Drinktwo} and {Numberthree} {Drinkthree}",
-                        "{Numberone} {Drinkone} {Numbertwo} {Drinktwo} and {Drinkthree}",
-                        "{Drinkone} {Drinktwo} and {Numberthree} {Drinkthree}",
-                        "{Drinkone} {Numbertwo} {Drinktwo} and {Drinkthree}",
-                        "{Numberone} {Drinkone} {Drinktwo} and {Drinkthree}",
-                        "{Drinkone} {Drinktwo} and {Drinkthree}",
-                        "{Drinkone} and {Numbertwo} {Drinktwo}",
-                        "{Numberone} {Drinkone} and {Drinktwo}",
-                        "{Drinkone} and {Drinktwo}",
+                        "{Numberone} {Drinkone} {Numbertwo} {Drinktwo}",
+                        "{Numberone} {Drinkone} {Numbertwo} {Drinktwo} {Numberthree} {Drinkthree}",
+                        "{Drinkone}  {Numbertwo} {Drinktwo} {Numberthree} {Drinkthree}",
+                        "{Numberone} {Drinkone} {Drinktwo} {Numberthree} {Drinkthree}",
+                        "{Numberone} {Drinkone} {Numbertwo} {Drinktwo} {Drinkthree}",
+                        "{Drinkone} {Drinktwo} {Numberthree} {Drinkthree}",
+                        "{Drinkone} {Numbertwo} {Drinktwo} {Drinkthree}",
+                        "{Numberone} {Drinkone} {Drinktwo} {Drinkthree}",
+                        "{Drinkone} {Drinktwo} {Drinkthree}",
+                        "{Drinkone} {Numbertwo} {Drinktwo}",
+                        "{Numberone} {Drinkone} {Drinktwo}",
+                        "{Drinkone} {Drinktwo}",
                         "{Numberone} {Drinkone}",
                         "{Drinkone}",
                         "I'd like to cancel {Numberone} {Drinkone} {Numbertwo} {Drinktwo} and {Numberthree} {Drinkthree}",
@@ -472,14 +472,20 @@
                     "name": "Recommandation",
                     "slots": [],
                     "samples": [
-                        "Any recommendation",
-                        "Can I have some recommendation please"
+                        "What should we order",
+                        "What would you recommend",
+                        "What do you like here Albert",
+                        "What do you like",
+                        "Any recommendations",
+                        "Can I have some recommendations please"
                     ]
                 },
                 {
                     "name": "VeganRecom",
                     "slots": [],
                     "samples": [
+                        "What do you have here that's vegan",
+                        "What do you have that's vegan",
                         "Do you have anything vegan"
                     ]
                 },
@@ -514,7 +520,7 @@
                         {
                             "id": "111",
                             "name": {
-                                "value": "Old Blackened",
+                                "value": "old blackened",
                                 "synonyms": [
                                     "whiskys",
                                     "whisky",
@@ -525,7 +531,7 @@
                         {
                             "id": "12",
                             "name": {
-                                "value": "Diet Coke",
+                                "value": "diet coke",
                                 "synonyms": [
                                     "diet cokes"
                                 ]
@@ -534,7 +540,7 @@
                         {
                             "id": "14",
                             "name": {
-                                "value": "Coke",
+                                "value": "coke",
                                 "synonyms": [
                                     "regular cokes",
                                     "normal cokes",
@@ -549,7 +555,7 @@
                         },
                         {
                             "name": {
-                                "value": "Botanist Bramble",
+                                "value": "botanist bramble",
                                 "synonyms": [
                                     "botanist brambles",
                                     "brambles",
@@ -559,7 +565,7 @@
                         },
                         {
                             "name": {
-                                "value": "Gin and Tonic",
+                                "value": "gin and tonic",
                                 "synonyms": [
                                     "gin and tonics"
                                 ]
@@ -567,7 +573,7 @@
                         },
                         {
                             "name": {
-                                "value": "Gray Goose",
+                                "value": "grey goose",
                                 "synonyms": [
                                     "vodkas",
                                     "vodka",
@@ -577,7 +583,7 @@
                         },
                         {
                             "name": {
-                                "value": "Pineapple Juice",
+                                "value": "pineapple juice",
                                 "synonyms": [
                                     "pineapple juices"
                                 ]
@@ -585,7 +591,7 @@
                         },
                         {
                             "name": {
-                                "value": "Orange Juice",
+                                "value": "orange juice",
                                 "synonyms": [
                                     "orange juices"
                                 ]
@@ -593,7 +599,7 @@
                         },
                         {
                             "name": {
-                                "value": "Apple Juice",
+                                "value": "apple juice",
                                 "synonyms": [
                                     "apple juices"
                                 ]
@@ -601,7 +607,7 @@
                         },
                         {
                             "name": {
-                                "value": "White wine",
+                                "value": "white wine",
                                 "synonyms": [
                                     "glasses of white wine",
                                     "glasses of house white",
@@ -615,7 +621,7 @@
                         },
                         {
                             "name": {
-                                "value": "Red wine",
+                                "value": "red wine",
                                 "synonyms": [
                                     "glasses of house red",
                                     "glass of house red",
@@ -629,7 +635,7 @@
                         },
                         {
                             "name": {
-                                "value": "Arran Blonde",
+                                "value": "arran blonde",
                                 "synonyms": [
                                     "arran blondes"
                                 ]
@@ -637,7 +643,7 @@
                         },
                         {
                             "name": {
-                                "value": "Peroni",
+                                "value": "peroni",
                                 "synonyms": [
                                     "peronis"
                                 ]
@@ -645,7 +651,7 @@
                         },
                         {
                             "name": {
-                                "value": "Stella Artois",
+                                "value": "stella artois",
                                 "synonyms": [
                                     "stella artoises",
                                     "stellas",
@@ -655,7 +661,7 @@
                         },
                         {
                             "name": {
-                                "value": "Rosé",
+                                "value": "rosé",
                                 "synonyms": [
                                     "glasses of rosé",
                                     "glass of rosé",
@@ -665,7 +671,7 @@
                         },
                         {
                             "name": {
-                                "value": "Water",
+                                "value": "water",
                                 "synonyms": [
                                     "glasses of water",
                                     "glass of water",
@@ -675,7 +681,7 @@
                         },
                         {
                             "name": {
-                                "value": "Coffee",
+                                "value": "coffee",
                                 "synonyms": [
                                     "coffees",
                                     "cups of coffee",
@@ -685,7 +691,7 @@
                         },
                         {
                             "name": {
-                                "value": "Tea",
+                                "value": "tea",
                                 "synonyms": [
                                     "pots of tea",
                                     "pot of tea",
@@ -702,7 +708,7 @@
                     "values": [
                         {
                             "name": {
-                                "value": "Caramelised Duck Breast",
+                                "value": "caramelised duck breast",
                                 "synonyms": [
                                     "duck breasts",
                                     "ducks",
@@ -713,7 +719,7 @@
                         },
                         {
                             "name": {
-                                "value": "Vegan Brownie",
+                                "value": "vegan brownie",
                                 "synonyms": [
                                     "brownies",
                                     "vegan brownies",
@@ -723,7 +729,7 @@
                         },
                         {
                             "name": {
-                                "value": "Vegetable Thai Curry",
+                                "value": "vegetable thai curry",
                                 "synonyms": [
                                     "vegetable curries",
                                     "thai curries",
@@ -735,7 +741,7 @@
                         },
                         {
                             "name": {
-                                "value": "Risotto",
+                                "value": "risotto",
                                 "synonyms": [
                                     "risottos"
                                 ]
@@ -743,7 +749,7 @@
                         },
                         {
                             "name": {
-                                "value": "Cheese plate",
+                                "value": "cheese plate",
                                 "synonyms": [
                                     "cheese plates",
                                     "Cheese"
@@ -752,7 +758,7 @@
                         },
                         {
                             "name": {
-                                "value": "Dark Chocolate Mousse",
+                                "value": "dark chocolate mousse",
                                 "synonyms": [
                                     "mousses",
                                     "Mousse"
@@ -761,7 +767,7 @@
                         },
                         {
                             "name": {
-                                "value": "Panna Cotta",
+                                "value": "panna cotta",
                                 "synonyms": [
                                     "panna cottas"
                                 ]
@@ -769,7 +775,7 @@
                         },
                         {
                             "name": {
-                                "value": "Cheesecake",
+                                "value": "cheesecake",
                                 "synonyms": [
                                     "cheesecakes"
                                 ]
@@ -777,7 +783,7 @@
                         },
                         {
                             "name": {
-                                "value": "Ice-cream",
+                                "value": "ice cream",
                                 "synonyms": [
                                     "ice creams"
                                 ]
@@ -785,7 +791,7 @@
                         },
                         {
                             "name": {
-                                "value": "Souffle",
+                                "value": "souffle",
                                 "synonyms": [
                                     "souffles"
                                 ]
@@ -793,7 +799,7 @@
                         },
                         {
                             "name": {
-                                "value": "Affogato",
+                                "value": "affogato",
                                 "synonyms": [
                                     "affogatos"
                                 ]
@@ -801,7 +807,7 @@
                         },
                         {
                             "name": {
-                                "value": "Lamb shoulder",
+                                "value": "lamb shoulder",
                                 "synonyms": [
                                     "lambs",
                                     "lamb shoulders",
@@ -811,7 +817,7 @@
                         },
                         {
                             "name": {
-                                "value": "Chicken Curry",
+                                "value": "chicken curry",
                                 "synonyms": [
                                     "chickens",
                                     "chicken curries",
@@ -821,7 +827,7 @@
                         },
                         {
                             "name": {
-                                "value": "Crab and Avocado Stack",
+                                "value": "crab and avocado stack",
                                 "synonyms": [
                                     "stacks",
                                     "crabs",
@@ -833,12 +839,12 @@
                         },
                         {
                             "name": {
-                                "value": "Scallops"
+                                "value": "scallops"
                             }
                         },
                         {
                             "name": {
-                                "value": "Spaghetti Carbonara",
+                                "value": "spaghetti carbonara",
                                 "synonyms": [
                                     "spaghettis",
                                     "pastas",
@@ -852,7 +858,7 @@
                         },
                         {
                             "name": {
-                                "value": "Sirloin Steak",
+                                "value": "sirloin steak",
                                 "synonyms": [
                                     "sirloin steaks",
                                     "steaks",
@@ -862,7 +868,7 @@
                         },
                         {
                             "name": {
-                                "value": "Beef Stew",
+                                "value": "beef stew",
                                 "synonyms": [
                                     "beef stews",
                                     "stews",
@@ -873,7 +879,7 @@
                         },
                         {
                             "name": {
-                                "value": "Pan Fried Salmon",
+                                "value": "pan fried salmon",
                                 "synonyms": [
                                     "pan fried salmons",
                                     "salmons",
@@ -883,7 +889,7 @@
                         },
                         {
                             "name": {
-                                "value": "Salad",
+                                "value": "salad",
                                 "synonyms": [
                                     "salads"
                                 ]
@@ -891,7 +897,7 @@
                         },
                         {
                             "name": {
-                                "value": "Soup",
+                                "value": "soup",
                                 "synonyms": [
                                     "soups"
                                 ]
@@ -1160,6 +1166,13 @@
                     },
                     "slots": [
                         {
+                            "name": "Numberone",
+                            "type": "Num",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
                             "name": "Foodone",
                             "type": "Menu",
                             "confirmationRequired": false,
@@ -1178,13 +1191,6 @@
                         {
                             "name": "Foodthree",
                             "type": "Menu",
-                            "confirmationRequired": false,
-                            "elicitationRequired": false,
-                            "prompts": {}
-                        },
-                        {
-                            "name": "Numberone",
-                            "type": "Num",
                             "confirmationRequired": false,
                             "elicitationRequired": false,
                             "prompts": {}
@@ -1935,7 +1941,7 @@
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "I recommend crab and avocado stack, caramelized duck breast and dark chocolate mousse."
+                        "value": "I recommend the crab and avocado stack, and the caramelized duck breast, and if you'd like something sweet afterwards, the dark chocolate mousse is definitely the best."
                     }
                 ]
             },
