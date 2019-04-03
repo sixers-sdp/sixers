@@ -2,68 +2,22 @@
 
 {% block bootstrap4_extra_head %}
 	{{ block.super }}
-	<meta http-equiv="refresh" content="1" >
 {% endblock %}
 
 
 {% block body %}
-		{% if human_requests %}
-		<div class="my-3 p-3 bg-white rounded box-shadow">
-			<h2 class="border-bottom border-gray pb-2 mb-0">Help requests</h2>
+	<div id="orders"></div>
 
-			{% for human_request in human_requests %}
-				<div class="media text-muted pt-3">
-					<p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-						<strong class="d-block text-gray-dark">Table {{ human_request.table_number }}</strong>
-						{{ human_request.text }}
-					</p>
-					{% if user.is_authenticated %}
-						<form action="{% url 'main:help_state' id=human_request.id %}" method="post">
-							{% csrf_token %}
-							<input type="hidden" value="true" name="processed">
-							<button type="submit" class="btn btn-primary alert-danger">Mark resolved</button>
-						</form>
-					{% endif %}
-				</div>
-			{% endfor %}
-		</div>
-	{% endif %}
-
-
-	{% if cancellations %}
-		<div class="my-3 p-3 bg-white rounded box-shadow">
-			<h2 class="border-bottom border-gray pb-2 mb-0">Cancellations</h2>
-
-			{% for cancellation in cancellations %}
-				<div class="media text-muted pt-3">
-					<p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-						<strong class="d-block text-gray-dark">Table {{ cancellation.table_number }}</strong>
-						{{ cancellation.text }}
-					</p>
-					{% if user.is_authenticated %}
-						<form action="{% url 'main:change_cancel_state' id=cancellation.id %}" method="post">
-							{% csrf_token %}
-							<input type="hidden" value="true" name="processed">
-							<button type="submit" class="btn btn-primary">Mark resolved</button>
-						</form>
-					{% endif %}
-				</div>
-			{% endfor %}
-		</div>
-	{% endif %}
-
-	{% if not delivery_orders or ready_orders or new_orders %}
-			<div class="my-3 p-3 bg-white rounded box-shadow">
-				<h2 class="border-bottom border-gray pb-2 mb-0">Awaiting orders</h2>
-			</div>
-	{% endif %}
-
-
-	{% include "includes/orders_sublist.html" with label="Order in delivery" orders=delivery_orders button_hide='hide' %}
-	{% if albert_is_empty %}
-		{% include "includes/orders_sublist.html" with label="Ready orders" orders=ready_orders button_text="Mark for delivery" button_state='delivery'%}
-	{% else %}
-		{% include "includes/orders_sublist.html" with label="Ready orders" orders=ready_orders %}
-	{% endif %}
-	{% include "includes/orders_sublist.html" with label="New orders" orders=new_orders button_text="Mark ready" button_state='ready' %}
+	<script>
+        window.setInterval(function () {
+            var request = new XMLHttpRequest();
+            request.open("GET", '/orders_frame');
+            request.onreadystatechange = function () {
+                if (request.readyState === 4 && request.status === 200) {
+					document.getElementById("orders").innerHTML = request.responseText;
+                }
+            };
+            request.send(null); // Send the request now
+        }, 1000);
+	</script>
 {% endblock %}

@@ -13,9 +13,19 @@ from . import models
 class OrderView(TemplateView):
     template_name = 'orders.html'
 
+
+class OrderFrameView(TemplateView):
+    template_name = 'orders_frame.html'
+
     def get_context_data(self, **kwargs):
         c = super().get_context_data(**kwargs)
         delivery = models.Order.objects.filter(state=ORDER_STATE_DELIVERY)
+
+        has_anything = [
+            models.HumanRequest.objects.filter(processed=False).exists(),
+            models.Order.objects.filter(state__in=[ORDER_STATE_NEW, ORDER_STATE_READY]).exists(),
+            models.Cancellation.objects.filter(processed=False).exists()
+        ]
 
         c['human_requests'] = models.HumanRequest.objects.filter(processed=False)
         c['new_orders'] = models.Order.objects.filter(state=ORDER_STATE_NEW)
@@ -23,6 +33,7 @@ class OrderView(TemplateView):
         c['delivery_orders'] = delivery
         c['albert_is_empty'] = not delivery.exists()
         c['cancellations'] = models.Cancellation.objects.filter(processed=False)
+        c['has_anything'] = any(has_anything)
         return c
 
 
