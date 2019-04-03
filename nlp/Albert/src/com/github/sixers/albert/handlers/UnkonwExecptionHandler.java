@@ -30,7 +30,7 @@ public class UnkonwExecptionHandler implements ExceptionHandler {
     public Optional<Response> handle(HandlerInput input, Throwable throwable) {
 
         String exceptionType = throwable.getMessage();
-        String tech_resp = "Human assistent is coming, please be patient";
+        String tech_resp = "Human assistant is coming, please be patient";
         // TODO: DEAL WITH THE EXCEPTION.
 
         // TODO: DO A POST REQUEST TO THE API.

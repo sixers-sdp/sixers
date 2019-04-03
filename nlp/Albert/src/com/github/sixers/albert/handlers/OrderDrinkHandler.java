@@ -191,7 +191,6 @@ public class OrderDrinkHandler implements IntentRequestHandler {
 		}
 
 
-
 		if (intent.getConfirmationStatus().getValue().toString().equals("CONFIRMED")) {
 
 			CloseableHttpClient httpClient = HttpClients.createDefault();

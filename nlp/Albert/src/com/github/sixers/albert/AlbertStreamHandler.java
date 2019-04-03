@@ -32,7 +32,8 @@ public class AlbertStreamHandler extends SkillStreamHandler {
                         new OrderDrinkHandler(),
                         new CancelFoodHandler(),
                         new CancelDrinkHandler(),
-                        new SetTableIntent())
+                        new SetTableIntent(),
+                        new CallWaiterIntentHandeler())
                 .addExceptionHandlers(new HumanNeededExecptionHandler(),
                         new UnkonwExecptionHandler())
                 // Add your skill id below
