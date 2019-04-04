@@ -1,5 +1,5 @@
 {
-  "interactionModel": {
+    "interactionModel": {
         "languageModel": {
             "invocationName": "albert",
             "intents": [
@@ -10,7 +10,6 @@
                 {
                     "name": "AMAZON.CancelIntent",
                     "samples": [
-                        "Yes please",
                         "Can we have a little longer please",
                         "Can we have a few more minutes please",
                         "I've changed my mind",
@@ -88,6 +87,48 @@
                         }
                     ],
                     "samples": [
+                        "I would like to have {Foodone} {Numbertwo} {Foodtwo} and {Foodthree} please",
+                        "I would like to have {Numberone} {Foodone} {Numbertwo} {Foodtwo} and {Foodthree} please",
+                        "I would like to have {Foodone} {Numbertwo} {Foodtwo} and {Numberthree} {Foodthree} please",
+                        "I would like to have {Numberone} {Foodone} {Foodtwo} and {Numberthree} {Foodthree} please",
+                        "I would like to have {Numberone} {Foodone} {Foodtwo} and {Foodthree} please",
+                        "I would like to have {Foodone} {Foodtwo} and {Numberthree} {Foodthree} please",
+                        "I would like to have {Numberone} {Foodone} {Numbertwo} {Foodtwo} and {Numberthree} {Foodthree} please",
+                        "I would like to have {Numberone} {Foodone} and {Numbertwo} {Foodtwo} please",
+                        "I would like to have {Foodone} and {Numbertwo} {Foodtwo} please",
+                        "I would like to have {Numberone} {Foodone} and {Foodtwo} please",
+                        "I would like to have {Numberone} {Foodone} please",
+                        "I would like to have {Foodone} {Foodtwo} and {Foodthree} please",
+                        "I would like to have {Foodone} and {Foodtwo} please",
+                        "I would like to have {Foodone} please",
+                        "I'd like to order {Foodone} {Numbertwo} {Foodtwo} and {Foodthree} please",
+                        "I'd like to order {Numberone} {Foodone} {Numbertwo} {Foodtwo} and {Foodthree} please",
+                        "I'd like to order {Foodone} {Numbertwo} {Foodtwo} and {Numberthree} {Foodthree} please",
+                        "I'd like to order {Numberone} {Foodone} {Foodtwo} and {Numberthree} {Foodthree} please",
+                        "I'd like to order {Numberone} {Foodone} {Foodtwo} and {Foodthree} please",
+                        "I'd like to order {Foodone} {Foodtwo} and {Numberthree} {Foodthree} please",
+                        "I'd like to order {Numberone} {Foodone} {Numbertwo} {Foodtwo} and {Numberthree} {Foodthree} please",
+                        "I'd like to order {Numberone} {Foodone} and {Numbertwo} {Foodtwo} please",
+                        "I'd like to order {Foodone} and {Numbertwo} {Foodtwo} please",
+                        "I'd like to order {Numberone} {Foodone} and {Foodtwo} please",
+                        "I'd like to order {Numberone} {Foodone} please",
+                        "I'd like to order {Foodone} {Foodtwo} and {Foodthree} please",
+                        "I'd like to order {Foodone} and {Foodtwo} please",
+                        "I'd like to order {Foodone} please",
+                        "Can I please have {Foodone} {Numbertwo} {Foodtwo} and {Foodthree}",
+                        "Can I please have {Numberone} {Foodone} {Numbertwo} {Foodtwo} and {Foodthree}",
+                        "Can I please have {Foodone} {Numbertwo} {Foodtwo} and {Numberthree} {Foodthree}",
+                        "Can I please have {Numberone} {Foodone} {Foodtwo} and {Numberthree} {Foodthree}",
+                        "Can I please have {Numberone} {Foodone} {Foodtwo} and {Foodthree}",
+                        "Can I please have {Foodone} {Foodtwo} and {Numberthree} {Foodthree}",
+                        "Can I please have {Numberone} {Foodone} {Numbertwo} {Foodtwo} and {Numberthree} {Foodthree}",
+                        "Can I please have {Numberone} {Foodone} and {Numbertwo} {Foodtwo}",
+                        "Can I please have {Foodone} and {Numbertwo} {Foodtwo}",
+                        "Can I please have {Numberone} {Foodone} and {Foodtwo}",
+                        "Can I please have {Numberone} {Foodone}",
+                        "Can I please have {Foodone} {Foodtwo} and {Foodthree}",
+                        "Can I please have {Foodone} and {Foodtwo}",
+                        "Can I please have {Foodone}",
                         "I'd like {Numberone} {Foodone} please",
                         "I'd like {Numberone} {Foodone}",
                         "I'd like {Foodone} please",
@@ -204,6 +245,48 @@
                         }
                     ],
                     "samples": [
+                        "I would like to have {Drinkone} {Numtwo} {Drinktwo} and {Drinkthree} please",
+                        "I would like to have {Numone} {Drinkone} {Numtwo} {Drinktwo} and {Drinkthree} please",
+                        "I would like to have {Drinkone} {Numtwo} {Drinktwo} and {Numthree} {Drinkthree} please",
+                        "I would like to have {Numone} {Drinkone} {Drinktwo} and {Numthree} {Drinkthree} please",
+                        "I would like to have {Numone} {Drinkone} {Drinktwo} and {Drinkthree} please",
+                        "I would like to have {Drinkone} {Drinktwo} and {Numthree} {Drinkthree} please",
+                        "I would like to have {Numone} {Drinkone} {Numtwo} {Drinktwo} and {Numthree} {Drinkthree} please",
+                        "I would like to have {Numone} {Drinkone} and {Numtwo} {Drinktwo} please",
+                        "I would like to have {Drinkone} and {Numtwo} {Drinktwo} please",
+                        "I would like to have {Numone} {Drinkone} and {Drinktwo} please",
+                        "I would like to have {Numone} {Drinkone} please",
+                        "I would like to have {Drinkone} {Drinktwo} and {Drinkthree} please",
+                        "I would like to have {Drinkone} and {Drinktwo} please",
+                        "I would like to have {Drinkone} please",
+                        "I'd like to order {Drinkone} {Numtwo} {Drinktwo} and {Drinkthree} please",
+                        "I'd like to order {Numone} {Drinkone} {Numtwo} {Drinktwo} and {Drinkthree} please",
+                        "I'd like to order {Drinkone} {Numtwo} {Drinktwo} and {Numthree} {Drinkthree} please",
+                        "I'd like to order {Numone} {Drinkone} {Drinktwo} and {Numthree} {Drinkthree} please",
+                        "I'd like to order {Numone} {Drinkone} {Drinktwo} and {Drinkthree} please",
+                        "I'd like to order {Drinkone} {Drinktwo} and {Numthree} {Drinkthree} please",
+                        "I'd like to order {Numone} {Drinkone} {Numtwo} {Drinktwo} and {Numthree} {Drinkthree} please",
+                        "I'd like to order {Numone} {Drinkone} and {Numtwo} {Drinktwo} please",
+                        "I'd like to order {Drinkone} and {Numtwo} {Drinktwo} please",
+                        "I'd like to order {Numone} {Drinkone} and {Drinktwo} please",
+                        "I'd like to order {Numone} {Drinkone} please",
+                        "I'd like to order {Drinkone} {Drinktwo} and {Drinkthree} please",
+                        "I'd like to order {Drinkone} and {Drinktwo} please",
+                        "I'd like to order {Drinkone} please",
+                        "Can I please have {Drinkone} {Numtwo} {Drinktwo} and {Drinkthree}",
+                        "Can I please have {Numone} {Drinkone} {Numtwo} {Drinktwo} and {Drinkthree}",
+                        "Can I please have {Drinkone} {Numtwo} {Drinktwo} and {Numthree} {Drinkthree}",
+                        "Can I please have {Numone} {Drinkone} {Drinktwo} and {Numthree} {Drinkthree}",
+                        "Can I please have {Numone} {Drinkone} {Drinktwo} and {Drinkthree}",
+                        "Can I please have {Drinkone} {Drinktwo} and {Numthree} {Drinkthree}",
+                        "Can I please have {Numone} {Drinkone} {Numtwo} {Drinktwo} and {Numthree} {Drinkthree}",
+                        "Can I please have {Numone} {Drinkone} and {Numtwo} {Drinktwo}",
+                        "Can I please have {Drinkone} and {Numtwo} {Drinktwo}",
+                        "Can I please have {Numone} {Drinkone} and {Drinktwo}",
+                        "Can I please have {Numone} {Drinkone}",
+                        "Can I please have {Drinkone} {Drinktwo} and {Drinkthree}",
+                        "Can I please have {Drinkone} and {Drinktwo}",
+                        "Can I please have {Drinkone}",
                         "{Drinkone} {Drinktwo} and {Numthree} {Drinkthree} please",
                         "{Drinkone} {Numtwo} {Drinktwo} and {Numthree} {Drinkthree} please",
                         "{Drinkone} {Numtwo} {Drinktwo} and {Drinkthree} please",
@@ -350,17 +433,6 @@
                         }
                     ],
                     "samples": [
-                        "{Numberone} {Foodone} {Foodtwo} {Numberthree} {Foodthree}",
-                        "{Numberone} {Foodone} {Numbertwo} {Foodtwo} {Foodthree}",
-                        "{Foodone} {Foodtwo} {Numberthree} {Foodthree}",
-                        "{Foodone} {Numbertwo} {Foodtwo} {Foodthree}",
-                        "{Numberone} {Foodone} {Foodtwo} {Foodthree}",
-                        "{Foodone} {Foodtwo} {Foodthree}",
-                        "{Foodone} {Numbertwo} {Foodtwo}",
-                        "{Numberone} {Foodone} {Numbertwo} {Foodtwo}",
-                        "{Numberone} {Foodone} {Foodtwo}",
-                        "{Foodone} {Foodtwo}",
-                        "{Numberone} {Foodone}",
                         "{Foodone}",
                         "I've changed my mind about my food order",
                         "I'd like to cancel {Numberone} {Foodone} {Numbertwo} {Foodtwo} and {Numberthree} {Foodthree}",
@@ -413,19 +485,6 @@
                         }
                     ],
                     "samples": [
-                        "{Numberone} {Drinkone} {Numbertwo} {Drinktwo}",
-                        "{Numberone} {Drinkone} {Numbertwo} {Drinktwo} {Numberthree} {Drinkthree}",
-                        "{Drinkone}  {Numbertwo} {Drinktwo} {Numberthree} {Drinkthree}",
-                        "{Numberone} {Drinkone} {Drinktwo} {Numberthree} {Drinkthree}",
-                        "{Numberone} {Drinkone} {Numbertwo} {Drinktwo} {Drinkthree}",
-                        "{Drinkone} {Drinktwo} {Numberthree} {Drinkthree}",
-                        "{Drinkone} {Numbertwo} {Drinktwo} {Drinkthree}",
-                        "{Numberone} {Drinkone} {Drinktwo} {Drinkthree}",
-                        "{Drinkone} {Drinktwo} {Drinkthree}",
-                        "{Drinkone} {Numbertwo} {Drinktwo}",
-                        "{Numberone} {Drinkone} {Drinktwo}",
-                        "{Drinkone} {Drinktwo}",
-                        "{Numberone} {Drinkone}",
                         "{Drinkone}",
                         "I'd like to cancel {Numberone} {Drinkone} {Numbertwo} {Drinktwo} and {Numberthree} {Drinkthree}",
                         "I'd like to cancel {Drinkone}  {Numbertwo} {Drinktwo} and {Numberthree} {Drinkthree}",
@@ -501,6 +560,62 @@
                     "slots": [],
                     "samples": [
                         "Do you have anything gluten free"
+                    ]
+                },
+                {
+                    "name": "CallWaiter",
+                    "slots": [
+                        {
+                            "name": "Query",
+                            "type": "AMAZON.SearchQuery",
+                            "samples": [
+                                "{Query}"
+                            ]
+                        }
+                    ],
+                    "samples": [
+                        "can i meet your manager",
+                        "i want to meet your manager",
+                        "i have a query",
+                        "I want to talk to a human",
+                        "i don't want to talk to a robot",
+                        "Can you ask for a human to come",
+                        "I wanna a waiter to help me",
+                        "I need human help",
+                        "I need some assistance",
+                        "I'd like to talk to a waiter",
+                        "I'd like to speak to a waiter",
+                        "Can I talk to a waiter",
+                        "Can I speak to a waiter",
+                        "Can I get a hell yeah",
+                        "Can I get a high chair"
+                    ]
+                },
+                {
+                    "name": "NutAllergy",
+                    "slots": [],
+                    "samples": [
+                        "I'm allergic to walnuts",
+                        "I'm allergic to pecans",
+                        "I'm allergic to brazil nuts",
+                        "I'm allergic to hazelnuts",
+                        "I'm allergic to almonds",
+                        "I'm allergic to peanuts",
+                        "I'm allergic to nuts"
+                    ]
+                },
+                {
+                    "name": "OtherAllergies",
+                    "slots": [],
+                    "samples": [
+                        "I'm allergic to gluten",
+                        "I'm allergic to wheat",
+                        "I'm allergic to soy",
+                        "I'm allergic to eggs",
+                        "I'm allergic to dairy",
+                        "I'm allergic to milk",
+                        "I'm allergic to fruit",
+                        "I'm allergic to shellfish"
                     ]
                 }
             ],
@@ -706,6 +821,20 @@
                 {
                     "name": "Menu",
                     "values": [
+                        {
+                            "name": {
+                                "value": "oranges"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "potato crisps",
+                                "synonyms": [
+                                    "crisps",
+                                    "chips"
+                                ]
+                            }
+                        },
                         {
                             "name": {
                                 "value": "caramelised duck breast",
@@ -1330,6 +1459,39 @@
                     "confirmationRequired": true,
                     "prompts": {
                         "confirmation": "Confirm.Intent.1281366522141"
+                    },
+                    "slots": []
+                },
+                {
+                    "name": "CallWaiter",
+                    "delegationStrategy": "ALWAYS",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "Query",
+                            "type": "AMAZON.SearchQuery",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.1408896482050.293983277650"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "NutAllergy",
+                    "confirmationRequired": true,
+                    "prompts": {
+                        "confirmation": "Confirm.Intent.805973708271"
+                    },
+                    "slots": []
+                },
+                {
+                    "name": "OtherAllergies",
+                    "confirmationRequired": true,
+                    "prompts": {
+                        "confirmation": "Confirm.Intent.294225234685"
                     },
                     "slots": []
                 }
@@ -1969,6 +2131,42 @@
                     {
                         "type": "PlainText",
                         "value": "Yes, everything here is gluten free apart from our spaghetti carbonara, cheesecake and brownie."
+                    }
+                ]
+            },
+            {
+                "id": "Confirm.Intent.48913102897",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "A waiter is coming to your table."
+                    }
+                ]
+            },
+            {
+                "id": "Confirm.Intent.805973708271",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "None of our dishes contain nuts. Feel free to order whatever you'd like off the menu"
+                    }
+                ]
+            },
+            {
+                "id": "Confirm.Intent.294225234685",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Please refer to our menu."
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.1408896482050.293983277650",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Could you tell me your query?"
                     }
                 ]
             }
