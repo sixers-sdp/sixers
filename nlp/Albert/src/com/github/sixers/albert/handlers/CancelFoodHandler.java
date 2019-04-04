@@ -218,11 +218,11 @@ public class CancelFoodHandler implements IntentRequestHandler {
 			}
 
 			return handlerInput.getResponseBuilder().withSpeech(speechText)
-					.withReprompt("Would you like to order something else?").withShouldEndSession(false).build();
+					.withReprompt("What else can I do for you").withShouldEndSession(false).build();
 		} else {
 			return handlerInput.getResponseBuilder()
-					.withSpeech("Okay, I have not cancelled your order. Would you like to cancel something else?")
-					.withReprompt("Would you like to order anything else?").withShouldEndSession(false).build();
+					.withSpeech("Okay, I have not cancelled your order. What else can I do for you?")
+					.withReprompt("What else can I do for you?").withShouldEndSession(false).build();
 		}
 
 	}
