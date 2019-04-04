@@ -188,6 +188,8 @@ public class CancelDrinkHandler implements IntentRequestHandler {
 				}
 			}
 		}
+		
+		speechText = speechText + "What else can I do for you?";
 
 		if (intent.getConfirmationStatus().getValue().toString().equals("CONFIRMED")) {
 

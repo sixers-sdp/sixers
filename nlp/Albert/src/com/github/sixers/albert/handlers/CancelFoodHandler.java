@@ -197,6 +197,8 @@ public class CancelFoodHandler implements IntentRequestHandler {
 				speechText = speechText + " and " + numthreeValue + " " + foodthreeName;
 			}
 		}
+		
+		speechText = speechText + "What else can I do for you?";
 
 		if (intent.getConfirmationStatus().getValue().toString().equals("CONFIRMED")) {
 

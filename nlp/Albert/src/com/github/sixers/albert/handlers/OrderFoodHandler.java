@@ -194,6 +194,8 @@ public class OrderFoodHandler implements IntentRequestHandler {
 				}
 			}
 		}
+		
+		speechText = speechText + "What else can I get for you?";
 
 		if (intent.getConfirmationStatus().getValue().toString().equals("CONFIRMED")) {
 			
@@ -220,7 +222,7 @@ public class OrderFoodHandler implements IntentRequestHandler {
 		} else {
 			return handlerInput.getResponseBuilder()
 					.withSpeech("Okay, I've cancelled that request. What else can I get for you")
-					.withReprompt("What else can I get for you").withShouldEndSession(false).build();
+					.withReprompt("What else can I get for you?").withShouldEndSession(false).build();
 		}
 	}
 

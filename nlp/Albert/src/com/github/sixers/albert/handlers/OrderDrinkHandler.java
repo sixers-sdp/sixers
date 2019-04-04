@@ -190,7 +190,7 @@ public class OrderDrinkHandler implements IntentRequestHandler {
 			}
 		}
 
-
+		speechText = speechText + "What else can I get for you?";
 
 		if (intent.getConfirmationStatus().getValue().toString().equals("CONFIRMED")) {
 
