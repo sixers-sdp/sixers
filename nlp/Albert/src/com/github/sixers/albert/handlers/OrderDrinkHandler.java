@@ -212,11 +212,11 @@ public class OrderDrinkHandler implements IntentRequestHandler {
 			}
 
 			return handlerInput.getResponseBuilder().withSpeech(speechText)
-					.withReprompt("Would you like anything else?").withShouldEndSession(false).build();
+					.withReprompt("What else can I get for you?").withShouldEndSession(false).build();
 		} else {
 			return handlerInput.getResponseBuilder()
-					.withSpeech("Okay, I've cancelled that request. Would you like something else?")
-					.withReprompt("Would you like anything else?").withShouldEndSession(false).build();
+					.withSpeech("Okay, I've cancelled that request. What else can I get for you?")
+					.withReprompt("What else can I get for you").withShouldEndSession(false).build();
 		}
 
 	}
