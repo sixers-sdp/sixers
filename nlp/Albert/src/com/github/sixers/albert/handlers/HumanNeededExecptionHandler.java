@@ -20,7 +20,7 @@ public class HumanNeededExecptionHandler implements ExceptionHandler {
     public Optional<Response> handle(HandlerInput input, Throwable throwable) {
 
 
-        String resp = "Human assistent is coming, please be patient";
+        String resp = "Human assistant is coming, please be patient";
 
         CloseableHttpClient httpClient = HttpClients.createDefault();
 
